@@ -1,0 +1,1874 @@
+<title>Nabda Brand System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;300;400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ============================================================
+   NABDA — brand system tokens
+   Palette source: Egyptian faience inlay (turquoise glaze, gold,
+   lapis, carnelian). Neutrals are biased toward the teal accent.
+   ============================================================ */
+:root{
+  /* raw brand constants — identical in every theme */
+  --ink:#04191A;      --deep:#063A38;     --teal:#0E7C74;
+  --faience:#3FB6A8;  --mint:#8FD9CD;     --mist:#E3EEEC;
+  --paper:#F4F8F7;    --gold:#E5A93C;     --glow:#F6D08A;
+  --lapis:#12305C;    --carnelian:#BE4224;--slate:#5B7472;
+
+  /* semantic — LIGHT (complete set, defined on bare :root) */
+  --bg:#F4F8F7;
+  --surface:#FFFFFF;
+  --surface-2:#E9F2F0;
+  --surface-3:#DCEAE7;
+  --text:#04191A;
+  --text-2:#3C5754;
+  --text-3:#5B7472;
+  --line:rgba(6,58,56,.15);
+  --line-strong:rgba(6,58,56,.3);
+  --accent:#0E7C74;
+  --accent-2:#3FB6A8;
+  --accent-ghost:rgba(14,124,116,.09);
+  --pulse:#8A5E10;          /* gold, darkened for text use on light */
+  --pulse-solid:#E5A93C;    /* gold as a fill/graphic */
+  --danger:#BE4224;
+  --shadow:0 1px 2px rgba(4,25,26,.06),0 12px 32px -16px rgba(4,25,26,.24);
+  --shadow-lift:0 2px 4px rgba(4,25,26,.07),0 28px 60px -28px rgba(4,25,26,.35);
+
+  /* invariants */
+  --rail:clamp(0px,calc((100vw - 980px) / 2 - 30px),176px);
+  --maxw:980px;
+  --f-display:"Readex Pro","Segoe UI",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans Arabic","Readex Pro",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SF Mono",monospace;
+  --step:1.5rem;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#041615;
+    --surface:#08201F;
+    --surface-2:#0C2C2A;
+    --surface-3:#123A37;
+    --text:#E4F0EE;
+    --text-2:#B4CFCB;
+    --text-3:#8AA8A4;
+    --line:rgba(120,200,190,.16);
+    --line-strong:rgba(120,200,190,.34);
+    --accent:#4FC7B8;
+    --accent-2:#8FD9CD;
+    --accent-ghost:rgba(79,199,184,.11);
+    --pulse:#F0BC5C;
+    --pulse-solid:#F0BC5C;
+    --danger:#F08A6B;
+    --shadow:0 1px 2px rgba(0,0,0,.5),0 12px 32px -16px rgba(0,0,0,.8);
+    --shadow-lift:0 2px 4px rgba(0,0,0,.5),0 28px 60px -28px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#041615;
+  --surface:#08201F;
+  --surface-2:#0C2C2A;
+  --surface-3:#123A37;
+  --text:#E4F0EE;
+  --text-2:#B4CFCB;
+  --text-3:#8AA8A4;
+  --line:rgba(120,200,190,.16);
+  --line-strong:rgba(120,200,190,.34);
+  --accent:#4FC7B8;
+  --accent-2:#8FD9CD;
+  --accent-ghost:rgba(79,199,184,.11);
+  --pulse:#F0BC5C;
+  --pulse-solid:#F0BC5C;
+  --danger:#F08A6B;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 12px 32px -16px rgba(0,0,0,.8);
+  --shadow-lift:0 2px 4px rgba(0,0,0,.5),0 28px 60px -28px rgba(0,0,0,.9);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--f-body);
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:3px;border-radius:3px}
+img,svg{max-width:100%}
+a{color:var(--accent)}
+
+/* ---------- language switching ---------- */
+:root[data-lang="ar"] .en-only{display:none}
+:root:not([data-lang="ar"]) .ar-only{display:none}
+.ar-text{font-family:var(--f-body);direction:rtl;unicode-bidi:isolate}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:80;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid var(--line);
+}
+.topbar-in{
+  max-width:1240px;margin:0 auto;padding:.55rem 1.25rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.tb-mark{display:flex;align-items:center;gap:.55rem;flex-shrink:0;font-family:var(--f-display);font-weight:600;letter-spacing:-.02em;font-size:1.02rem}
+.tb-mark svg{width:24px;flex:0 0 24px;height:auto;display:block}
+.tb-nav{display:flex;gap:.15rem;margin-inline-start:auto;overflow-x:auto;scrollbar-width:none;min-width:0;flex:0 1 auto;-webkit-overflow-scrolling:touch}
+.tb-nav::-webkit-scrollbar{display:none}
+.tb-nav a{
+  font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--text-3);text-decoration:none;padding:.4rem .5rem;border-radius:6px;white-space:nowrap;
+}
+.tb-nav a:hover{color:var(--accent);background:var(--accent-ghost)}
+.tb-tools{display:flex;gap:.4rem;flex-shrink:0}
+.tgl{
+  font-family:var(--f-mono);font-size:.68rem;letter-spacing:.05em;
+  background:var(--surface-2);color:var(--text-2);border:1px solid var(--line);
+  border-radius:999px;padding:.38rem .7rem;cursor:pointer;line-height:1;
+}
+.tgl:hover{border-color:var(--line-strong);color:var(--text)}
+
+/* ---------- shell ---------- */
+main{max-width:1240px;margin:0 auto;padding:0 1.25rem 6rem}
+.sec{
+  max-width:var(--maxw);margin:0 auto;
+  padding-block:clamp(3.2rem,7vw,5.5rem);
+  border-top:1px solid var(--line);
+  position:relative;
+}
+.sec:first-of-type{border-top:0}
+.sec-head{display:grid;gap:.5rem;margin-bottom:2.4rem}
+.sec-num{
+  font-family:var(--f-mono);font-size:.7rem;letter-spacing:.18em;color:var(--accent);
+  display:flex;align-items:center;gap:.7rem;
+}
+.sec-num::after{content:"";flex:1;height:1px;background:var(--line);max-width:120px}
+h2{
+  font-family:var(--f-display);font-weight:500;letter-spacing:-.03em;
+  font-size:clamp(1.7rem,3.6vw,2.5rem);line-height:1.1;margin:0;text-wrap:balance;
+}
+.sec-sub{color:var(--text-2);max-width:62ch;margin:0;font-size:1.02rem}
+h3{
+  font-family:var(--f-display);font-weight:500;letter-spacing:-.02em;
+  font-size:1.22rem;margin:0 0 .5rem;line-height:1.3;
+}
+h4{font-family:var(--f-display);font-weight:500;font-size:1rem;margin:0 0 .35rem;letter-spacing:-.01em}
+p{margin:0 0 1rem;max-width:66ch}
+.lbl{
+  font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text-3);margin:0 0 .4rem;display:block;
+}
+.stack{display:grid;gap:var(--step)}
+.stack>*,.grid-2>*,.grid-3>*,.lockups>*,.social>*,.icons>*,.orb-row>*,.swatches>*,.concept-top>*,.concept-body>*,.kit>*{min-width:0}
+.grid-2{display:grid;gap:var(--step);grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.grid-3{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1.35rem 1.4rem;box-shadow:var(--shadow);
+}
+.card-flat{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:1.35rem 1.4rem}
+.muted{color:var(--text-2)}
+.small{font-size:.9rem}
+.tiny{font-size:.82rem;line-height:1.55}
+strong{font-weight:600;color:var(--text)}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;isolation:isolate;overflow:hidden;
+  border-radius:20px;margin:1.25rem auto 0;max-width:1200px;
+  background:radial-gradient(120% 130% at 82% 8%,#0B3B38 0%,#062725 42%,#04191A 100%);
+  color:#E9F4F2;padding:clamp(2.6rem,6vw,4.6rem) clamp(1.5rem,5vw,4rem) clamp(5rem,9vw,7rem);
+  border:1px solid rgba(143,217,205,.16);
+}
+#trace{position:absolute;inset:auto 0 0 0;width:100%;height:150px;z-index:0;opacity:.6;pointer-events:none;-webkit-mask-image:linear-gradient(180deg,transparent,#000 45%);mask-image:linear-gradient(180deg,transparent,#000 45%)}
+.hero-in{position:relative;z-index:1;display:grid;gap:1.5rem;max-width:900px}
+.eyebrow{
+  font-family:var(--f-mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--glow);display:flex;align-items:center;gap:.6rem;
+}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 0 rgba(229,169,60,.7);animation:beat 1.15s ease-out infinite}
+@keyframes beat{0%{box-shadow:0 0 0 0 rgba(229,169,60,.55)}70%{box-shadow:0 0 0 11px rgba(229,169,60,0)}100%{box-shadow:0 0 0 0 rgba(229,169,60,0)}}
+.hero-lockup{display:flex;align-items:center;gap:1.15rem;flex-wrap:wrap}
+.hero-lockup svg{width:clamp(54px,9vw,80px);height:auto}
+.hero-word{font-family:var(--f-display);font-weight:600;letter-spacing:-.045em;font-size:clamp(3rem,10vw,5.6rem);line-height:.9;color:#F3FAF8}
+.hero-word .ar-text{letter-spacing:0;font-weight:500}
+.hero-tag{font-family:var(--f-display);font-weight:300;font-size:clamp(1.15rem,3vw,1.7rem);line-height:1.3;color:#BFE3DC;max-width:22ch;margin:0;text-wrap:balance}
+.hero-tag em{font-style:normal;color:var(--glow)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{
+  font-family:var(--f-mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid rgba(143,217,205,.3);border-radius:999px;padding:.3rem .7rem;color:#A9D6CE;
+}
+@media (prefers-reduced-motion:reduce){
+  .eyebrow .dot{animation:none}
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+}
+</style>
+<style>
+/* ---------- logo concept blocks ---------- */
+.concept{
+  border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface);
+  box-shadow:var(--shadow);
+}
+.concept-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}
+@media (max-width:720px){.concept-top{grid-template-columns:1fr}}
+.stage{
+  display:grid;place-items:center;padding:2.4rem 1.5rem;gap:1rem;min-height:230px;
+  background:
+    linear-gradient(var(--line) 1px,transparent 1px) 0 0/100% 28px,
+    linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/28px 100%,
+    var(--surface-2);
+  border-inline-end:1px solid var(--line);
+}
+@media (max-width:720px){.stage{border-inline-end:0;border-block-end:1px solid var(--line)}}
+.stage.dark{
+  background:
+    linear-gradient(rgba(143,217,205,.09) 1px,transparent 1px) 0 0/100% 28px,
+    linear-gradient(90deg,rgba(143,217,205,.09) 1px,transparent 1px) 0 0/28px 100%,
+    #04191A;
+}
+.stage svg{width:min(168px,46vw);height:auto;display:block}
+.concept-body{padding:1.5rem 1.5rem 1.6rem;display:grid;gap:.9rem;align-content:start}
+.concept-name{display:flex;align-items:baseline;gap:.65rem;flex-wrap:wrap}
+.concept-name .n{font-family:var(--f-mono);font-size:.72rem;color:var(--accent);letter-spacing:.14em}
+.concept-name h3{margin:0}
+.concept-name .arname{font-family:var(--f-body);font-size:1.05rem;color:var(--text-3);direction:rtl}
+.pill{
+  display:inline-block;font-family:var(--f-mono);font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;
+  border-radius:999px;padding:.24rem .6rem;border:1px solid var(--line-strong);color:var(--text-2);
+}
+.pill.rec{background:var(--pulse-solid);border-color:var(--pulse-solid);color:#1B1305;font-weight:600}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:.3rem .9rem;font-size:.88rem}
+.kv dt{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);padding-top:.28rem}
+.kv dd{margin:0;color:var(--text-2)}
+.lockups{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));border-top:1px solid var(--line)}
+.lock{
+  display:grid;gap:.55rem;place-items:center;padding:1.4rem 1rem;
+  border-inline-end:1px solid var(--line);text-align:center;
+}
+.lock:last-child{border-inline-end:0}
+.lock .cap{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3)}
+.lk{display:flex;align-items:center;gap:.5rem}
+.lk svg{width:30px;height:auto}
+.lk .wm{font-family:var(--f-display);font-weight:600;letter-spacing:-.04em;font-size:1.5rem;color:var(--text)}
+.lk .wm.ar{letter-spacing:0;font-weight:500}
+.lk.stackv{flex-direction:column;gap:.35rem}
+.lk.small svg{width:17px}
+.lk.small .wm{font-size:.92rem}
+
+/* ---------- color ---------- */
+.swatches{display:grid;gap:.75rem;grid-template-columns:repeat(auto-fit,minmax(158px,1fr))}
+.sw{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.sw .chipc{height:88px;display:flex;align-items:flex-end;padding:.5rem .65rem}
+.sw .chipc span{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.08em;opacity:.9}
+.sw .meta{padding:.6rem .7rem .75rem;display:grid;gap:.18rem}
+.sw .nm{font-family:var(--f-display);font-weight:500;font-size:.92rem}
+.sw .hex{font-family:var(--f-mono);font-size:.76rem;color:var(--text-2)}
+.sw .use{font-size:.76rem;color:var(--text-3);line-height:1.45}
+.ratios{display:grid;gap:.55rem}
+.ratio{
+  display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:.8rem;
+  border:1px solid var(--line);border-radius:10px;padding:.55rem .8rem;background:var(--surface);
+}
+.ratio .sample{font-size:.9rem;border-radius:5px;padding:.22rem .6rem}
+.ratio .num{font-family:var(--f-mono);font-size:.85rem;font-variant-numeric:tabular-nums}
+.badge{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.08em;padding:.2rem .45rem;border-radius:5px;background:var(--accent-ghost);color:var(--accent)}
+.badge.warn{background:rgba(190,66,36,.12);color:var(--danger)}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;max-width:100%;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.88rem;min-width:520px}
+th,td{text-align:start;padding:.62rem .85rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{
+  font-family:var(--f-mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-3);font-weight:400;background:var(--surface-2);white-space:nowrap;
+}
+tr:last-child td{border-bottom:0}
+td code,.mono{font-family:var(--f-mono);font-size:.82rem;color:var(--accent)}
+.num-col{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ---------- type specimens ---------- */
+.spec{border:1px solid var(--line);border-radius:14px;padding:1.4rem;background:var(--surface);display:grid;gap:.8rem}
+.spec .glyphs{font-family:var(--f-display);font-size:clamp(2rem,6vw,3.4rem);line-height:1.15;letter-spacing:-.03em;word-break:break-word}
+.spec .glyphs.ar{font-family:var(--f-body);direction:rtl;letter-spacing:0}
+.scale-row{display:flex;align-items:baseline;gap:1rem;border-bottom:1px dashed var(--line);padding-bottom:.55rem;flex-wrap:wrap}
+.scale-row:last-child{border-bottom:0}
+.scale-row .tag{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.1em;color:var(--text-3);width:78px;flex-shrink:0}
+.scale-row .demo{font-family:var(--f-display);letter-spacing:-.025em;line-height:1.15}
+
+/* ---------- do / dont ---------- */
+.dd{display:grid;gap:.7rem}
+.dd li{list-style:none;display:grid;grid-template-columns:auto 1fr;gap:.7rem;align-items:start;font-size:.92rem;color:var(--text-2)}
+.dd ul{margin:0;padding:0;display:grid;gap:.7rem}
+.mk{width:19px;height:19px;border-radius:5px;display:grid;place-items:center;font-size:.72rem;font-weight:700;flex-shrink:0;margin-top:.18rem}
+.mk.y{background:var(--accent-ghost);color:var(--accent)}
+.mk.n{background:rgba(190,66,36,.13);color:var(--danger)}
+
+/* ---------- Pulse avatar ---------- */
+.orb-row{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.orbcell{
+  display:grid;gap:.7rem;place-items:center;padding:1.5rem .8rem;border-radius:14px;
+  background:radial-gradient(80% 80% at 50% 40%,#0A2E2C,#04191A);border:1px solid rgba(143,217,205,.15);
+}
+.orbcell .cap{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#8FD9CD}
+.orb{position:relative;width:78px;height:78px;display:grid;place-items:center}
+.orb i{position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(229,169,60,.55)}
+.orb b{
+  position:relative;width:26px;height:26px;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%,#FFF0CE,#E5A93C 55%,#B87F1E);
+  box-shadow:0 0 22px 4px rgba(229,169,60,.5);
+}
+.orb.idle b{animation:breathe 2.4s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(1);box-shadow:0 0 18px 3px rgba(229,169,60,.4)}50%{transform:scale(1.13);box-shadow:0 0 30px 7px rgba(229,169,60,.6)}}
+.orb.listen i{animation:ripple 1.9s cubic-bezier(.2,.6,.35,1) infinite}
+.orb.listen i:nth-child(2){animation-delay:.63s}
+.orb.listen i:nth-child(3){animation-delay:1.26s}
+@keyframes ripple{0%{transform:scale(.34);opacity:.95}100%{transform:scale(1);opacity:0}}
+.orb.think i:first-child{border:0;background:conic-gradient(from 0deg,transparent 0 62%,rgba(229,169,60,.9) 78%,transparent 92%);-webkit-mask:radial-gradient(circle,transparent 58%,#000 60%);mask:radial-gradient(circle,transparent 58%,#000 60%);animation:spin 1.5s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.orb.speak{gap:3px;display:flex;align-items:center;justify-content:center}
+.orb.speak s{display:block;width:5px;border-radius:3px;background:linear-gradient(#F6D08A,#E5A93C);animation:bars .9s ease-in-out infinite;text-decoration:none}
+.orb.speak s:nth-child(1){height:16px;animation-delay:0s}
+.orb.speak s:nth-child(2){height:34px;animation-delay:.11s}
+.orb.speak s:nth-child(3){height:52px;animation-delay:.22s}
+.orb.speak s:nth-child(4){height:30px;animation-delay:.33s}
+.orb.speak s:nth-child(5){height:14px;animation-delay:.44s}
+@keyframes bars{0%,100%{transform:scaleY(.42)}50%{transform:scaleY(1)}}
+
+/* ---------- app icons ---------- */
+.icons{display:grid;gap:1.1rem;grid-template-columns:repeat(auto-fit,minmax(128px,1fr))}
+.icell{display:grid;gap:.6rem;justify-items:center;text-align:center}
+.ic{width:104px;height:104px;border-radius:23.5%;display:grid;place-items:center;box-shadow:var(--shadow-lift);overflow:hidden;position:relative}
+.ic svg{width:56%;height:auto}
+.icell .cap{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);line-height:1.5}
+
+/* ---------- device / browser mockups ---------- */
+.browser{border:1px solid var(--line-strong);border-radius:14px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow-lift)}
+.bbar{display:flex;align-items:center;gap:.4rem;padding:.5rem .75rem;background:var(--surface-2);border-bottom:1px solid var(--line)}
+.bbar i{width:9px;height:9px;border-radius:50%;background:var(--line-strong)}
+.bbar .url{
+  margin-inline-start:.5rem;font-family:var(--f-mono);font-size:.66rem;color:var(--text-3);
+  background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:.16rem .6rem;
+}
+.lp{background:#FFFFFF;color:#04191A;font-family:var(--f-body)}
+.lp-nav{display:flex;align-items:center;gap:1rem;padding:.85rem 1.2rem;border-bottom:1px solid #E3EEEC}
+.lp-nav .wm{font-family:var(--f-display);font-weight:600;letter-spacing:-.04em;font-size:1.05rem;color:#04191A;display:flex;align-items:center;gap:.4rem}
+.lp-nav .wm svg{width:19px}
+.lp-nav .links{display:flex;gap:.9rem;font-size:.72rem;color:#5B7472;margin-inline-start:auto}
+.lp-btn{background:#0E7C74;color:#fff;font-size:.72rem;padding:.4rem .8rem;border-radius:8px;font-weight:600}
+.lp-hero{padding:2rem 1.2rem 1.6rem;background:linear-gradient(180deg,#F4F8F7,#FFFFFF);text-align:start}
+.lp-hero h5{font-family:var(--f-display);font-weight:600;letter-spacing:-.035em;font-size:clamp(1.3rem,3.6vw,2rem);line-height:1.1;margin:0 0 .5rem;color:#04191A;max-width:16ch}
+.lp-hero p{font-size:.82rem;color:#3C5754;margin:0 0 1rem;max-width:38ch}
+.lp-search{display:flex;gap:.4rem;background:#fff;border:1px solid #DCEAE7;border-radius:11px;padding:.4rem;box-shadow:0 10px 26px -18px rgba(4,25,26,.5);max-width:440px}
+.lp-search .f{flex:1;font-size:.74rem;color:#5B7472;padding:.42rem .6rem;border-inline-end:1px solid #E3EEEC}
+.lp-search .go{background:#0E7C74;color:#fff;border-radius:8px;padding:.42rem .85rem;font-size:.74rem;font-weight:600}
+.lp-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;padding:1.1rem 1.2rem 3.4rem}
+@media (max-width:560px){.lp-cards{grid-template-columns:1fr 1fr}.lp-cards>div:last-child{display:none}}
+.dcard{border:1px solid #E3EEEC;border-radius:11px;padding:.7rem;display:grid;gap:.35rem;background:#fff}
+.dcard .av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#8FD9CD,#0E7C74)}
+.dcard .nm{font-size:.76rem;font-weight:600;color:#04191A}
+.dcard .sp{font-size:.66rem;color:#5B7472}
+.dcard .slot{font-size:.62rem;color:#0E7C74;background:#E9F2F0;border-radius:5px;padding:.16rem .4rem;justify-self:start;font-family:var(--f-mono)}
+.lp-pulse{
+  position:absolute;inset-inline-end:14px;inset-block-end:14px;display:flex;align-items:center;gap:.5rem;
+  background:#04191A;color:#F6D08A;border-radius:999px;padding:.42rem .8rem .42rem .5rem;font-size:.72rem;
+  box-shadow:0 14px 32px -12px rgba(4,25,26,.7);
+}
+.lp-pulse .o{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#FFF0CE,#E5A93C 58%,#B87F1E);box-shadow:0 0 12px 2px rgba(229,169,60,.55);flex-shrink:0}
+.lp-wrap{position:relative}
+
+/* ---------- social ---------- */
+.social{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));align-items:start}
+.frame{border-radius:12px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);position:relative}
+.f-sq{aspect-ratio:1/1}
+.f-st{aspect-ratio:9/16}
+.f-cv{aspect-ratio:3/1}
+.f-av{aspect-ratio:1/1;border-radius:50%}
+.fcap{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-top:.45rem;display:block;text-align:center}
+.ink-bg{background:radial-gradient(120% 120% at 78% 12%,#0B3B38,#04191A)}
+.teal-bg{background:linear-gradient(160deg,#0E7C74,#063A38)}
+.paper-bg{background:#F4F8F7}
+.pad{padding:clamp(.7rem,4%,1.2rem);height:100%;display:grid;align-content:space-between;gap:.5rem}
+.pad .top{display:flex;align-items:center;gap:.4rem}
+.pad .top svg{width:18px}
+.pad .top .w{font-family:var(--f-display);font-weight:600;font-size:.8rem;letter-spacing:-.03em}
+.pad .hl{font-family:var(--f-display);font-weight:500;letter-spacing:-.025em;line-height:1.15;font-size:clamp(.85rem,4.4cqw,1.15rem);text-wrap:balance;margin:0}
+.pad .ft{font-family:var(--f-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;opacity:.75}
+.on-dark{color:#EAF5F3}
+.on-dark .hl em{font-style:normal;color:#F6D08A}
+.on-light{color:#04191A}
+.on-light .hl em{font-style:normal;color:#0E7C74}
+
+/* ---------- prompt blocks ---------- */
+.prompt{border:1px solid var(--line);border-radius:12px;background:var(--surface-2);overflow:hidden}
+.prompt-h{
+  display:flex;align-items:center;gap:.6rem;padding:.5rem .75rem;border-bottom:1px solid var(--line);
+  background:var(--surface);
+}
+.prompt-h .t{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;color:var(--text-3)}
+.copy{
+  margin-inline-start:auto;font-family:var(--f-mono);font-size:.63rem;letter-spacing:.06em;
+  background:transparent;border:1px solid var(--line-strong);color:var(--text-2);
+  border-radius:6px;padding:.24rem .55rem;cursor:pointer;
+}
+.copy:hover{border-color:var(--accent);color:var(--accent)}
+.prompt pre{
+  margin:0;padding:.9rem 1rem;font-family:var(--f-mono);font-size:.76rem;line-height:1.72;
+  color:var(--text-2);white-space:pre-wrap;word-break:break-word;overflow-x:auto;
+}
+.prompt pre b{color:var(--accent);font-weight:500}
+.prompt pre i{color:var(--pulse);font-style:normal}
+
+/* ---------- misc ---------- */
+.note{
+  border-inline-start:2px solid var(--accent);padding:.15rem 0 .15rem 1rem;
+  color:var(--text-2);font-size:.92rem;
+}
+:root[data-lang="ar"] .note{padding:.15rem 1rem .15rem 0}
+.footer{
+  max-width:var(--maxw);margin:0 auto;padding:2.5rem 0 0;border-top:1px solid var(--line);
+  display:flex;gap:1rem;flex-wrap:wrap;align-items:center;color:var(--text-3);font-size:.82rem;
+}
+.footer .lk{margin-inline-end:auto}
+</style>
+<style>
+.hero-word .ar-text,.wm.ar,.glyphs.arlogo,.pad .w.ar{font-family:var(--f-display)}
+.brandline{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+</style>
+
+<!-- ============ SVG MARK LIBRARY ============ -->
+<svg width="0" height="0" style="position:absolute;visibility:hidden" aria-hidden="true" focusable="false">
+  <symbol id="m-nuqta" viewBox="0 0 132 116">
+    <circle cx="66" cy="12" r="8.5" fill="var(--mk2,#E5A93C)"/>
+    <path d="M16 48 C16 86 39 106 66 106 C93 106 116 86 116 48" fill="none"
+          stroke="var(--mk1,#0E7C74)" stroke-width="13" stroke-linecap="round"/>
+    <path d="M34 48 L44 48 L53 31 L66 68 L75 48 L98 48" fill="none"
+          stroke="var(--mk1,#0E7C74)" stroke-width="9.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="m-nuqta-min" viewBox="0 0 132 116">
+    <circle cx="66" cy="20" r="10" fill="var(--mk2,#E5A93C)"/>
+    <path d="M16 50 C16 88 39 108 66 108 C93 108 116 88 116 50" fill="none"
+          stroke="var(--mk1,#0E7C74)" stroke-width="14.5" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="m-cross" viewBox="0 0 128 120">
+    <rect x="54" y="12" width="20" height="96" rx="10" fill="var(--mk1,#0E7C74)"/>
+    <rect x="10" y="50" width="50" height="20" rx="10" fill="var(--mk1,#0E7C74)"/>
+    <path d="M76 60 L85 60 L93 37 L103 85 L111 60 L120 60" fill="none"
+          stroke="var(--mk1,#0E7C74)" stroke-width="11.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="64" cy="60" r="8.5" fill="var(--mk2,#E5A93C)"/>
+  </symbol>
+  <symbol id="m-halqa" viewBox="0 0 120 120">
+    <g fill="none" stroke="var(--mk1,#0E7C74)" stroke-width="9" stroke-linecap="round">
+      <path d="M75.7 21.1 A42 42 0 0 1 101.6 65.8"/>
+      <path d="M85.9 93.1 A42 42 0 0 1 34.1 93.1"/>
+      <path d="M18.4 65.8 A42 42 0 0 1 44.3 21.1"/>
+      <path d="M33 60 H45 L52 46 L61 76 L68 58 L73 60 H87" stroke-width="7" stroke-linejoin="round"/>
+    </g>
+    <circle cx="97.1" cy="79.7" r="10.5" fill="var(--mk1,#0E7C74)"/>
+    <circle cx="22.9" cy="79.7" r="10.5" fill="var(--mk1,#0E7C74)"/>
+    <circle cx="60" cy="18" r="10.5" fill="var(--mk2,#E5A93C)"/>
+  </symbol>
+  <symbol id="m-sada" viewBox="0 0 128 116">
+    <path d="M34 10 H94 A26 26 0 0 1 120 36 V60 A26 26 0 0 1 94 86 H62 L36 106 L40 86 H34 A26 26 0 0 1 8 60 V36 A26 26 0 0 1 34 10 Z"
+          fill="none" stroke="var(--mk1,#0E7C74)" stroke-width="11" stroke-linejoin="round"/>
+    <path d="M28 48 H40 L46 32 L54 66 L61 48 H72" fill="none"
+          stroke="var(--mk1,#0E7C74)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="94" cy="48" r="7" fill="var(--mk2,#E5A93C)"/>
+  </symbol>
+  <symbol id="m-meeqat" viewBox="0 0 120 120">
+    <rect x="32" y="6" width="11" height="24" rx="5.5" fill="var(--mk1,#0E7C74)"/>
+    <rect x="77" y="6" width="11" height="24" rx="5.5" fill="var(--mk1,#0E7C74)"/>
+    <rect x="10" y="20" width="100" height="92" rx="22" fill="none" stroke="var(--mk1,#0E7C74)" stroke-width="11"/>
+    <path d="M26 72 H40 L48 52 L58 88 L66 72 L77 87 L98 50" fill="none"
+          stroke="var(--mk2,#E5A93C)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="tb-mark"><svg viewBox="0 0 132 116"><use href="#m-nuqta-min"/></svg> Nabda</span>
+    <nav class="tb-nav" aria-label="Sections">
+      <a href="#s00">Strategy</a><a href="#s01">Logos</a><a href="#s02">Identity</a>
+      <a href="#s03">Color</a><a href="#s04">Type</a><a href="#s05">Rules</a>
+      <a href="#s06">Pulse</a><a href="#s07">Icons</a><a href="#s08">Web</a>
+      <a href="#s09">Landing</a><a href="#s10">Social</a><a href="#s11">Prompts</a>
+    </nav>
+    <div class="tb-tools">
+      <button class="tgl" id="langBtn" type="button" aria-pressed="false">عربي</button>
+      <button class="tgl" id="themeBtn" type="button">Theme</button>
+    </div>
+  </div>
+</div>
+
+<main>
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <canvas id="trace" aria-hidden="true"></canvas>
+  <div class="hero-in">
+    <span class="eyebrow"><span class="dot"></span> Brand System — v1.0 — Cairo</span>
+    <div class="hero-lockup">
+      <svg viewBox="0 0 132 116" style="--mk1:#8FD9CD;--mk2:#F6D08A"><use href="#m-nuqta"/></svg>
+      <span class="hero-word"><span class="en-only">nabda</span><span class="ar-only ar-text">نبضة</span></span>
+    </div>
+    <p class="hero-tag">
+      <span class="en-only">Your health starts with a <em>pulse</em>.</span>
+      <span class="ar-only ar-text">صحتك تبدأ بـ<em>نبضة</em>.</span>
+    </p>
+    <div class="hero-meta">
+      <span class="chip">Arabic-first · bilingual</span>
+      <span class="chip">Calm base · intelligent accent</span>
+      <span class="chip">Egypt &amp; Levant</span>
+      <span class="chip">5 marks · 1 system</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 00 STRATEGY ============ -->
+<section class="sec" id="s00">
+  <div class="sec-head">
+    <span class="sec-num">§00 — Strategy</span>
+    <h2>Before the logo, the argument</h2>
+    <p class="sec-sub">Nabda is not competing on features. In Egypt and the Levant, healthcare booking is won on one thing: <strong>does this feel like it will actually work?</strong> Every design decision below is downstream of that question.</p>
+  </div>
+
+  <div class="stack">
+    <div class="grid-2">
+      <div class="card">
+        <span class="lbl">The tension we are designing against</span>
+        <p class="small muted">Finding a doctor here still runs on WhatsApp screenshots, a receptionist who may or may not pick up, and a neighbour's recommendation. People are not short of options — they are short of <strong>certainty</strong>. The category's default look (stock photo of a smiling doctor, corporate blue, English-first) signals <em>foreign, expensive, probably not for me</em>.</p>
+        <p class="small muted" style="margin:0">So the brand's job is not to look advanced. It is to look <strong>certain</strong> — and then be surprisingly intelligent once you're inside.</p>
+      </div>
+      <div class="card">
+        <span class="lbl">Brand idea</span>
+        <h3 style="font-size:1.45rem">One beat. Then everything follows.</h3>
+        <p class="small muted">A pulse is the smallest possible proof that a system is alive. Nabda's whole promise compresses into that: <strong>one tap, one beat, and the machinery moves</strong> — the doctor is found, the slot is held, the reminder is sent, Pulse is awake at 2am.</p>
+        <p class="small muted" style="margin:0">Design consequence: the identity is built from a <strong>single beat</strong>, never a busy waveform. Restraint is the message.</p>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card-flat">
+        <span class="lbl">Positioning</span>
+        <p class="tiny muted" style="margin:0">For Arabic-speaking patients who need care they can trust and afford, Nabda is the healthcare platform that turns finding, booking and remembering a doctor's visit into a single conversation — because Pulse does the work you'd otherwise do by phone.</p>
+      </div>
+      <div class="card-flat">
+        <span class="lbl">Personality — the dial</span>
+        <p class="tiny muted" style="margin:0"><strong>Calm</strong> over energetic · <strong>plain</strong> over clever · <strong>warm</strong> over clinical · <strong>certain</strong> over aspirational · <strong>quietly modern</strong> over futuristic. Nabda is the composed nurse at the desk who already has your file open, not the startup founder on stage.</p>
+      </div>
+      <div class="card-flat">
+        <span class="lbl">What we refuse</span>
+        <p class="tiny muted" style="margin:0">No stethoscope-around-neck stock photography. No corporate cobalt blue. No English-first hierarchy. No AI sparkles. No urgency theatre — health anxiety is not a growth lever.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">The two registers — this is the whole system in one line</span>
+      <div class="grid-2" style="gap:1.1rem;margin-top:.4rem">
+        <div>
+          <h4 style="color:var(--accent)">Register A — The Platform</h4>
+          <p class="small muted" style="margin:0">Faience teal, deep ink, generous white space, zero motion beyond a fade. This is where booking happens, and booking must feel like paperwork that went right. <strong>Teal never glows.</strong></p>
+        </div>
+        <div>
+          <h4 style="color:var(--pulse)">Register B — Pulse, the intelligence layer</h4>
+          <p class="small muted" style="margin:0">Gold. Luminous, breathing, always the only thing on screen that emits light. Gold is <strong>reserved exclusively for Pulse</strong> — if it glows, it is thinking. Users learn this in one session without being told.</p>
+        </div>
+      </div>
+    </div>
+    <p class="note">This gold-means-intelligence rule is the single most valuable asset in this document. Protect it. The moment gold is used for a promo banner or a "Book now" button, the system loses its only piece of learned meaning.</p>
+  </div>
+</section>
+<!-- ============ 01 LOGO CONCEPTS ============ -->
+<section class="sec" id="s01">
+  <div class="sec-head">
+    <span class="sec-num">§01 — Logo system</span>
+    <h2>Five marks, five arguments</h2>
+    <p class="sec-sub">Each concept is a different answer to "what is Nabda, in one shape?" They are not variations — they are competing theories. One is recommended; the others are live options with honest trade-offs stated.</p>
+  </div>
+
+  <div class="stack" style="--step:2.2rem">
+
+  <!-- ---- 01 NUQTA ---- -->
+  <article class="concept">
+    <div class="concept-top">
+      <div class="stage"><svg viewBox="0 0 132 116"><use href="#m-nuqta"/></svg></div>
+      <div class="concept-body">
+        <div class="concept-name">
+          <span class="n">01</span><h3>Nuqta</h3><span class="arname">النقطة</span>
+          <span class="pill rec">Recommended</span>
+        </div>
+        <p class="small muted" style="margin:0">The Arabic letter <strong>ن</strong> — first letter of نبضة — drawn as a bowl with a heartbeat laid across its mouth, and the letter's own dot (<em>nuqta</em>) floating above in gold. One glyph, read two ways: an Arabic reader sees a letter, a Latin reader sees a pulse in a cradle. Nobody has to be taught it.</p>
+        <dl class="kv">
+          <dt>Reads as</dt><dd>ن · a heartbeat · a cupped hand · a smile</dd>
+          <dt>The idea</dt><dd>The dot is the patient. The bowl is the system holding them. The beat is the proof it's working.</dd>
+          <dt>Strength</dt><dd>Genuinely bilingual — not a Latin mark with Arabic bolted on. Holds together down to 24px and reduces cleanly below that. The gold dot pre-installs the Pulse rule before users ever meet Pulse.</dd>
+          <dt>Watch-out</dt><dd>The bowl must stay wide and shallow. Deepen it and it becomes a bowl of soup; narrow it and the ن disappears.</dd>
+          <dt>Best for</dt><dd>Primary mark. App icon, favicon, WhatsApp avatar, clinic-door sticker.</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="lockups">
+      <div class="lock"><div class="lk"><svg viewBox="0 0 132 116"><use href="#m-nuqta"/></svg><span class="wm">nabda</span></div><span class="cap">Horizontal · Latin</span></div>
+      <div class="lock"><div class="lk"><svg viewBox="0 0 132 116"><use href="#m-nuqta"/></svg><span class="wm ar ar-text">نبضة</span></div><span class="cap">Horizontal · Arabic</span></div>
+      <div class="lock"><div class="lk stackv"><svg viewBox="0 0 132 116"><use href="#m-nuqta"/></svg><span class="wm" style="font-size:1.1rem">nabda</span></div><span class="cap">Stacked</span></div>
+      <div class="lock" style="background:#04191A"><div class="lk"><svg viewBox="0 0 132 116" style="--mk1:#8FD9CD;--mk2:#F6D08A"><use href="#m-nuqta"/></svg><span class="wm" style="color:#EAF5F3">nabda</span></div><span class="cap" style="color:#8AA8A4">Reversed on ink</span></div>
+      <div class="lock"><div class="lk"><svg viewBox="0 0 132 116"><use href="#m-nuqta-min"/></svg><span class="wm">nabda</span></div><span class="cap">Reduced mark · under 24px</span></div>
+    </div>
+    <div style="padding:1.2rem 1.4rem 1.4rem">
+      <div class="prompt">
+        <div class="prompt-h"><span class="t">AI image prompt — 01 Nuqta</span><button class="copy" type="button">Copy</button></div>
+<pre><b>CONCEPT:</b> Logo mark for "Nabda", an Arabic healthcare booking platform. A single heartbeat cradled inside the Arabic letter noon (ن).
+<b>SUBJECT:</b> One abstract geometric symbol on a plain field. A wide shallow U-shaped bowl drawn as a single thick rounded stroke; a horizontal line crosses the open top of the bowl and rises into exactly one sharp ECG spike at its centre; a single solid circular dot floats above, centred over the spike.
+<b>STYLE:</b> Flat vector logo design, corporate identity, geometric minimalism, mathematically constructed, uniform stroke weight, round terminals. Swiss/International-style precision with an Arabic calligraphic reference. No gradients, no bevels, no 3D.
+<b>COMPOSITION:</b> Centred, symmetrical, generous negative space, mark occupies 55% of frame, clean isolated presentation on solid background, front-on orthographic view.
+<b>COLORS:</b> Stroke in deep faience teal <i>#0E7C74</i>; the floating dot in warm gold <i>#E5A93C</i>; background off-white <i>#F4F8F7</i>. Strictly two ink colours plus background.
+<b>LIGHTING:</b> None — flat colour, no shadow, no glow, no depth cues.
+<b>MOOD:</b> Calm, trustworthy, medical, quietly premium, human. Reassuring rather than energetic.
+<b>DETAILS:</b> Stroke weight consistent throughout; the ECG spike is the only asymmetric event; dot diameter roughly 0.65× the stroke length unit; all corners rounded; optical balance over mathematical balance.
+<b>FORMAT:</b> Square 1:1, 2048×2048, transparent-ready, vector-clean edges, logo presentation sheet.
+<b>QUALITY:</b> Award-winning brand identity, Behance/Dribbble portfolio quality, pixel-crisp, production-ready, scalable to 16px.
+<b>NEGATIVE PROMPT:</b> text, letters, typography, wordmark, watermark, signature, stethoscope, human figure, realistic heart, anatomical heart, cross, caduceus, gradient, drop shadow, glow, bevel, emboss, 3D render, photorealism, clip art, busy detail, multiple waveform peaks, sparkles, stars, mockup, paper texture, drop of blood, red colour.</pre>
+      </div>
+    </div>
+  </article>
+
+  <!-- ---- 02 MUSALLAB ---- -->
+  <article class="concept">
+    <div class="concept-top">
+      <div class="stage"><svg viewBox="0 0 128 120"><use href="#m-cross"/></svg></div>
+      <div class="concept-body">
+        <div class="concept-name">
+          <span class="n">02</span><h3>Musallab</h3><span class="arname">المُصلَّب</span>
+          <span class="pill">Institutional option</span>
+        </div>
+        <p class="small muted" style="margin:0">A healthcare cross whose right arm has left the building — it exits as a heartbeat travelling outward. Care that doesn't sit in a clinic waiting to be visited, but is transmitted to you. The gold nucleus at the crossing is the intelligence sitting at the centre of the institution.</p>
+        <dl class="kv">
+          <dt>Reads as</dt><dd>Medical cross · a signal leaving a tower · a pulse monitor</dd>
+          <dt>The idea</dt><dd>Category legitimacy (the cross) plus the one thing incumbents don't have (it moves).</dd>
+          <dt>Strength</dt><dd>Instantly legible as healthcare in a market where that matters. Strong on signage, pharmacy partnerships, insurance co-branding.</dd>
+          <dt>Watch-out</dt><dd>The cross is the most crowded symbol in the category, and in some Levantine contexts it carries confessional readings. The asymmetric arm is what saves it — never symmetrise it.</dd>
+          <dt>Best for</dt><dd>B2B: clinic dashboard, contracts, partner badges, physical signage.</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="lockups">
+      <div class="lock"><div class="lk"><svg viewBox="0 0 128 120"><use href="#m-cross"/></svg><span class="wm">nabda</span></div><span class="cap">Horizontal · Latin</span></div>
+      <div class="lock"><div class="lk"><svg viewBox="0 0 128 120"><use href="#m-cross"/></svg><span class="wm ar ar-text">نبضة</span></div><span class="cap">Horizontal · Arabic</span></div>
+      <div class="lock"><div class="lk stackv"><svg viewBox="0 0 128 120"><use href="#m-cross"/></svg><span class="wm" style="font-size:1.1rem">nabda</span></div><span class="cap">Stacked</span></div>
+      <div class="lock" style="background:#04191A"><div class="lk"><svg viewBox="0 0 128 120" style="--mk1:#8FD9CD;--mk2:#F6D08A"><use href="#m-cross"/></svg><span class="wm" style="color:#EAF5F3">nabda</span></div><span class="cap" style="color:#8AA8A4">Reversed on ink</span></div>
+    </div>
+    <div style="padding:1.2rem 1.4rem 1.4rem">
+      <div class="prompt">
+        <div class="prompt-h"><span class="t">AI image prompt — 02 Musallab</span><button class="copy" type="button">Copy</button></div>
+<pre><b>CONCEPT:</b> Logo mark for "Nabda", a healthcare platform. A medical cross whose right arm dissolves into a heartbeat signal travelling outward.
+<b>SUBJECT:</b> One abstract symbol. A vertical rounded bar and a shorter left horizontal rounded bar meet to form three arms of a plus sign; the fourth (right) arm is replaced by a continuous ECG line with a single downward-then-upward deflection that exits the frame edge as a flat baseline. A solid circular dot sits exactly at the crossing point.
+<b>STYLE:</b> Flat vector logo, geometric minimalism, uniform stroke weight, fully rounded terminals, constructed on a strict grid. Institutional, medical, modern. No gradients, no 3D.
+<b>COMPOSITION:</b> Centred with deliberate rightward asymmetry, generous negative space, mark fills 60% of frame, front-on orthographic, isolated on solid background.
+<b>COLORS:</b> Bars and signal line in deep faience teal <i>#0E7C74</i>; the nucleus dot in warm gold <i>#E5A93C</i>; background off-white <i>#F4F8F7</i>. Two ink colours only.
+<b>LIGHTING:</b> None — flat colour, no shadow, no glow.
+<b>MOOD:</b> Institutional trust, clinical competence, forward motion. Serious but not cold.
+<b>DETAILS:</b> Bar corner radius equals half the bar width; the ECG line matches the bar width exactly so the arm reads as continuous; only one deflection in the signal; the dot is optically centred on the crossing, not mathematically.
+<b>FORMAT:</b> Square 1:1, 2048×2048, transparent-ready, vector-clean edges.
+<b>QUALITY:</b> Award-winning identity design, production-ready, crisp at all scales, portfolio presentation.
+<b>NEGATIVE PROMPT:</b> text, letters, wordmark, watermark, red cross, Red Cross emblem, religious cross, crucifix, Swiss flag, pharmacy green cross, stethoscope, heart shape, human figure, gradient, glow, shadow, bevel, 3D, photorealism, clip art, multiple ECG peaks, sparkles, busy detail, red colour, plus symbol with four equal arms.</pre>
+      </div>
+    </div>
+  </article>
+  <!-- ---- 03 HALQA ---- -->
+  <article class="concept">
+    <div class="concept-top">
+      <div class="stage"><svg viewBox="0 0 120 120"><use href="#m-halqa"/></svg></div>
+      <div class="concept-body">
+        <div class="concept-name">
+          <span class="n">03</span><h3>Halqa</h3><span class="arname">الحلقة</span>
+          <span class="pill">Platform / network option</span>
+        </div>
+        <p class="small muted" style="margin:0">Three nodes on a broken ring — patient, doctor, clinic — with a shared heartbeat held in the centre. The ring is deliberately open at each node: this is a network you can join, not a closed institution. The gold node at twelve o'clock is Pulse, sitting in the circle rather than above it.</p>
+        <dl class="kv">
+          <dt>Reads as</dt><dd>A network · a circle of care · three people around a table · a monitor</dd>
+          <dt>The idea</dt><dd>Nabda's real product is the connection, not any one party. Nobody at the centre — the heartbeat is.</dd>
+          <dt>Strength</dt><dd>The clearest story for investors and for multi-clinic expansion. Rotates well in loading states.</dd>
+          <dt>Watch-out</dt><dd>Most detail of the five. The inner pulse disappears below ~32px — ship a simplified three-node variant for favicons.</dd>
+          <dt>Best for</dt><dd>Corporate / investor identity, partner ecosystem, conference and pitch material.</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="lockups">
+      <div class="lock"><div class="lk"><svg viewBox="0 0 120 120"><use href="#m-halqa"/></svg><span class="wm">nabda</span></div><span class="cap">Horizontal · Latin</span></div>
+      <div class="lock"><div class="lk"><svg viewBox="0 0 120 120"><use href="#m-halqa"/></svg><span class="wm ar ar-text">نبضة</span></div><span class="cap">Horizontal · Arabic</span></div>
+      <div class="lock"><div class="lk stackv"><svg viewBox="0 0 120 120"><use href="#m-halqa"/></svg><span class="wm" style="font-size:1.1rem">nabda</span></div><span class="cap">Stacked</span></div>
+      <div class="lock" style="background:#04191A"><div class="lk"><svg viewBox="0 0 120 120" style="--mk1:#8FD9CD;--mk2:#F6D08A"><use href="#m-halqa"/></svg><span class="wm" style="color:#EAF5F3">nabda</span></div><span class="cap" style="color:#8AA8A4">Reversed on ink</span></div>
+    </div>
+    <div style="padding:1.2rem 1.4rem 1.4rem">
+      <div class="prompt">
+        <div class="prompt-h"><span class="t">AI image prompt — 03 Halqa</span><button class="copy" type="button">Copy</button></div>
+<pre><b>CONCEPT:</b> Logo mark for "Nabda", a healthcare network platform. Three connected nodes around a shared heartbeat.
+<b>SUBJECT:</b> One abstract symbol. A circle drawn as three equal arc segments separated by three gaps; a solid filled dot sits centred in each gap at 12, 4 and 8 o'clock; inside the ring, a small horizontal ECG line with one peak floats at the exact centre.
+<b>STYLE:</b> Flat vector logo, geometric minimalism, compass-and-ruler construction, uniform stroke weight, round terminals, perfectly circular. Modern network/systems iconography. No gradients, no 3D.
+<b>COMPOSITION:</b> Perfectly centred, three-fold rotational symmetry, mark fills 62% of frame, generous negative space, front-on orthographic, isolated on solid background.
+<b>COLORS:</b> Arcs and inner heartbeat and two nodes in deep faience teal <i>#0E7C74</i>; the top node in warm gold <i>#E5A93C</i>; background off-white <i>#F4F8F7</i>.
+<b>LIGHTING:</b> None — flat colour, no shadow, no glow.
+<b>MOOD:</b> Connected, collaborative, systemic, calm. Infrastructure rather than app.
+<b>DETAILS:</b> Node diameter slightly larger than arc stroke weight so nodes read as terminals, not thickenings; arc gaps optically equal; inner pulse at roughly 40% of ring diameter with exactly one peak; no connecting spokes to the centre.
+<b>FORMAT:</b> Square 1:1, 2048×2048, transparent-ready, vector-clean edges.
+<b>QUALITY:</b> Award-winning brand identity, production-ready vector, crisp geometry, portfolio presentation.
+<b>NEGATIVE PROMPT:</b> text, letters, wordmark, watermark, atom, orbit, molecule, gear, loading spinner, recycling symbol, peace sign, network mesh with many lines, human figures holding hands, gradient, glow, shadow, 3D, photorealism, clip art, busy detail, sparkles, red colour.</pre>
+      </div>
+    </div>
+  </article>
+
+  <!-- ---- 04 SADA ---- -->
+  <article class="concept">
+    <div class="concept-top">
+      <div class="stage"><svg viewBox="0 0 128 116"><use href="#m-sada"/></svg></div>
+      <div class="concept-body">
+        <div class="concept-name">
+          <span class="n">04</span><h3>Sada</h3><span class="arname">الصدى</span>
+          <span class="pill">AI-forward option</span>
+        </div>
+        <p class="small muted" style="margin:0">A conversation bubble containing a heartbeat that resolves into a single gold point of attention. This is the mark for a company that believes the booking form is dead and the chat is the product. The gold dot is Pulse listening — and it is the same dot that becomes the avatar in §06.</p>
+        <dl class="kv">
+          <dt>Reads as</dt><dd>A message · a voice note · someone listening · vitals on a screen</dd>
+          <dt>The idea</dt><dd>Health starts when someone finally answers. Nabda answers at 2am.</dd>
+          <dt>Strength</dt><dd>Perfect fit for a WhatsApp-first market. The mark and the AI avatar are the same object, which is rare and very efficient.</dd>
+          <dt>Watch-out</dt><dd>Ties the entire brand to the AI. If Pulse is ever de-emphasised, the logo becomes a lie. Also the most likely of the five to date.</dd>
+          <dt>Best for</dt><dd>Pulse sub-brand mark, chat entry points, WhatsApp Business profile, voice-channel branding.</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="lockups">
+      <div class="lock"><div class="lk"><svg viewBox="0 0 128 116"><use href="#m-sada"/></svg><span class="wm">nabda</span></div><span class="cap">Horizontal · Latin</span></div>
+      <div class="lock"><div class="lk"><svg viewBox="0 0 128 116"><use href="#m-sada"/></svg><span class="wm ar ar-text">نبضة</span></div><span class="cap">Horizontal · Arabic</span></div>
+      <div class="lock"><div class="lk stackv"><svg viewBox="0 0 128 116"><use href="#m-sada"/></svg><span class="wm" style="font-size:1.1rem">Pulse</span></div><span class="cap">As the Pulse mark</span></div>
+      <div class="lock" style="background:#04191A"><div class="lk"><svg viewBox="0 0 128 116" style="--mk1:#8FD9CD;--mk2:#F6D08A"><use href="#m-sada"/></svg><span class="wm" style="color:#EAF5F3">nabda</span></div><span class="cap" style="color:#8AA8A4">Reversed on ink</span></div>
+    </div>
+    <div style="padding:1.2rem 1.4rem 1.4rem">
+      <div class="prompt">
+        <div class="prompt-h"><span class="t">AI image prompt — 04 Sada</span><button class="copy" type="button">Copy</button></div>
+<pre><b>CONCEPT:</b> Logo mark for "Pulse", the AI health assistant inside the Nabda platform. A chat bubble containing a heartbeat that ends in a single point of attention.
+<b>SUBJECT:</b> One abstract symbol. A rounded-rectangle speech bubble drawn as an open outline with a short angled tail at the lower left; inside it, a horizontal ECG line with exactly one peak on the left half, and a single solid filled dot on the right half at the same optical height as the line.
+<b>STYLE:</b> Flat vector logo, geometric minimalism, uniform outline weight, generous corner radius, round terminals. Conversational software iconography with medical precision. No gradients, no 3D.
+<b>COMPOSITION:</b> Centred with the tail creating deliberate lower-left weight, mark fills 62% of frame, generous negative space, front-on orthographic, isolated on solid background.
+<b>COLORS:</b> Bubble outline and heartbeat in deep faience teal <i>#0E7C74</i>; the single dot in warm gold <i>#E5A93C</i>; background off-white <i>#F4F8F7</i>.
+<b>LIGHTING:</b> None in the logo lockup — flat colour only.
+<b>MOOD:</b> Attentive, available, intelligent, calm. Someone is awake on the other side.
+<b>DETAILS:</b> Bubble corner radius roughly one third of bubble height; tail is a clean angled wedge, not a curl; the heartbeat line stops cleanly before the dot with a clear gap so the dot reads as a separate answer, not a terminal; exactly one peak.
+<b>FORMAT:</b> Square 1:1, 2048×2048, transparent-ready, vector-clean edges.
+<b>QUALITY:</b> Award-winning identity, production-ready vector, crisp at 16px, portfolio presentation.
+<b>NEGATIVE PROMPT:</b> text, letters, wordmark, watermark, three ellipsis dots, robot, robot face, android, chatbot mascot, eyes, smiley, sparkle, star, magic wand, neural network diagram, gradient, glow, shadow, 3D, photorealism, clip art, busy detail, multiple bubbles, red colour.</pre>
+      </div>
+    </div>
+  </article>
+
+  <!-- ---- 05 MEEQAT ---- -->
+  <article class="concept">
+    <div class="concept-top">
+      <div class="stage"><svg viewBox="0 0 120 120"><use href="#m-meeqat"/></svg></div>
+      <div class="concept-body">
+        <div class="concept-name">
+          <span class="n">05</span><h3>Meeqat</h3><span class="arname">الميقات</span>
+          <span class="pill">Product / utility option</span>
+        </div>
+        <p class="small muted" style="margin:0">An appointment card with two beats and a confirmation stroke drawn in one continuous line — the heartbeat literally resolves into a checkmark. The most functional of the five: it says exactly what the product does, which in a low-trust category is not a weakness.</p>
+        <dl class="kv">
+          <dt>Reads as</dt><dd>A calendar · a booking confirmed · a monitor reading normal</dd>
+          <dt>The idea</dt><dd>The moment of relief. Two beats of uncertainty, then the tick.</dd>
+          <dt>Strength</dt><dd>Zero ambiguity about the category. Excellent in SMS/WhatsApp confirmation contexts and app-store listings where you get one glance.</dd>
+          <dt>Watch-out</dt><dd>Least ownable — checkmarks are commodity. And gold on white is the weakest contrast pairing in this system; use the mono variant below 32px.</dd>
+          <dt>Best for</dt><dd>Booking confirmations, notification icons, calendar integrations, receipt and reminder templates.</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="lockups">
+      <div class="lock"><div class="lk"><svg viewBox="0 0 120 120"><use href="#m-meeqat"/></svg><span class="wm">nabda</span></div><span class="cap">Horizontal · Latin</span></div>
+      <div class="lock"><div class="lk"><svg viewBox="0 0 120 120"><use href="#m-meeqat"/></svg><span class="wm ar ar-text">نبضة</span></div><span class="cap">Horizontal · Arabic</span></div>
+      <div class="lock"><div class="lk stackv"><svg viewBox="0 0 120 120" style="--mk2:#0E7C74"><use href="#m-meeqat"/></svg><span class="wm" style="font-size:1.1rem">nabda</span></div><span class="cap">Mono variant · small sizes</span></div>
+      <div class="lock" style="background:#04191A"><div class="lk"><svg viewBox="0 0 120 120" style="--mk1:#8FD9CD;--mk2:#F6D08A"><use href="#m-meeqat"/></svg><span class="wm" style="color:#EAF5F3">nabda</span></div><span class="cap" style="color:#8AA8A4">Reversed on ink</span></div>
+    </div>
+    <div style="padding:1.2rem 1.4rem 1.4rem">
+      <div class="prompt">
+        <div class="prompt-h"><span class="t">AI image prompt — 05 Meeqat</span><button class="copy" type="button">Copy</button></div>
+<pre><b>CONCEPT:</b> Logo mark for "Nabda", a doctor-appointment booking platform. A calendar card in which a heartbeat resolves into a checkmark in one unbroken stroke.
+<b>SUBJECT:</b> One abstract symbol. A rounded-square card drawn as an open outline with two small vertical rounded tabs rising from its top edge like calendar binding rings; inside the card, a single continuous line runs left to right: flat baseline, two ECG peaks, then a rising checkmark that finishes in the upper right.
+<b>STYLE:</b> Flat vector logo, geometric minimalism, uniform stroke weight, round terminals, generous corner radius, grid-constructed. Clean product/utility iconography. No gradients, no 3D.
+<b>COMPOSITION:</b> Centred, mark fills 62% of frame, the internal line rising left-to-right to create optical lift, generous negative space, front-on orthographic, isolated on solid background.
+<b>COLORS:</b> Card outline and tabs in deep faience teal <i>#0E7C74</i>; the continuous heartbeat-to-check line in warm gold <i>#E5A93C</i>; background off-white <i>#F4F8F7</i>.
+<b>LIGHTING:</b> None — flat colour, no shadow, no glow.
+<b>MOOD:</b> Relief, confirmation, competence, order. The feeling of a thing being handled.
+<b>DETAILS:</b> The heartbeat and the checkmark are one path with no break; exactly two peaks before the tick; card corner radius roughly one fifth of card width; tabs sit outside the card outline, not overlapping it.
+<b>FORMAT:</b> Square 1:1, 2048×2048, transparent-ready, vector-clean edges.
+<b>QUALITY:</b> Award-winning identity, production-ready vector, crisp at small sizes, portfolio presentation.
+<b>NEGATIVE PROMPT:</b> text, letters, numbers, dates, calendar grid, day cells, wordmark, watermark, clock, clipboard, stethoscope, green tick badge, shield, gradient, glow, shadow, 3D, photorealism, clip art, busy detail, many peaks, sparkles, red colour.</pre>
+      </div>
+    </div>
+  </article>
+
+  </div>
+
+  <div class="card" style="margin-top:2.2rem">
+    <span class="lbl">The recommendation, stated plainly</span>
+    <p class="small muted" style="margin:0 0 .7rem"><strong>Ship 01 Nuqta as the primary mark and 04 Sada as the Pulse sub-mark.</strong> Together they cover the two registers from §00 without inventing a second visual language: Nuqta is calm and letter-derived, Sada is conversational and carries the same gold dot. A user who sees the gold dot in the app icon and then meets it again in the chat avatar has learned the system without a single line of onboarding copy.</p>
+    <p class="small muted" style="margin:0">Hold 02 Musallab in reserve for physical signage and insurance partnerships, where category legibility beats distinctiveness. Use 03 Halqa for the deck. Retire 05 Meeqat to notification iconography — it is a good icon and an unremarkable logo.</p>
+  </div>
+</section>
+<!-- ============ 02 VISUAL IDENTITY ============ -->
+<section class="sec" id="s02">
+  <div class="sec-head">
+    <span class="sec-num">§02 — Visual identity</span>
+    <h2>Construction, clear space, and the one motif</h2>
+    <p class="sec-sub">The identity has exactly one repeating device beyond the logo. Systems fail when they have five. Everything below governs the recommended mark, 01 Nuqta.</p>
+  </div>
+
+  <div class="stack">
+    <div class="grid-2">
+      <div class="card">
+        <span class="lbl">Construction — everything derives from X</span>
+        <svg viewBox="0 0 220 186" style="width:100%;height:auto;display:block;margin:.4rem 0 .8rem" role="img" aria-label="Construction diagram: the mark on a modular grid with clear space equal to one X on every side">
+          <defs><pattern id="g8" width="11" height="11" patternUnits="userSpaceOnUse">
+            <path d="M11 0 H0 V11" fill="none" stroke="var(--line)" stroke-width="1"/></pattern></defs>
+          <rect x="0" y="0" width="220" height="186" fill="url(#g8)"/>
+          <rect x="37.3" y="21.9" width="131.4" height="127.9" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="5 4" opacity=".85"/>
+          <g transform="translate(44,34)" style="--mk1:var(--accent);--mk2:var(--pulse-solid)">
+            <use href="#m-nuqta" width="118" height="103.7"/>
+          </g>
+          <g stroke="var(--pulse-solid)" stroke-width="1.3">
+            <path d="M25 21.9 H33"/><path d="M25 37.1 H33"/><path d="M29 21.9 V37.1"/>
+          </g>
+          <text x="15" y="33" fill="var(--pulse)" font-family="IBM Plex Mono, monospace" font-size="9">X</text>
+          <g fill="var(--text-3)" font-family="IBM Plex Mono, monospace" font-size="7.4" letter-spacing=".07em">
+            <text x="37" y="14">CLEAR SPACE = 1X ON ALL SIDES</text>
+            <text x="37" y="168">X = THE GOLD DOT&#39;S DIAMETER</text>
+          </g>
+        </svg>
+        <p class="tiny muted" style="margin:0">The gold dot's diameter is the module. Bowl stroke = 0.76X. Bowl width = 5.9X. Cap height of the wordmark = 2.1X. Wordmark sits at 1X from the mark. Nothing in the identity is measured in pixels — only in X.</p><p class="tiny muted" style="margin:.6rem 0 0"><strong>Below 24px the beat is dropped</strong> and the mark reduces to the bowl and the dot — the pure ن. The heartbeat is carried by the interval motif instead. Never shrink the full mark past the point where the spike closes up; a muddy logo is worse than a simplified one.</p>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <span class="lbl">Minimum sizes</span>
+          <div class="tw"><table>
+            <tr><th>Context</th><th>Minimum</th><th>Variant</th></tr>
+            <tr><td>App icon / favicon</td><td class="num-col">16 px</td><td><strong>Reduced mark</strong> — bowl + dot, no beat</td></tr>
+            <tr><td>Mobile UI header</td><td class="num-col">24 px</td><td>Reduced mark + Arabic wordmark</td></tr>
+            <tr><td>Web header</td><td class="num-col">28 px</td><td>Full horizontal lockup</td></tr>
+            <tr><td>Print / collateral</td><td class="num-col">8 mm</td><td>Full lockup, two-colour</td></tr>
+            <tr><td>Clinic signage</td><td class="num-col">60 mm</td><td>Stacked, reversed on ink</td></tr>
+          </table></div>
+        </div>
+        <div class="card">
+          <span class="lbl">The one motif — "the interval"</span>
+          <svg viewBox="0 0 320 44" style="width:100%;height:auto;margin:.3rem 0 .6rem" role="img" aria-label="The interval motif: a flat baseline with a single beat">
+            <path d="M4 26 H96 L104 26 L112 10 L124 40 L132 26 H316" fill="none" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="112" cy="10" r="0" fill="none"/>
+          </svg>
+          <p class="tiny muted" style="margin:0">A long flat line with <strong>one</strong> beat, never a repeating waveform. It runs as a hairline divider between sections, along the bottom of the app header, and across the top of email templates. The flatness is the point — calm, interrupted once. A repeating ECG reads as an emergency room.</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <span class="lbl">Misuse — each of these has been seen in a real health-tech brand</span>
+      <div class="grid-3" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+        <div class="card" style="text-align:center;padding:1rem">
+          <svg viewBox="0 0 132 116" style="width:64px;transform:scaleX(1.42)"><use href="#m-nuqta"/></svg>
+          <p class="tiny" style="margin:.7rem 0 0;color:var(--danger)">Never stretch or condense. Scale proportionally only.</p>
+        </div>
+        <div class="card" style="text-align:center;padding:1rem">
+          <svg viewBox="0 0 132 116" style="width:64px;--mk1:#8E44AD;--mk2:#E74C3C"><use href="#m-nuqta"/></svg>
+          <p class="tiny" style="margin:.7rem 0 0;color:var(--danger)">Never recolour outside the palette. Gold is Pulse; nothing else glows.</p>
+        </div>
+        <div class="card" style="text-align:center;padding:1rem">
+          <svg viewBox="0 0 132 116" style="width:64px;filter:drop-shadow(0 6px 4px rgba(0,0,0,.45))"><use href="#m-nuqta"/></svg>
+          <p class="tiny" style="margin:.7rem 0 0;color:var(--danger)">No shadows, bevels, outlines or 3D. The mark is flat, always.</p>
+        </div>
+        <div class="card" style="text-align:center;padding:1rem">
+          <svg viewBox="0 0 132 116" style="width:64px;transform:rotate(-14deg)"><use href="#m-nuqta"/></svg>
+          <p class="tiny" style="margin:.7rem 0 0;color:var(--danger)">Never rotate. The bowl must sit level or the ن stops being a ن.</p>
+        </div>
+        <div class="card" style="text-align:center;padding:1rem;background:linear-gradient(135deg,#7ab8ff,#c9a0ff)">
+          <svg viewBox="0 0 132 116" style="width:64px;--mk1:#fff;--mk2:#fff"><use href="#m-nuqta"/></svg>
+          <p class="tiny" style="margin:.7rem 0 0;color:#7a1f0c">Never place on a busy or off-palette background. Use ink, paper or teal.</p>
+        </div>
+        <div class="card" style="text-align:center;padding:1rem">
+          <div class="lk" style="justify-content:center"><svg viewBox="0 0 132 116" style="width:34px"><use href="#m-nuqta"/></svg><span class="wm" style="font-family:Georgia,serif;font-size:1.3rem">nabda</span></div>
+          <p class="tiny" style="margin:.7rem 0 0;color:var(--danger)">Never reset the wordmark. It is a fixed asset, not live text.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ============ 03 COLOR ============ -->
+<section class="sec" id="s03">
+  <div class="sec-head">
+    <span class="sec-num">§03 — Color</span>
+    <h2>Faience, gold, and almost nothing else</h2>
+    <p class="sec-sub">The palette is pulled from Egyptian faience inlay — turquoise glaze set against gold, lapis and carnelian. It gives Nabda a medical blue-green that is regionally rooted rather than borrowed from Silicon Valley, and it hands us gold as a warm intelligence colour that no competitor is using.</p>
+  </div>
+
+  <div class="stack">
+    <div>
+      <span class="lbl">Core — the brand lives here</span>
+      <div class="swatches">
+        <div class="sw"><div class="chipc" style="background:#0E7C74;color:#fff"><span>PRIMARY</span></div>
+          <div class="meta"><span class="nm">Nabda Teal</span><span class="hex">#0E7C74</span><span class="use">Buttons, links, active states, the mark. The colour people will call "the Nabda green".</span></div></div>
+        <div class="sw"><div class="chipc" style="background:#063A38;color:#BFE3DC"><span>DEPTH</span></div>
+          <div class="meta"><span class="nm">Deep Pulse</span><span class="hex">#063A38</span><span class="use">Dark surfaces, headings on light, footer, doctor-profile headers.</span></div></div>
+        <div class="sw"><div class="chipc" style="background:#04191A;color:#8FD9CD"><span>GROUND</span></div>
+          <div class="meta"><span class="nm">Ink</span><span class="hex">#04191A</span><span class="use">Body text on light. Dark-mode ground. Teal-biased, never neutral black.</span></div></div>
+        <div class="sw"><div class="chipc" style="background:#3FB6A8;color:#04191A"><span>ACCENT</span></div>
+          <div class="meta"><span class="nm">Faience</span><span class="hex">#3FB6A8</span><span class="use">Dark-mode primary, illustration, availability indicators.</span></div></div>
+      </div>
+    </div>
+
+    <div>
+      <span class="lbl">Intelligence — Pulse only, no exceptions</span>
+      <div class="swatches">
+        <div class="sw" style="border-color:var(--pulse-solid)"><div class="chipc" style="background:#E5A93C;color:#3A2606"><span>PULSE</span></div>
+          <div class="meta"><span class="nm">Pulse Gold</span><span class="hex">#E5A93C</span><span class="use">The AI avatar, AI-authored suggestions, the nuqta in the mark. Nothing else.</span></div></div>
+        <div class="sw" style="border-color:var(--pulse-solid)"><div class="chipc" style="background:#F6D08A;color:#3A2606"><span>GLOW</span></div>
+          <div class="meta"><span class="nm">Gold Glow</span><span class="hex">#F6D08A</span><span class="use">Pulse highlights and text on ink grounds. Also the ripple colour.</span></div></div>
+        <div class="sw"><div class="chipc" style="background:#8A5E10;color:#fff"><span>TEXT-SAFE</span></div>
+          <div class="meta"><span class="nm">Gold Deep</span><span class="hex">#8A5E10</span><span class="use">The only gold permitted for text on light backgrounds. #E5A93C fails contrast there.</span></div></div>
+      </div>
+    </div>
+
+    <div>
+      <span class="lbl">Support &amp; semantic</span>
+      <div class="swatches">
+        <div class="sw"><div class="chipc" style="background:#8FD9CD;color:#04191A"><span>TINT</span></div>
+          <div class="meta"><span class="nm">Mint</span><span class="hex">#8FD9CD</span><span class="use">Illustration, empty states, selected chips, dark-mode secondary text accents.</span></div></div>
+        <div class="sw"><div class="chipc" style="background:#E3EEEC;color:#04191A"><span>SURFACE</span></div>
+          <div class="meta"><span class="nm">Mist</span><span class="hex">#E3EEEC</span><span class="use">Card fills, dividers, disabled states, table headers.</span></div></div>
+        <div class="sw"><div class="chipc" style="background:#F4F8F7;color:#04191A;border-bottom:1px solid #E3EEEC"><span>PAGE</span></div>
+          <div class="meta"><span class="nm">Paper</span><span class="hex">#F4F8F7</span><span class="use">Default page ground. Warmer and calmer than pure white on cheap screens.</span></div></div>
+        <div class="sw"><div class="chipc" style="background:#12305C;color:#fff"><span>DATA</span></div>
+          <div class="meta"><span class="nm">Lapis</span><span class="hex">#12305C</span><span class="use">Charts, specialty coding, admin dashboard depth. Never a CTA.</span></div></div>
+        <div class="sw"><div class="chipc" style="background:#BE4224;color:#fff"><span>URGENT</span></div>
+          <div class="meta"><span class="nm">Carnelian</span><span class="hex">#BE4224</span><span class="use">Cancellations, errors, destructive actions. Used sparingly — health anxiety is real.</span></div></div>
+        <div class="sw"><div class="chipc" style="background:#5B7472;color:#fff"><span>MUTED</span></div>
+          <div class="meta"><span class="nm">Slate</span><span class="hex">#5B7472</span><span class="use">Secondary text, metadata, timestamps, placeholder copy.</span></div></div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <span class="lbl">Distribution — the ratio that keeps it calm</span>
+        <div style="display:flex;height:34px;border-radius:8px;overflow:hidden;margin:.5rem 0 .8rem;border:1px solid var(--line)">
+          <div style="flex:62;background:#F4F8F7"></div>
+          <div style="flex:22;background:#E3EEEC"></div>
+          <div style="flex:11;background:#0E7C74"></div>
+          <div style="flex:3;background:#04191A"></div>
+          <div style="flex:2;background:#E5A93C"></div>
+        </div>
+        <div class="tw"><table>
+          <tr><th>Share</th><th>Colour</th><th>Where</th></tr>
+          <tr><td class="num-col">62%</td><td><code>Paper</code></td><td>Page ground, breathing room</td></tr>
+          <tr><td class="num-col">22%</td><td><code>Mist</code></td><td>Cards, dividers, structure</td></tr>
+          <tr><td class="num-col">11%</td><td><code>Teal</code></td><td>Actions, links, the mark</td></tr>
+          <tr><td class="num-col">3%</td><td><code>Ink</code></td><td>Type, one dark band per page</td></tr>
+          <tr><td class="num-col">2%</td><td><code>Gold</code></td><td>Pulse. If it's more than 2%, it isn't special.</td></tr>
+        </table></div>
+      </div>
+
+      <div class="card">
+        <span class="lbl">Verified contrast — WCAG 2.1, measured not guessed</span>
+        <div class="ratios" style="margin-top:.5rem">
+          <div class="ratio"><span class="sample" style="background:#F4F8F7;color:#04191A">Ink on Paper</span><span class="num">16.92</span><span class="badge">AAA</span></div>
+          <div class="ratio"><span class="sample" style="background:#F4F8F7;color:#0E7C74">Teal on Paper</span><span class="num">4.72</span><span class="badge">AA</span></div>
+          <div class="ratio"><span class="sample" style="background:#0E7C74;color:#fff">White on Teal</span><span class="num">5.06</span><span class="badge">AA</span></div>
+          <div class="ratio"><span class="sample" style="background:#F4F8F7;color:#5B7472">Slate on Paper</span><span class="num">4.69</span><span class="badge">AA</span></div>
+          <div class="ratio"><span class="sample" style="background:#F4F8F7;color:#BE4224">Carnelian on Paper</span><span class="num">4.91</span><span class="badge">AA</span></div>
+          <div class="ratio"><span class="sample" style="background:#04191A;color:#E5A93C">Gold on Ink</span><span class="num">8.69</span><span class="badge">AAA</span></div>
+          <div class="ratio"><span class="sample" style="background:#04191A;color:#3FB6A8">Faience on Ink</span><span class="num">7.31</span><span class="badge">AAA</span></div>
+          <div class="ratio"><span class="sample" style="background:#F4F8F7;color:#E5A93C">Gold on Paper</span><span class="num">1.95</span><span class="badge warn">FAIL</span></div>
+        </div>
+        <p class="tiny muted" style="margin:.8rem 0 0">Gold on light backgrounds fails, badly. This is a feature, not a bug: it enforces the rule that Pulse lives on dark surfaces. Where gold must carry text on light, substitute <code>#8A5E10</code> — Gold Deep, 5.32:1.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ============ 04 TYPOGRAPHY ============ -->
+<section class="sec" id="s04">
+  <div class="sec-head">
+    <span class="sec-num">§04 — Typography</span>
+    <h2>Two scripts, one voice</h2>
+    <p class="sec-sub">Most bilingual brands pick a Latin face they love and then find an Arabic face that tolerates it. Nabda does the opposite: both faces here ship Arabic and Latin from the same drawing office, so a headline in عربي and a headline in English are siblings, not translations.</p>
+  </div>
+
+  <div class="stack">
+    <div class="grid-2">
+      <div class="spec">
+        <span class="lbl">Display &amp; wordmark — Readex Pro</span>
+        <div class="glyphs">nabda Aa Gg 24</div>
+        <div class="glyphs arlogo ar-text">نبضة صحتك ٢٤</div>
+        <p class="tiny muted" style="margin:0">Chosen for open apertures, low stroke contrast and generously round counters — the qualities that keep a headline legible on a cheap phone screen in poor light, which is the real reading condition in this market. Its Arabic and Latin share proportions and weight axis, so bilingual lockups need no optical fudging. Use at <strong>200–600</strong>; never 700 (it closes up).</p>
+      </div>
+      <div class="spec">
+        <span class="lbl">Interface &amp; body — IBM Plex Sans Arabic</span>
+        <div class="glyphs" style="font-family:var(--f-body)">Book a doctor 09:30</div>
+        <div class="glyphs ar">احجز موعدك <span dir="ltr" style="unicode-bidi:isolate">٠٩:٣٠</span></div>
+        <p class="tiny muted" style="margin:0">Built for interfaces: unambiguous 1/l/I, a clear Arabic hamza, and numerals that hold their shape at 12px. It carries every screen of the product — doctor cards, schedules, forms, reminders. Use at <strong>300–600</strong>.</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <span class="lbl">The scale — Latin</span>
+        <div style="display:grid;gap:.55rem;margin-top:.5rem">
+          <div class="scale-row"><span class="tag">DISPLAY 44</span><span class="demo" style="font-size:2.05rem;font-weight:600;letter-spacing:-.035em">Your health starts</span></div>
+          <div class="scale-row"><span class="tag">H1 34</span><span class="demo" style="font-size:1.62rem;font-weight:600;letter-spacing:-.03em">Find a doctor near you</span></div>
+          <div class="scale-row"><span class="tag">H2 26</span><span class="demo" style="font-size:1.28rem;font-weight:500;letter-spacing:-.025em">Available this week</span></div>
+          <div class="scale-row"><span class="tag">H3 20</span><span class="demo" style="font-size:1.05rem;font-weight:500;letter-spacing:-.02em">Dr. Yasmin Farouk</span></div>
+          <div class="scale-row"><span class="tag">BODY 16</span><span class="demo" style="font-family:var(--f-body);font-size:1rem;font-weight:400;letter-spacing:0">Cardiology · Maadi · 12 years</span></div>
+          <div class="scale-row"><span class="tag">SMALL 14</span><span class="demo" style="font-family:var(--f-body);font-size:.87rem;color:var(--text-2)">Next available 09:30 today</span></div>
+          <div class="scale-row"><span class="tag">LABEL 11</span><span class="demo" style="font-family:var(--f-mono);font-size:.69rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3)">Confirmed</span></div>
+          <div class="scale-row"><span class="tag">DATA 15</span><span class="demo" style="font-family:var(--f-mono);font-size:.93rem;font-variant-numeric:tabular-nums;color:var(--accent)">09:30 — 10:00 · EGP 450</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <span class="lbl">The scale — Arabic (same steps, adjusted)</span>
+        <div style="display:grid;gap:.55rem;margin-top:.5rem" dir="rtl">
+          <div class="scale-row"><span class="tag" dir="ltr">DISPLAY 47</span><span class="demo ar-text" style="font-size:2.05rem;font-weight:600">صحتك تبدأ بنبضة</span></div>
+          <div class="scale-row"><span class="tag" dir="ltr">H1 37</span><span class="demo ar-text" style="font-size:1.62rem;font-weight:600">ابحث عن طبيب قريب منك</span></div>
+          <div class="scale-row"><span class="tag" dir="ltr">H2 28</span><span class="demo ar-text" style="font-size:1.28rem;font-weight:500">المواعيد المتاحة هذا الأسبوع</span></div>
+          <div class="scale-row"><span class="tag" dir="ltr">H3 22</span><span class="demo ar-text" style="font-size:1.05rem;font-weight:500">د. ياسمين فاروق</span></div>
+          <div class="scale-row"><span class="tag" dir="ltr">BODY 17</span><span class="demo ar-text" style="font-family:var(--f-body);font-size:1rem">قلب وأوعية دموية · المعادي · ١٢ سنة خبرة</span></div>
+          <div class="scale-row"><span class="tag" dir="ltr">SMALL 15</span><span class="demo ar-text" style="font-family:var(--f-body);font-size:.87rem;color:var(--text-2)">أقرب موعد <span dir="ltr" style="unicode-bidi:isolate">٩:٣٠</span> صباحاً اليوم</span></div>
+          <div class="scale-row"><span class="tag" dir="ltr">LABEL 13</span><span class="demo ar-text" style="font-family:var(--f-body);font-size:.8rem;color:var(--text-3);font-weight:500">تم التأكيد</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">Bilingual rules — the non-obvious ones</span>
+      <div class="tw" style="margin-top:.5rem"><table>
+        <tr><th>Rule</th><th>Why</th></tr>
+        <tr><td>Arabic sizes run <strong>+8%</strong> against their Latin step, line-height <strong>+0.15</strong></td><td>Arabic x-height is smaller relative to its em, and the ascender/descender traffic above and below the baseline needs air.</td></tr>
+        <tr><td><strong>Never letter-space Arabic.</strong> Never uppercase it. Never italicise it.</td><td>Tracking breaks the joins between letters — the word literally comes apart. Arabic has no case and no true italic.</td></tr>
+        <tr><td>The uppercase mono label style is <strong>Latin-only</strong>. Arabic labels use Plex Sans Arabic 500 at the same size.</td><td>Keeps the "small technical label" texture without mangling the script.</td></tr>
+        <tr><td>Ship <strong>Western numerals (0–9)</strong> as default in Egypt; offer Eastern Arabic numerals (٠–٩) as a user setting.</td><td>Egyptian digital users read Western numerals fluently; older users and Gulf markets often prefer Eastern. Make it a preference, not an assumption.</td></tr>
+        <tr><td>Times, prices and phone numbers are <strong>always LTR</strong>, even inside RTL text.</td><td>Bidirectional algorithms mangle mixed-direction strings. Wrap them in an isolate.</td></tr>
+        <tr><td>Mirror the entire layout in RTL — <strong>except</strong> the logo, clocks, and media playback controls.</td><td>Those carry directional meaning that doesn't flip. The heartbeat motif <em>does</em> flip: it should always travel toward the reading direction.</td></tr>
+        <tr><td>Arabic is the <strong>default locale</strong>. English is the toggle, not the other way round.</td><td>This is the single strongest trust signal available to us, and it costs nothing.</td></tr>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 GUIDELINES ============ -->
+<section class="sec" id="s05">
+  <div class="sec-head">
+    <span class="sec-num">§05 — Brand guidelines</span>
+    <h2>How Nabda behaves</h2>
+    <p class="sec-sub">Voice, imagery, motion and the rules that stop a brand system from eroding in month four.</p>
+  </div>
+
+  <div class="stack">
+    <div class="grid-2">
+      <div class="card">
+        <span class="lbl">Voice — four settings</span>
+        <div class="stack" style="--step:.85rem;margin-top:.4rem">
+          <div><h4>Plain, never simplified</h4><p class="tiny muted" style="margin:0">Short sentences, ordinary words, full respect. "Your appointment is confirmed for Tuesday at 9:30." Not "Awesome! You're all set 🎉".</p></div>
+          <div><h4>Certain, never boastful</h4><p class="tiny muted" style="margin:0">State what will happen. "We'll remind you the night before and an hour ahead." Nabda earns trust by being specific, not by claiming to be trusted.</p></div>
+          <div><h4>Warm, never familiar</h4><p class="tiny muted" style="margin:0">Address people the way a good receptionist does — kind, professional, not your friend. In Arabic use حضرتك, not the casual second person.</p></div>
+          <div><h4>Calm under bad news</h4><p class="tiny muted" style="margin:0">Cancellations, no-shows, unavailable doctors: no exclamation marks, no apology theatre. Say what happened, then say the next step.</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <span class="lbl">Copy in practice</span>
+        <div class="tw" style="margin-top:.4rem"><table>
+          <tr><th>Instead of</th><th>Write</th></tr>
+          <tr><td class="muted">Oops! Something went wrong 😥</td><td>We couldn't hold that slot — someone booked it 40 seconds ago. Here are three more with Dr. Farouk this week.</td></tr>
+          <tr><td class="muted">Book now and save!</td><td>Dr. Farouk has 09:30 open today. EGP 450.</td></tr>
+          <tr><td class="muted">Your AI-powered health companion</td><td>Ask Pulse. It knows every clinic's hours and can book for you.</td></tr>
+          <tr><td class="muted">Appointment cancelled!!</td><td>Your Tuesday appointment was cancelled by the clinic. Your payment is already back on its way. Want the next opening?</td></tr>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <span class="lbl">Photography direction</span>
+        <p class="small muted" style="margin:0 0 .7rem">Real Egyptian and Levantine clinics, real faces, ordinary daylight. Grandmothers, working fathers, women in hijab and women without, a teenager on a phone in a waiting room. Nabda's users are not a lifestyle segment.</p>
+        <ul class="dd" style="padding:0;margin:0">
+          <li><span class="mk y">✓</span><span>Available light from a window; slightly cool, unfiltered</span></li>
+          <li><span class="mk y">✓</span><span>Hands, phones and paperwork — the texture of the real task</span></li>
+          <li><span class="mk y">✓</span><span>Eye-level framing; the subject is doing something, not posing</span></li>
+          <li><span class="mk n">✕</span><span>Stethoscope draped over a shoulder. White-coat-arms-crossed. Anyone smiling at the camera in a lab coat.</span></li>
+          <li><span class="mk n">✕</span><span>Blue-tinted "technology" imagery, floating holograms, DNA helices</span></li>
+          <li><span class="mk n">✕</span><span>Distress, needles, hospital beds, anything that raises the reader's pulse</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="lbl">Iconography &amp; motion</span>
+        <p class="small muted" style="margin:0 0 .7rem"><strong>Icons:</strong> 24px grid, 1.75px stroke, round caps and joins, no fills. Drawn from the same geometry as the mark — same corner radii, same terminal treatment. Outline only; a filled icon in this system means "active", nothing else.</p>
+        <p class="small muted" style="margin:0 0 .7rem"><strong>Motion, Register A:</strong> 160–220ms, <code>cubic-bezier(.2,.7,.3,1)</code>, opacity and 4–8px translate only. No bounce, no spring, no scale-in. Booking flows must feel like a door closing properly, not a toy.</p>
+        <p class="small muted" style="margin:0"><strong>Motion, Register B (Pulse only):</strong> continuous, breathing, 1.9–2.4s cycles. Pulse is the only element in the product allowed to animate while idle. Everything honours <code>prefers-reduced-motion</code>: the breathing stops, the gold stays.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">Accessibility — non-negotiable in a health product</span>
+      <div class="grid-3" style="margin-top:.5rem">
+        <div><h4>Contrast</h4><p class="tiny muted" style="margin:0">4.5:1 minimum for all body text, 3:1 for UI boundaries. The verified table in §03 is the source of truth — re-run it before any palette change ships.</p></div>
+        <div><h4>Targets &amp; text</h4><p class="tiny muted" style="margin:0">44×44px minimum touch targets. Body text never below 16px — many users are older and reading on a cracked screen. Support 200% zoom without horizontal scroll.</p></div>
+        <div><h4>Never colour alone</h4><p class="tiny muted" style="margin:0">Availability, confirmation and cancellation each carry a shape and a word as well as a colour. Roughly 1 in 12 men in the region has a colour vision deficiency.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+.aperture{width:78px;height:78px}
+.aperture g{transform-origin:50% 50%;animation:spin 3.4s cubic-bezier(.4,0,.6,1) infinite}
+.aperture g:nth-child(2){animation-duration:2.2s;animation-direction:reverse}
+.linewave{width:78px;height:40px}
+.linewave path{stroke-dasharray:220;stroke-dashoffset:220;animation:draw 2.6s ease-in-out infinite}
+@keyframes draw{0%{stroke-dashoffset:220}45%{stroke-dashoffset:0}75%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:-220;opacity:.15}}
+.statebar{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.7rem}
+</style>
+
+<!-- ============ 06 PULSE AVATAR ============ -->
+<section class="sec" id="s06">
+  <div class="sec-head">
+    <span class="sec-num">§06 — Pulse</span>
+    <h2>The avatar is a light, not a face</h2>
+    <p class="sec-sub">Pulse is an assistant inside a health product. The moment it gets eyes, a name badge or a cartoon body, it starts making promises about companionship it cannot keep — and in healthcare that is a liability, not a delight. Pulse is represented as <strong>a single point of warm light that behaves</strong>. Its behaviour is the personality.</p>
+  </div>
+
+  <div class="stack">
+    <div>
+      <span class="lbl">Concept A — "Nuqta Bloom" · recommended · this is the gold dot from the logo, alive</span>
+      <div class="orb-row">
+        <div class="orbcell"><div class="orb idle"><b></b></div><span class="cap">Idle · awake</span></div>
+        <div class="orbcell"><div class="orb listen"><i></i><i></i><i></i><b></b></div><span class="cap">Listening</span></div>
+        <div class="orbcell"><div class="orb think"><i></i><b></b></div><span class="cap">Thinking</span></div>
+        <div class="orbcell"><div class="orb speak"><s></s><s></s><s></s><s></s><s></s></div><span class="cap">Speaking</span></div>
+      </div>
+      <p class="tiny muted" style="margin:.8rem 0 0;max-width:70ch">The same object in four behaviours. Idle breathes at roughly 25 breaths per minute — slower than a resting heart rate, because the job is to calm the room. Listening sends ripples <em>outward</em> (it is receiving). Thinking rotates a single arc — no dots, no spinner, no "AI is generating". Speaking becomes a five-bar waveform, which is also the voice-note affordance every WhatsApp user in the region already understands.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <span class="lbl">Concept B — "Aperture"</span>
+        <div style="display:grid;place-items:center;padding:1.4rem;background:radial-gradient(80% 80% at 50% 40%,#0A2E2C,#04191A);border-radius:12px;margin-bottom:.8rem">
+          <svg class="aperture" viewBox="0 0 100 100" fill="none" stroke-linecap="round">
+            <g stroke="#E5A93C" stroke-width="5"><path d="M50 12 A38 38 0 0 1 82 32"/><path d="M50 88 A38 38 0 0 1 18 68"/></g>
+            <g stroke="#F6D08A" stroke-width="3.5" opacity=".8"><path d="M76 66 A28 28 0 0 1 42 78"/><path d="M24 34 A28 28 0 0 1 58 22"/></g>
+            <circle cx="50" cy="50" r="9" fill="#E5A93C"/>
+          </svg>
+        </div>
+        <p class="tiny muted" style="margin:0">Two counter-rotating arc pairs around a fixed core. Reads as a lens focusing — apt for "finding you the right doctor". More mechanical than A, and it costs more attention. Good as the <strong>search / matching</strong> state inside concept A rather than as a separate identity.</p>
+      </div>
+      <div class="card">
+        <span class="lbl">Concept C — "The Interval"</span>
+        <div style="display:grid;place-items:center;padding:1.4rem;background:radial-gradient(80% 80% at 50% 40%,#0A2E2C,#04191A);border-radius:12px;margin-bottom:.8rem">
+          <svg class="linewave" viewBox="0 0 200 60" fill="none">
+            <path d="M6 32 H62 L70 32 L80 12 L94 52 L102 32 H194" stroke="#E5A93C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="tiny muted" style="margin:0">No orb at all — Pulse is the brand's interval motif, drawn in gold, animating left to right as it thinks. The most restrained option and the most defensibly on-brand, but it has no resting state and is hard to place as a 32px chat avatar. Best used as the <strong>Pulse loading bar</strong>, not the avatar.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">The state machine — build to this table</span>
+      <div class="tw" style="margin-top:.5rem"><table>
+        <tr><th>State</th><th>Form</th><th>Motion</th><th>Duration</th><th>Meaning to the user</th></tr>
+        <tr><td>Idle</td><td>Core dot, no rings</td><td>Scale 1 → 1.13, glow radius 18 → 30px</td><td class="num-col">2.4s loop</td><td>I'm here, no rush</td></tr>
+        <tr><td>Listening</td><td>Core + 3 expanding rings</td><td>Rings scale .34 → 1, opacity 1 → 0, staggered 0.63s</td><td class="num-col">1.9s loop</td><td>I'm taking this in</td></tr>
+        <tr><td>Thinking</td><td>Core + one 30° arc</td><td>Arc rotates 360° linear</td><td class="num-col">1.5s loop</td><td>Working — bounded, not forever</td></tr>
+        <tr><td>Speaking</td><td>Five vertical bars</td><td>ScaleY .42 → 1, staggered 0.11s</td><td class="num-col">0.9s loop</td><td>This is me talking</td></tr>
+        <tr><td>Acting</td><td>Core + gold interval sweep</td><td>Line draws left → right, then dissolves</td><td class="num-col">2.6s</td><td>I'm booking it right now</td></tr>
+        <tr><td>Done</td><td>Core, one hard beat</td><td>Single scale pulse to 1.3, then settle to Idle</td><td class="num-col">400ms</td><td>Handled</td></tr>
+        <tr><td>Handoff</td><td>Core fades gold → teal</td><td>Cross-fade 300ms, motion stops</td><td class="num-col">300ms</td><td>A human is taking over — and the light stops glowing</td></tr>
+      </table></div>
+      <p class="tiny muted" style="margin:.8rem 0 0"><strong>The handoff state is the ethical one.</strong> When a real doctor or clinic staff member joins the conversation, the gold must go. Users have to be able to tell, at a glance and without reading, whether they are talking to software or a person. Never blur that line — not for engagement, not for polish.</p>
+    </div>
+
+    <div class="card-flat">
+      <span class="lbl">Pulse conversational rules</span>
+      <div class="grid-2" style="gap:1rem;margin-top:.4rem">
+        <ul class="dd" style="padding:0;margin:0">
+          <li><span class="mk y">✓</span><span>Opens in the user's language, detected from their first message — not from a menu</span></li>
+          <li><span class="mk y">✓</span><span>Names its limits early: "I can book, move or cancel appointments. I can't give medical advice."</span></li>
+          <li><span class="mk y">✓</span><span>Confirms before acting: states doctor, date, time and price, then waits</span></li>
+          <li><span class="mk y">✓</span><span>Handles Egyptian colloquial Arabic, not just Modern Standard</span></li>
+        </ul>
+        <ul class="dd" style="padding:0;margin:0">
+          <li><span class="mk n">✕</span><span>Never diagnoses, never suggests a medication, never estimates severity</span></li>
+          <li><span class="mk n">✕</span><span>Never uses emoji, exclamation marks, or "I'm so sorry to hear that"</span></li>
+          <li><span class="mk n">✕</span><span>Never claims to be human, and never dodges the question when asked</span></li>
+          <li><span class="mk n">✕</span><span>On any emergency signal, stops assisting and surfaces emergency numbers immediately</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span class="t">AI image prompt — Pulse avatar (Concept A)</span><button class="copy" type="button">Copy</button></div>
+<pre><b>CONCEPT:</b> Avatar for "Pulse", the AI assistant in the Nabda healthcare app. A single point of warm intelligent light — no face, no robot, no character.
+<b>SUBJECT:</b> One small glowing sphere of warm golden light, perfectly centred, with three faint concentric circular rings radiating outward from it and fading as they expand. The sphere has a soft internal highlight in its upper left, like a bead of amber lit from within.
+<b>STYLE:</b> Minimal digital UI art, soft volumetric glow, subtle radial gradient, clean abstract light study. Apple-grade product rendering restraint. Not illustrative, not a character design.
+<b>COMPOSITION:</b> Perfectly centred, radially symmetrical, sphere occupies 20% of frame, rings occupy 70%, deep empty space around it, front-on.
+<b>COLORS:</b> Core sphere <i>#E5A93C</i> to <i>#FFF0CE</i> highlight to <i>#B87F1E</i> shadow edge; rings in translucent <i>#F6D08A</i>; background deep teal-black gradient from <i>#0A2E2C</i> at centre to <i>#04191A</i> at edges. No other hues anywhere.
+<b>LIGHTING:</b> Self-emissive — the sphere is the only light source. Soft bloom falloff, no cast shadow, no rim light from outside.
+<b>MOOD:</b> Attentive, warm, calm, awake at 2am. Present without demanding attention. Reassuring, never uncanny.
+<b>DETAILS:</b> Glow falloff smooth with no banding; ring stroke under 2px at 1024 scale; rings evenly spaced; absolutely no facial features, no eyes, no mouth, no limbs, no silhouette.
+<b>FORMAT:</b> Square 1:1, 1024×1024, suitable for a 32px circular chat avatar crop, UI asset.
+<b>QUALITY:</b> Production UI asset, clean gradients, no artefacts, no noise, crisp when downscaled.
+<b>NEGATIVE PROMPT:</b> face, eyes, mouth, robot, android, mascot, character, humanoid, creature, hands, text, letters, logo, sparkle, star, lens flare, purple, blue, cyan, neon, cyberpunk, circuit board, neural network, hexagons, sci-fi HUD, glass orb reflections, background objects, busy detail, photorealism.</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 APP ICONS ============ -->
+<section class="sec" id="s07">
+  <div class="sec-head">
+    <span class="sec-num">§07 — App icons</span>
+    <h2>One glance on a crowded home screen</h2>
+    <p class="sec-sub">The icon competes with fifty others at 60px, most of them saturated. Nabda wins by being the calm one — a deep teal tile with a single warm point of light on it.</p>
+  </div>
+
+  <div class="stack">
+    <div class="icons">
+      <div class="icell">
+        <div class="ic" style="background:linear-gradient(152deg,#12897F 0%,#0E7C74 42%,#063A38 100%)">
+          <svg viewBox="0 0 132 116" style="--mk1:#F4F8F7;--mk2:#F6D08A"><use href="#m-nuqta"/></svg>
+        </div>
+        <span class="cap">A · Primary<br>iOS &amp; Android</span>
+      </div>
+      <div class="icell">
+        <div class="ic" style="background:#04191A">
+          <svg viewBox="0 0 132 116" style="--mk1:#8FD9CD;--mk2:#F6D08A"><use href="#m-nuqta"/></svg>
+        </div>
+        <span class="cap">B · Ink<br>dark home screens</span>
+      </div>
+      <div class="icell">
+        <div class="ic" style="background:#F4F8F7;border:1px solid var(--line)">
+          <svg viewBox="0 0 132 116" style="--mk1:#0E7C74;--mk2:#E5A93C"><use href="#m-nuqta"/></svg>
+        </div>
+        <span class="cap">C · Paper<br>light / print / favicon</span>
+      </div>
+      <div class="icell">
+        <div class="ic" style="background:radial-gradient(78% 78% at 50% 38%,#0B3B38,#04191A)">
+          <div style="width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#FFF0CE,#E5A93C 55%,#B87F1E);box-shadow:0 0 26px 6px rgba(229,169,60,.55)"></div>
+        </div>
+        <span class="cap">D · Pulse<br>companion / widget</span>
+      </div>
+      <div class="icell">
+        <div class="ic" style="background:#0E7C74">
+          <svg viewBox="0 0 132 116" style="--mk1:#FFFFFF;--mk2:#FFFFFF"><use href="#m-nuqta"/></svg>
+        </div>
+        <span class="cap">E · Mono<br>notifications, badges</span>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <span class="lbl">Icon construction rules</span>
+        <ul class="dd" style="padding:0;margin:.4rem 0 0">
+          <li><span class="mk y">✓</span><span>Mark occupies <strong>56%</strong> of the tile width, optically centred — the bowl's visual mass sits low, so the mark is nudged up 3% from mathematical centre</span></li>
+          <li><span class="mk y">✓</span><span>iOS: supply a square master; the system applies the squircle. Android: supply the adaptive foreground on a 108dp canvas with the mark inside the 66dp safe circle</span></li>
+          <li><span class="mk y">✓</span><span>The gold dot must survive to 29px (iOS notification size) — at that scale it is ~4px. Verified legible; it reads as a highlight, which is enough</span></li>
+          <li><span class="mk n">✕</span><span>No wordmark inside the icon. No gloss, no inner shadow, no border on the gradient variants</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="lbl">Export matrix</span>
+        <div class="tw" style="margin-top:.4rem"><table>
+          <tr><th>Platform</th><th>Sizes</th><th>Variant</th></tr>
+          <tr><td>iOS</td><td class="num-col">1024, 180, 120, 87, 80, 60, 58, 40, 29</td><td>A</td></tr>
+          <tr><td>Android adaptive</td><td class="num-col">432 fg + bg layers, 192, 144, 96, 72, 48</td><td>A</td></tr>
+          <tr><td>Favicon</td><td class="num-col">180, 32, 16 + SVG</td><td>C (16px: mono teal)</td></tr>
+          <tr><td>Notification</td><td class="num-col">96, 72, 48, 36, 24 monochrome</td><td>E, alpha-only</td></tr>
+          <tr><td>WhatsApp Business</td><td class="num-col">640 circular-safe</td><td>A, mark scaled to 48%</td></tr>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span class="t">AI image prompt — App icon (variant A)</span><button class="copy" type="button">Copy</button></div>
+<pre><b>CONCEPT:</b> Mobile app icon for "Nabda", an Arabic healthcare appointment platform. Calm, premium, instantly readable on a crowded home screen.
+<b>SUBJECT:</b> A rounded-square app tile. Centred on it, a single white symbol: a wide shallow U-shaped bowl of uniform stroke with a horizontal line across its open top rising into one sharp ECG spike, and a small solid golden dot floating above the spike.
+<b>STYLE:</b> Flat vector app icon, geometric minimalism, iOS/Android design language, uniform stroke weight, round terminals, generous negative space. No skeuomorphism.
+<b>COMPOSITION:</b> Perfectly square tile, symbol centred and occupying 56% of the tile width, optically raised 3% above true centre, wide clear margin on all sides.
+<b>COLORS:</b> Tile background a smooth diagonal gradient from <i>#12897F</i> top-left through <i>#0E7C74</i> to <i>#063A38</i> bottom-right; symbol in off-white <i>#F4F8F7</i>; the single floating dot in warm gold <i>#F6D08A</i>.
+<b>LIGHTING:</b> Flat. The gradient is a colour transition, not a light source. No gloss, no inner shadow, no bevel, no highlight sweep.
+<b>MOOD:</b> Calm, trustworthy, medical, quietly premium. The restrained icon among fifty loud ones.
+<b>DETAILS:</b> Corner radius 23.5% of tile width (Apple squircle proportion); gradient smooth with zero banding; symbol strokes optically corrected so horizontal and vertical read the same weight; exactly one gold element.
+<b>FORMAT:</b> Square 1:1, 1024×1024, app icon master, flat, no device mockup.
+<b>QUALITY:</b> App Store submission quality, pixel-perfect, crisp at 29px, production-ready.
+<b>NEGATIVE PROMPT:</b> text, letters, wordmark, app name, iPhone mockup, phone frame, home screen, drop shadow under the tile, glossy reflection, glass highlight, 3D, bevel, emboss, stethoscope, heart shape, cross, red, blue, purple, gradient mesh, noise texture, sparkles, multiple symbols, border, outline stroke on tile.</pre>
+    </div>
+  </div>
+</section>
+<style>
+/* UI kit preview panel — deliberately light-grounded: it is a spec of the product's light theme */
+.kit{background:#F4F8F7;border:1px solid #DCEAE7;border-radius:14px;padding:1.4rem;color:#04191A;font-family:var(--f-body);display:grid;gap:1.25rem}
+.kit .klbl{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;color:#5B7472}
+.kit .row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.btn{font-family:var(--f-body);font-size:.86rem;font-weight:600;border-radius:10px;padding:.6rem 1.05rem;border:1px solid transparent;line-height:1.2;display:inline-flex;align-items:center;gap:.45rem}
+.btn.pri{background:#0E7C74;color:#fff}
+.btn.sec{background:#fff;color:#0E7C74;border-color:#B9DBD6}
+.btn.gho{background:transparent;color:#0E7C74}
+.btn.dan{background:#fff;color:#BE4224;border-color:#EBC0B4}
+.btn.pul{background:#04191A;color:#F6D08A;padding-inline-start:.5rem}
+.btn.pul .o{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#FFF0CE,#E5A93C 58%,#B87F1E);box-shadow:0 0 10px 2px rgba(229,169,60,.5)}
+.btn.dis{background:#E3EEEC;color:#93AAA7}
+.fieldk{background:#fff;border:1px solid #DCEAE7;border-radius:10px;padding:.6rem .8rem;font-size:.85rem;color:#5B7472;min-width:200px;flex:1}
+.slotchip{font-family:var(--f-mono);font-size:.76rem;border-radius:8px;padding:.35rem .6rem;border:1px solid #B9DBD6;color:#0E7C74;background:#fff}
+.slotchip.on{background:#0E7C74;color:#fff;border-color:#0E7C74}
+.slotchip.off{background:#EDF3F2;color:#A0B4B1;border-color:#E3EEEC;text-decoration:line-through}
+.kcard{background:#fff;border:1px solid #E3EEEC;border-radius:13px;padding:.9rem;display:grid;gap:.55rem;max-width:290px;box-shadow:0 1px 2px rgba(4,25,26,.05),0 14px 30px -22px rgba(4,25,26,.5)}
+.kcard .hd{display:flex;gap:.65rem;align-items:center}
+.kcard .avx{width:42px;height:42px;border-radius:50%;background:linear-gradient(140deg,#8FD9CD,#0E7C74);flex-shrink:0}
+.kcard .nmx{font-family:var(--f-display);font-weight:600;font-size:.95rem;letter-spacing:-.02em;line-height:1.2}
+.kcard .spx{font-size:.76rem;color:#5B7472}
+.kcard .stars{font-size:.74rem;color:#8A5E10}
+.statusdot{display:inline-flex;align-items:center;gap:.35rem;font-size:.74rem;color:#0E7C74}
+.statusdot::before{content:"";width:7px;height:7px;border-radius:50%;background:#0E7C74}
+.tokrow{display:flex;align-items:center;gap:.6rem;font-size:.8rem}
+.tokrow .bar{height:12px;background:#0E7C74;border-radius:3px;opacity:.85}
+</style>
+
+<!-- ============ 08 WEB DIRECTION ============ -->
+<section class="sec" id="s08">
+  <div class="sec-head">
+    <span class="sec-num">§08 — Website &amp; product</span>
+    <h2>Design direction and the component seed</h2>
+    <p class="sec-sub">Nabda's interface should feel like a well-run reception desk: everything already prepared, nothing shouting. Below is the token layer and the first eight components, specified tightly enough to build from.</p>
+  </div>
+
+  <div class="stack">
+    <div class="grid-2">
+      <div class="card">
+        <span class="lbl">Six layout principles</span>
+        <div class="stack" style="--step:.75rem;margin-top:.4rem">
+          <div><h4>1 — Availability is the hero, not the doctor</h4><p class="tiny muted" style="margin:0">Every doctor card leads with the next open slot. The photo is secondary. People are not shopping for a personality, they are solving Tuesday.</p></div>
+          <div><h4>2 — One primary action per screen</h4><p class="tiny muted" style="margin:0">Exactly one teal filled button in view at a time. Everything else is secondary or ghost.</p></div>
+          <div><h4>3 — Never a blank state</h4><p class="tiny muted" style="margin:0">No results always offers Pulse: "No cardiologist in Maadi before Thursday. Ask Pulse to widen the search?"</p></div>
+          <div><h4>4 — Prices are always visible</h4><p class="tiny muted" style="margin:0">Hidden pricing is the category's original sin and the number one reason people abandon. Show EGP before the booking step, always.</p></div>
+          <div><h4>5 — Mobile is not the small version</h4><p class="tiny muted" style="margin:0">Design 390px first. ~85% of this market books on a mid-range Android over a patchy connection. Budget 120KB of critical CSS+JS, ship system-font fallbacks.</p></div>
+          <div><h4>6 — RTL is the default build</h4><p class="tiny muted" style="margin:0">Use logical properties throughout (<code>margin-inline-start</code>, not <code>margin-left</code>). LTR is the mirrored case, not the base case.</p></div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <span class="lbl">Spacing — 4px base, 8px rhythm</span>
+          <div style="display:grid;gap:.4rem;margin-top:.5rem">
+            <div class="tokrow"><code style="width:52px">4</code><div class="bar" style="width:4px"></div><span class="muted tiny">icon gaps</span></div>
+            <div class="tokrow"><code style="width:52px">8</code><div class="bar" style="width:8px"></div><span class="muted tiny">label → field</span></div>
+            <div class="tokrow"><code style="width:52px">12</code><div class="bar" style="width:12px"></div><span class="muted tiny">inside chips</span></div>
+            <div class="tokrow"><code style="width:52px">16</code><div class="bar" style="width:16px"></div><span class="muted tiny">card padding</span></div>
+            <div class="tokrow"><code style="width:52px">24</code><div class="bar" style="width:24px"></div><span class="muted tiny">between cards</span></div>
+            <div class="tokrow"><code style="width:52px">40</code><div class="bar" style="width:40px"></div><span class="muted tiny">between blocks</span></div>
+            <div class="tokrow"><code style="width:52px">72</code><div class="bar" style="width:72px"></div><span class="muted tiny">between sections</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <span class="lbl">Radii &amp; elevation</span>
+          <div class="tw" style="margin-top:.4rem"><table>
+            <tr><th>Token</th><th>Value</th><th>Applied to</th></tr>
+            <tr><td><code>r-sm</code></td><td class="num-col">8px</td><td>Chips, slots, inputs</td></tr>
+            <tr><td><code>r-md</code></td><td class="num-col">10px</td><td>Buttons</td></tr>
+            <tr><td><code>r-lg</code></td><td class="num-col">13px</td><td>Cards, sheets</td></tr>
+            <tr><td><code>r-full</code></td><td class="num-col">999px</td><td>Avatars, Pulse, badges</td></tr>
+            <tr><td><code>e-1</code></td><td class="num-col">0 1px 2px / 5%</td><td>Resting cards</td></tr>
+            <tr><td><code>e-2</code></td><td class="num-col">0 14px 30px −22px / 50%</td><td>Hover, sheets</td></tr>
+            <tr><td><code>e-pulse</code></td><td class="num-col">0 0 26px 6px gold 55%</td><td>Pulse only. The only glow in the system.</td></tr>
+          </table></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <span class="lbl">Component seed — light theme</span>
+      <div class="kit" style="margin-top:.5rem">
+        <div>
+          <span class="klbl">Buttons</span>
+          <div class="row" style="margin-top:.5rem">
+            <span class="btn pri">احجز الآن · Book</span>
+            <span class="btn sec">View profile</span>
+            <span class="btn gho">Reschedule</span>
+            <span class="btn dan">Cancel booking</span>
+            <span class="btn pul"><span class="o"></span> Ask Pulse</span>
+            <span class="btn dis">Fully booked</span>
+          </div>
+        </div>
+        <div>
+          <span class="klbl">Search &amp; availability</span>
+          <div class="row" style="margin-top:.5rem">
+            <span class="fieldk">Specialty, doctor or symptom</span>
+            <span class="fieldk" style="min-width:130px;flex:0 0 auto">Maadi, Cairo</span>
+            <span class="btn pri">Search</span>
+          </div>
+          <div class="row" style="margin-top:.6rem">
+            <span class="slotchip on">09:30</span><span class="slotchip">10:00</span><span class="slotchip">10:30</span>
+            <span class="slotchip off">11:00</span><span class="slotchip">14:15</span><span class="slotchip off">15:00</span>
+          </div>
+        </div>
+        <div>
+          <span class="klbl">Doctor card — availability leads</span>
+          <div class="row" style="margin-top:.5rem;align-items:flex-start">
+            <div class="kcard">
+              <div class="hd">
+                <div class="avx"></div>
+                <div>
+                  <div class="nmx">د. ياسمين فاروق</div>
+                  <div class="spx">Cardiology · Maadi · 12 yrs</div>
+                </div>
+              </div>
+              <div class="row" style="gap:.5rem"><span class="stars">★ 4.8 · 214 reviews</span><span class="statusdot">Available today</span></div>
+              <div class="row" style="gap:.4rem"><span class="slotchip on">09:30</span><span class="slotchip">10:00</span><span class="slotchip">10:30</span></div>
+              <div class="row" style="justify-content:space-between;gap:.5rem">
+                <span style="font-family:var(--f-mono);font-size:.85rem;font-variant-numeric:tabular-nums">EGP 450</span>
+                <span class="btn pri" style="padding:.45rem .85rem;font-size:.8rem">Book 09:30</span>
+              </div>
+            </div>
+            <div style="flex:1;min-width:190px">
+              <p class="tiny" style="color:#3C5754;margin:0">Note what leads and what doesn't. The next open slot and the price sit above the fold of the card; the rating is present but small; the photo is a 42px avatar, not a hero image. The primary button names the actual slot — <strong>"Book 09:30"</strong>, never "Book now" — so the tap is a confirmation of something already decided, not a leap.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+:root[data-lang="ar"] .lp{direction:rtl}
+.lpsec{display:grid;grid-template-columns:auto 1fr;gap:.75rem 1rem;align-items:start}
+.lpsec .n{font-family:var(--f-mono);font-size:.68rem;color:var(--accent);padding-top:.25rem;letter-spacing:.1em}
+</style>
+
+<!-- ============ 09 LANDING PAGE ============ -->
+<section class="sec" id="s09">
+  <div class="sec-head">
+    <span class="sec-num">§09 — Landing page</span>
+    <h2>The page has 4 seconds and one job</h2>
+    <p class="sec-sub">Not to explain Nabda. To let someone <em>start searching</em> before they have decided to trust it. The search field is the hero — everything else is proof arriving after the fact. Use the عربي / EN switch in the header to see the whole thing flip.</p>
+  </div>
+
+  <div class="stack">
+    <div class="browser">
+      <div class="bbar"><i></i><i></i><i></i><span class="url">nabda.health</span></div>
+      <div class="lp-wrap">
+        <div class="lp">
+          <div class="lp-nav">
+            <span class="wm"><svg viewBox="0 0 132 116"><use href="#m-nuqta-min"/></svg><span class="en-only">nabda</span><span class="ar-only ar-text">نبضة</span></span>
+            <span class="links">
+              <span class="en-only">Specialties</span><span class="ar-only ar-text">التخصصات</span>
+              <span class="en-only">For clinics</span><span class="ar-only ar-text">للعيادات</span>
+              <span class="en-only">Help</span><span class="ar-only ar-text">مساعدة</span>
+            </span>
+            <span class="lp-btn"><span class="en-only">Sign in</span><span class="ar-only ar-text">تسجيل الدخول</span></span>
+          </div>
+          <div class="lp-hero">
+            <h5><span class="en-only">A doctor who is actually free today.</span><span class="ar-only ar-text">طبيب متاح فعلاً اليوم.</span></h5>
+            <p><span class="en-only">Search real availability across 340 clinics in Cairo. See the price before you book. Pulse can do it for you in Arabic, any hour.</span><span class="ar-only ar-text">ابحث في المواعيد المتاحة فعلياً في 340 عيادة بالقاهرة. اعرف السعر قبل الحجز. ويمكن لـ«نبضة» أن تحجز لك بالعربية في أي وقت.</span></p>
+            <div class="lp-search">
+              <span class="f"><span class="en-only">Cardiology</span><span class="ar-only ar-text">قلب وأوعية دموية</span></span>
+              <span class="f" style="flex:0 0 90px"><span class="en-only">Maadi</span><span class="ar-only ar-text">المعادي</span></span>
+              <span class="go"><span class="en-only">Search</span><span class="ar-only ar-text">ابحث</span></span>
+            </div>
+          </div>
+          <div class="lp-cards">
+            <div class="dcard"><div class="av"></div><div class="nm"><span class="en-only">Dr. Yasmin Farouk</span><span class="ar-only ar-text">د. ياسمين فاروق</span></div><div class="sp"><span class="en-only">Cardiology · 4.8</span><span class="ar-only ar-text">قلب · 4.8</span></div><span class="slot" dir="ltr" style="unicode-bidi:isolate">09:30 · EGP 450</span></div>
+            <div class="dcard"><div class="av" style="background:linear-gradient(135deg,#F6D08A,#B87F1E)"></div><div class="nm"><span class="en-only">Dr. Karim Mahfouz</span><span class="ar-only ar-text">د. كريم محفوظ</span></div><div class="sp"><span class="en-only">Dermatology · 4.6</span><span class="ar-only ar-text">جلدية · 4.6</span></div><span class="slot" dir="ltr" style="unicode-bidi:isolate">11:00 · EGP 350</span></div>
+            <div class="dcard"><div class="av" style="background:linear-gradient(135deg,#8FD9CD,#12305C)"></div><div class="nm"><span class="en-only">Dr. Hala Nabil</span><span class="ar-only ar-text">د. هالة نبيل</span></div><div class="sp"><span class="en-only">Paediatrics · 4.9</span><span class="ar-only ar-text">أطفال · 4.9</span></div><span class="slot" dir="ltr" style="unicode-bidi:isolate">14:15 · EGP 400</span></div>
+          </div>
+        </div>
+        <div class="lp-pulse"><span class="o"></span><span class="en-only">Ask Pulse</span><span class="ar-only ar-text">اسأل نبضة</span></div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <span class="lbl">Section order — and why</span>
+        <div class="stack" style="--step:.7rem;margin-top:.4rem">
+          <div class="lpsec"><span class="n">01</span><div><h4>Search hero, no illustration</h4><p class="tiny muted" style="margin:0">Headline states an outcome, not a value proposition. The live search field is above the fold on a 390px screen. Zero decoration competing with it.</p></div></div>
+          <div class="lpsec"><span class="n">02</span><div><h4>Three real doctor cards — already loaded</h4><p class="tiny muted" style="margin:0">Live availability from the actual database, not mock data. This is the single most persuasive element on the page: proof the inventory exists.</p></div></div>
+          <div class="lpsec"><span class="n">03</span><div><h4>Specialty grid, Arabic-labelled</h4><p class="tiny muted" style="margin:0">12 tiles, outline icons on Mist. Entry point for people who don't know what to search for.</p></div></div>
+          <div class="lpsec"><span class="n">04</span><div><h4>Pulse demo — a real transcript, dark band</h4><p class="tiny muted" style="margin:0">The one ink-grounded section on the page. A short Arabic conversation that books an appointment in four messages. The gold appears here for the first time and the reader learns the rule instantly.</p></div></div>
+          <div class="lpsec"><span class="n">05</span><div><h4>Trust row: clinics, reviews, reminders</h4><p class="tiny muted" style="margin:0">Numbers, not adjectives. "340 clinics · 61,000 appointments kept · reminders by SMS, email and WhatsApp."</p></div></div>
+          <div class="lpsec"><span class="n">06</span><div><h4>For clinics — a different door</h4><p class="tiny muted" style="margin:0">Short B2B band using the Musallab mark (§01/02) and Lapis rather than teal, so it reads as a separate audience without leaving the system.</p></div></div>
+          <div class="lpsec"><span class="n">07</span><div><h4>Footer with the interval motif</h4><p class="tiny muted" style="margin:0">Deep Pulse ground, the single-beat hairline across the top, licence and clinic-registration details in full — regulatory transparency is a trust asset here.</p></div></div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <span class="lbl">Hero copy — bilingual, tested pairs</span>
+          <div class="tw" style="margin-top:.4rem"><table>
+            <tr><th>Arabic (primary)</th><th>English</th></tr>
+            <tr><td class="ar-text">طبيب متاح فعلاً اليوم.</td><td>A doctor who is actually free today.</td></tr>
+            <tr><td class="ar-text">احجز في دقيقة. من غير مكالمات.</td><td>Book in a minute. No phone calls.</td></tr>
+            <tr><td class="ar-text">اعرف السعر قبل ما تحجز.</td><td>Know the price before you book.</td></tr>
+            <tr><td class="ar-text">صحتك تبدأ بنبضة.</td><td>Your health starts with a pulse.</td></tr>
+          </table></div>
+          <p class="tiny muted" style="margin:.7rem 0 0">The Arabic is deliberately colloquial Egyptian, not Modern Standard. MSA on a consumer landing page reads as government paperwork.</p>
+        </div>
+        <div class="card">
+          <span class="lbl">Performance budget — this is a brand decision</span>
+          <p class="tiny muted" style="margin:0">A page that loads in 1.2s on 3G <em>is</em> the brand promise of "no waiting", delivered before a word is read. Budget: LCP &lt; 1.8s on a mid-range Android over 3G, &lt;120KB critical path, fonts subset to Arabic + Latin basic with <code>font-display:swap</code> and a matched system fallback so the layout never jumps. No hero video. No carousel.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span class="t">AI image prompt — landing hero visual (optional supporting image)</span><button class="copy" type="button">Copy</button></div>
+<pre><b>CONCEPT:</b> Supporting photograph for the Nabda landing page — the real moment of relief when an appointment is confirmed. Not a doctor. Not technology.
+<b>SUBJECT:</b> A woman in her early sixties sitting in an ordinary Cairo apartment, looking down at her phone with a small private smile, her reading glasses pushed up on her head. A daughter's hand rests on her shoulder from just outside the frame. Everyday clothes, no styling.
+<b>STYLE:</b> Documentary photography, natural and unposed, mid-range prime lens look, subtle grain, honest skin tones, no beauty retouching.
+<b>COMPOSITION:</b> Medium shot, eye level, subject slightly off-centre to the right leaving clean negative space on the left for headline text, shallow depth of field with the room softly falling away.
+<b>COLORS:</b> Warm neutral interior, muted; a teal element somewhere incidental in the background (a cushion, a tiled wall) at roughly <i>#0E7C74</i>; overall palette desaturated to sit under the brand colours without competing.
+<b>LIGHTING:</b> Late-afternoon daylight from a window at camera left, soft and directional, mild contrast, no fill flash, no artificial colour grade.
+<b>MOOD:</b> Quiet relief. Something worrying has just been handled. Dignified, warm, entirely ordinary.
+<b>DETAILS:</b> Real apartment textures — worn upholstery, a glass of tea, a wall calendar; phone screen not legible; hands and posture relaxed; the subject is not looking at the camera.
+<b>FORMAT:</b> 16:9 landscape, 3000px wide, web hero crop with safe area on the left third.
+<b>QUALITY:</b> Editorial photography, natural colour science, sharp on the eyes, print-grade.
+<b>NEGATIVE PROMPT:</b> stock photo look, white teeth smile at camera, doctor, lab coat, stethoscope, hospital, clinic interior, medical equipment, blue tint, holograms, HUD overlay, floating UI, glossy skin retouching, studio lighting, plain white background, model posing, laptop, text, watermark, logo, oversaturated colours.</pre>
+    </div>
+  </div>
+</section>
+<style>
+.frame{container-type:inline-size}
+.gridpost{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.gridpost div{aspect-ratio:1/1;display:grid;place-items:center;font-family:var(--f-display);font-size:.62rem;letter-spacing:-.01em;text-align:center;padding:.3rem;line-height:1.2}
+</style>
+
+<!-- ============ 10 SOCIAL ============ -->
+<section class="sec" id="s10">
+  <div class="sec-head">
+    <span class="sec-num">§10 — Social</span>
+    <h2>Calm in a feed built to prevent it</h2>
+    <p class="sec-sub">Every health account in the region posts the same thing: a stock doctor, a gradient, five hashtags and an exclamation mark. Nabda's advantage on social is exactly its advantage everywhere — it is the quiet one. Ink grounds, one line of type, enormous negative space, and gold only when Pulse speaks.</p>
+  </div>
+
+  <div class="stack">
+    <div class="social">
+      <div>
+        <div class="frame f-av ink-bg" style="display:grid;place-items:center">
+          <svg viewBox="0 0 132 116" style="width:52%;--mk1:#8FD9CD;--mk2:#F6D08A"><use href="#m-nuqta"/></svg>
+        </div>
+        <span class="fcap">Profile · all channels</span>
+      </div>
+      <div>
+        <div class="frame f-sq ink-bg on-dark">
+          <div class="pad">
+            <div class="top"><svg viewBox="0 0 132 116" style="--mk1:#8FD9CD;--mk2:#F6D08A"><use href="#m-nuqta-min"/></svg><span class="w en-only">nabda</span><span class="w ar ar-text ar-only">نبضة</span></div>
+            <p class="hl"><span class="en-only">Your health starts with a <em>pulse</em>.</span><span class="ar-only ar-text">صحتك تبدأ بـ<em>نبضة</em>.</span></p>
+            <span class="ft">nabda.health</span>
+          </div>
+        </div>
+        <span class="fcap">1:1 · brand post</span>
+      </div>
+      <div>
+        <div class="frame f-sq paper-bg on-light">
+          <div class="pad">
+            <div class="top"><svg viewBox="0 0 132 116"><use href="#m-nuqta-min"/></svg><span class="w en-only">nabda</span><span class="w ar ar-text ar-only">نبضة</span></div>
+            <p class="hl"><span class="en-only">340 clinics.<br>One search.<br><em>No phone calls.</em></span><span class="ar-only ar-text">٣٤٠ عيادة.<br>بحث واحد.<br><em>من غير مكالمات.</em></span></p>
+            <span class="ft" style="color:#5B7472">nabda.health</span>
+          </div>
+        </div>
+        <span class="fcap">1:1 · proof post</span>
+      </div>
+      <div>
+        <div class="frame f-st" style="background:radial-gradient(80% 60% at 50% 34%,#0B3B38,#04191A)">
+          <div class="pad on-dark">
+            <div class="top"><svg viewBox="0 0 132 116" style="--mk1:#8FD9CD;--mk2:#F6D08A"><use href="#m-nuqta-min"/></svg><span class="w en-only">nabda</span><span class="w ar ar-text ar-only">نبضة</span></div>
+            <div style="display:grid;gap:.55rem;justify-items:start">
+              <div style="width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#FFF0CE,#E5A93C 55%,#B87F1E);box-shadow:0 0 18px 4px rgba(229,169,60,.45)"></div>
+              <p class="hl" style="font-size:clamp(.8rem,5.6cqw,1.1rem)"><span class="en-only">Pulse answers at <em>2am</em>. In Arabic.</span><span class="ar-only ar-text">نبضة بترد الساعة <em>٢</em> بالليل. بالعربي.</span></p>
+            </div>
+            <span class="ft">Swipe up</span>
+          </div>
+        </div>
+        <span class="fcap">9:16 · story / Reel</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="frame f-cv teal-bg on-dark" style="max-width:100%">
+        <div class="pad" style="align-content:center">
+          <div style="display:flex;align-items:center;gap:.7rem;flex-wrap:wrap">
+            <svg viewBox="0 0 132 116" style="width:30px;--mk1:#EAF5F3;--mk2:#F6D08A"><use href="#m-nuqta"/></svg>
+            <span style="font-family:var(--f-display);font-weight:600;letter-spacing:-.04em;font-size:1.25rem" class="en-only">nabda</span>
+            <span style="font-family:var(--f-display);font-weight:500;font-size:1.25rem" class="ar-only ar-text">نبضة</span>
+            <span style="opacity:.55">|</span>
+            <span style="font-size:.8rem;opacity:.9" class="en-only">Find a doctor. Book in a minute.</span>
+            <span style="font-size:.8rem;opacity:.9" class="ar-only ar-text">ابحث عن طبيب. واحجز في دقيقة.</span>
+          </div>
+        </div>
+      </div>
+      <span class="fcap">3:1 · Facebook &amp; LinkedIn cover</span>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <span class="lbl">The grid — a repeating three-beat rhythm</span>
+        <div class="gridpost" style="margin:.5rem 0 .8rem">
+          <div style="background:#04191A;color:#EAF5F3">Brand line</div>
+          <div style="background:#F4F8F7;color:#04191A">Proof number</div>
+          <div style="background:#0E7C74;color:#fff">Doctor spotlight</div>
+          <div style="background:#04191A;color:#F6D08A">Pulse moment</div>
+          <div style="background:#F4F8F7;color:#04191A">Health tip</div>
+          <div style="background:#0E7C74;color:#fff">Clinic partner</div>
+          <div style="background:#04191A;color:#EAF5F3">Brand line</div>
+          <div style="background:#F4F8F7;color:#04191A">Proof number</div>
+          <div style="background:#0E7C74;color:#fff">Doctor spotlight</div>
+        </div>
+        <p class="tiny muted" style="margin:0">Three grounds cycling in a fixed order — ink, paper, teal — so the profile grid reads as a deliberate pattern rather than a scrapbook. Gold appears in exactly one of every six tiles, always the Pulse post. Anyone scrolling the grid learns the colour rule without being told.</p>
+      </div>
+      <div class="card">
+        <span class="lbl">Channel notes</span>
+        <div class="tw" style="margin-top:.4rem"><table>
+          <tr><th>Channel</th><th>Role</th><th>Treatment</th></tr>
+          <tr><td>Instagram</td><td>Reach &amp; trust</td><td>The three-beat grid. Reels: one Arabic sentence on ink, no voiceover music.</td></tr>
+          <tr><td>Facebook</td><td>Volume, 35+</td><td>Same assets, longer Arabic captions. This is where the booking traffic actually is.</td></tr>
+          <tr><td>TikTok</td><td>Awareness, 18–30</td><td>Screen recordings of a real booking, unedited, timed. Brand appears only as the end card.</td></tr>
+          <tr><td>WhatsApp Business</td><td>Conversion</td><td>Profile = variant A icon. Pulse lives here natively — treat it as a product surface, not a channel.</td></tr>
+          <tr><td>LinkedIn</td><td>Clinics &amp; hiring</td><td>Musallab mark, Lapis accent, numbers-led. Never consumer copy.</td></tr>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="card-flat">
+      <span class="lbl">Post template rules</span>
+      <div class="grid-3" style="margin-top:.4rem">
+        <div><h4>Type</h4><p class="tiny muted" style="margin:0">One idea per post, maximum 9 Arabic words. Readex Pro 500–600. Never centre it — type sits bottom-left (or bottom-right in RTL), aligned to the same margin as the logo.</p></div>
+        <div><h4>Margins</h4><p class="tiny muted" style="margin:0">8% of the canvas on all sides, and nothing enters it. On stories, keep the bottom 18% clear of the platform UI.</p></div>
+        <div><h4>Never</h4><p class="tiny muted" style="margin:0">No hashtag walls, no emoji, no "link in bio!!", no before/after health imagery, no countdown urgency, no engagement bait questions.</p></div>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span class="t">AI image prompt — social brand post (1:1 ink template)</span><button class="copy" type="button">Copy</button></div>
+<pre><b>CONCEPT:</b> Social media brand post template for Nabda, a calm Arabic healthcare platform. Deliberately the quietest post in the feed.
+<b>SUBJECT:</b> An empty square graphic composition — a very deep teal-black field with a soft radial lightening in the upper right quadrant, a small logo mark locked to the top-left corner, and clear open space in the lower half reserved for one line of Arabic type. No illustration, no photograph, no objects.
+<b>STYLE:</b> Minimal editorial graphic design, flat with one subtle atmospheric gradient, generous negative space, Swiss layout discipline, premium restraint.
+<b>COMPOSITION:</b> Square, corner-anchored not centred, 8% margin respected on all sides, roughly 70% of the canvas left intentionally empty, strong asymmetric balance.
+<b>COLORS:</b> Ground gradient from <i>#0B3B38</i> in the upper right to <i>#04191A</i> at the lower left; mark in pale mint <i>#8FD9CD</i>; a single small warm gold accent <i>#F6D08A</i>. Nothing else.
+<b>LIGHTING:</b> One soft, wide, low-intensity glow in the upper right — atmospheric depth only, no visible light source, no rays.
+<b>MOOD:</b> Calm, premium, nocturnal, trustworthy. Deliberately understated next to loud healthcare marketing.
+<b>DETAILS:</b> Gradient completely free of banding; no vignette; no texture overlay; no borders or frames; the empty lower area must stay genuinely clean for typesetting.
+<b>FORMAT:</b> Square 1:1, 1440×1440, Instagram post template, flat graphic (not a device mockup).
+<b>QUALITY:</b> Art-directed brand template, print-grade smoothness, production-ready.
+<b>NEGATIVE PROMPT:</b> text, letters, Arabic script, lorem ipsum, watermark, doctor, stethoscope, hospital, human figure, medical icons, heart, cross, sparkles, particles, bokeh, light rays, lens flare, hexagon pattern, circuit lines, DNA helix, purple, blue, neon, cyberpunk, busy gradient mesh, phone mockup, drop shadow, frame, border.</pre>
+    </div>
+  </div>
+</section>
+<!-- ============ 11 PROMPT LIBRARY & ROLLOUT ============ -->
+<section class="sec" id="s11">
+  <div class="sec-head">
+    <span class="sec-num">§11 — Production</span>
+    <h2>Prompt library and what to build first</h2>
+    <p class="sec-sub">Eight generation prompts sit inline through this document. Three more live here for the asset classes that don't belong to a single section. All are written for Midjourney, Firefly, Ideogram or DALL·E — strip the labels if your tool prefers plain prose, but keep the negative prompt.</p>
+  </div>
+
+  <div class="stack">
+    <div class="card">
+      <span class="lbl">Index</span>
+      <div class="tw" style="margin-top:.4rem"><table>
+        <tr><th>Prompt</th><th>Produces</th><th>Where</th></tr>
+        <tr><td>01 Nuqta</td><td>Primary logo mark</td><td>§01</td></tr>
+        <tr><td>02 Musallab</td><td>Institutional cross mark</td><td>§01</td></tr>
+        <tr><td>03 Halqa</td><td>Network / corporate mark</td><td>§01</td></tr>
+        <tr><td>04 Sada</td><td>Pulse sub-brand mark</td><td>§01</td></tr>
+        <tr><td>05 Meeqat</td><td>Booking / notification mark</td><td>§01</td></tr>
+        <tr><td>Pulse avatar</td><td>AI avatar, all states</td><td>§06</td></tr>
+        <tr><td>App icon A</td><td>iOS / Android icon master</td><td>§07</td></tr>
+        <tr><td>Landing hero</td><td>Supporting photograph</td><td>§09</td></tr>
+        <tr><td>Social 1:1</td><td>Ink post template</td><td>§10</td></tr>
+        <tr><td>Specialty icons</td><td>12-icon outline set</td><td>below</td></tr>
+        <tr><td>Clinic photography</td><td>Partner / B2B imagery</td><td>below</td></tr>
+        <tr><td>OG / share card</td><td>Link preview template</td><td>below</td></tr>
+      </table></div>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span class="t">AI image prompt — specialty icon set</span><button class="copy" type="button">Copy</button></div>
+<pre><b>CONCEPT:</b> A twelve-icon set for medical specialties in the Nabda app — cardiology, dermatology, paediatrics, dentistry, orthopaedics, ophthalmology, ENT, gynaecology, neurology, psychiatry, nutrition, general practice.
+<b>SUBJECT:</b> Twelve simple outline pictograms arranged in a clean 4×3 grid on a plain field, each icon a single unfilled line drawing of its specialty's most recognisable object or body part, abstracted to its simplest reliable form.
+<b>STYLE:</b> Flat vector line icons, 24px grid construction, uniform 1.75px stroke, round caps and round joins, no fills, no colour variation within an icon. Geometric and calm, drawn with the same corner radii as a rounded-square logo system.
+<b>COMPOSITION:</b> Even 4×3 grid, generous and equal spacing, every icon optically the same visual weight and occupying the same square bounding box, front-on orthographic.
+<b>COLORS:</b> All strokes deep faience teal <i>#0E7C74</i> on off-white <i>#F4F8F7</i>. Monochrome only.
+<b>LIGHTING:</b> None — flat line art.
+<b>MOOD:</b> Clear, calm, clinical without being cold. Legible before it is charming.
+<b>DETAILS:</b> Optical correction so circular icons don't read smaller than square ones; no icon uses more than 6 strokes; no anatomical realism; no facial features on the body-part icons.
+<b>FORMAT:</b> 4:3 sheet, 2400px wide, icon specimen sheet, each icon separable and vector-clean.
+<b>QUALITY:</b> Production icon set, pixel-aligned at 24px, consistent stroke terminals, portfolio presentation.
+<b>NEGATIVE PROMPT:</b> text, labels, letters, filled shapes, duotone, gradient, shadow, 3D, isometric, hand-drawn wobble, sketch texture, emoji, cartoon faces, realistic anatomy, blood, needles, colour variation, inconsistent stroke weight, drop shadows, badges, circular containers.</pre>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span class="t">AI image prompt — clinic &amp; partner photography</span><button class="copy" type="button">Copy</button></div>
+<pre><b>CONCEPT:</b> Photography for Nabda's clinic-facing pages — the receptionist's side of the counter, where the software actually lands.
+<b>SUBJECT:</b> A clinic receptionist in her thirties at a modest Cairo practice, mid-task at a desk with a monitor and an open paper appointment book beside it, glancing at the screen. Modest, real workwear. The waiting room visible and softly out of focus behind her, with two ordinary patients seated.
+<b>STYLE:</b> Documentary editorial photography, unposed, natural colour, mild grain, 35mm prime look, no retouching beyond a colour pass.
+<b>COMPOSITION:</b> Three-quarter view from slightly behind the counter, subject on the right third, the paper book and the screen both readable as shapes, clean horizontal space on the left for text.
+<b>COLORS:</b> Neutral warm interior, beige and pale green walls typical of Egyptian clinics, one incidental teal element near <i>#0E7C74</i>; overall gently desaturated.
+<b>LIGHTING:</b> Mixed daylight and overhead fluorescent, honestly rendered rather than corrected away; soft shadows; no flash.
+<b>MOOD:</b> Competent, busy, ordinary, human. The dignity of routine work.
+<b>DETAILS:</b> Real clutter — a stack of files, a landline, a tea glass; the monitor content not legible; no branded software visible on screen.
+<b>FORMAT:</b> 3:2 landscape, 3000px wide, editorial crop.
+<b>QUALITY:</b> Editorial photography, natural colour science, print-grade sharpness.
+<b>NEGATIVE PROMPT:</b> stock photo smile at camera, glossy modern hospital, western clinic interior, blue LED lighting, futuristic screens, holograms, floating UI overlays, lab coats posed with crossed arms, empty spotless set, studio lighting, plain background, text, watermark, logo, oversaturation.</pre>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span class="t">AI image prompt — OG / link-share card</span><button class="copy" type="button">Copy</button></div>
+<pre><b>CONCEPT:</b> Open Graph share card for nabda.health — what appears when someone forwards a Nabda link on WhatsApp.
+<b>SUBJECT:</b> A wide graphic composition: deep teal-black field, a logo mark locked to the left third at moderate size, a long thin horizontal line running across the lower portion of the canvas with exactly one sharp heartbeat spike in it, and open space in the right two thirds reserved for one line of type.
+<b>STYLE:</b> Minimal editorial graphic design, flat with one soft atmospheric gradient, disciplined Swiss layout, premium restraint. No illustration, no photography.
+<b>COMPOSITION:</b> 1.91:1 wide, left-anchored mark, type space right, the heartbeat line crossing the full width at roughly 72% height, large deliberate emptiness above.
+<b>COLORS:</b> Ground from <i>#0B3B38</i> upper right to <i>#04191A</i> lower left; mark and heartbeat line in pale mint <i>#8FD9CD</i>; one small gold dot <i>#F6D08A</i> above the spike.
+<b>LIGHTING:</b> One soft wide glow in the upper right for depth, no visible source, no rays.
+<b>MOOD:</b> Calm, credible, nocturnal, premium. Legible as a 300px thumbnail in a chat thread.
+<b>DETAILS:</b> Heartbeat line stroke roughly 3px at 1200 width; exactly one spike; no banding in the gradient; no frame or border; type area genuinely clean.
+<b>FORMAT:</b> 1200×630, Open Graph card, flat graphic, not a mockup.
+<b>QUALITY:</b> Production social asset, crisp when downscaled to 300px, no compression artefacts.
+<b>NEGATIVE PROMPT:</b> text, letters, watermark, doctor, stethoscope, hospital, human figure, heart shape, cross, phone mockup, browser frame, sparkles, particles, lens flare, repeating ECG waveform, grid pattern, purple, blue, neon, border, drop shadow, busy detail.</pre>
+    </div>
+
+    <div class="card">
+      <span class="lbl">Rollout — build in this order</span>
+      <div class="tw" style="margin-top:.4rem"><table>
+        <tr><th>Phase</th><th>Produce</th><th>Why first</th></tr>
+        <tr><td>Week 1</td><td>Nuqta mark in all lockups (AR/EN, stacked, reversed, mono), full colour tokens, both type families licensed and subset</td><td>Nothing else can be produced without these, and they unblock the product team immediately</td></tr>
+        <tr><td>Week 2</td><td>App icons A–E, favicon set, OG card, WhatsApp Business profile</td><td>These are the surfaces users meet before the website — store listing and forwarded links</td></tr>
+        <tr><td>Week 3</td><td>Pulse avatar as a Lottie/CSS component with all seven states, plus the handoff behaviour</td><td>Pulse is the differentiator; the state machine needs engineering lead time</td></tr>
+        <tr><td>Week 4</td><td>Component library in Figma from §08, specialty icon set, landing page build</td><td>Design and engineering can now work in parallel against fixed tokens</td></tr>
+        <tr><td>Week 5–6</td><td>Photography shoot (§05 direction), social template set, clinic/B2B kit with Musallab</td><td>Photography is the longest lead item and the easiest to get wrong — brief it against a finished system, not a moodboard</td></tr>
+      </table></div>
+    </div>
+
+    <p class="note">One last thing, and it matters more than any asset in this document: <strong>the identity is only as trustworthy as the availability data behind it.</strong> A calm, premium brand attached to a booking that doesn't hold is worse than no brand at all — it converts a stranger's hope into a specific grievance. Ship the design system when the inventory is real.</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <span class="lk"><svg viewBox="0 0 132 116" style="width:22px"><use href="#m-nuqta-min"/></svg>
+    <span style="font-family:var(--f-display);font-weight:600;letter-spacing:-.03em;font-size:1rem;color:var(--text)">nabda</span></span>
+  <span>Brand system v1.0 · Egypt &amp; Levant · Arabic-first</span>
+  <span class="mono" style="color:var(--text-3)">صحتك تبدأ بنبضة</span>
+</footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var root=document.documentElement;
+
+  /* ---- theme ---- */
+  var themeBtn=document.getElementById('themeBtn');
+  function effective(){
+    var a=root.getAttribute('data-theme');
+    if(a) return a;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  }
+  themeBtn.addEventListener('click',function(){
+    var next=effective()==='dark'?'light':'dark';
+    root.setAttribute('data-theme',next);
+    themeBtn.textContent=next==='dark'?'Light':'Dark';
+  });
+  themeBtn.textContent=effective()==='dark'?'Light':'Dark';
+
+  /* ---- language ---- */
+  var langBtn=document.getElementById('langBtn');
+  langBtn.addEventListener('click',function(){
+    var ar=root.getAttribute('data-lang')==='ar';
+    if(ar){root.removeAttribute('data-lang');}else{root.setAttribute('data-lang','ar');}
+    langBtn.textContent=ar?'عربي':'EN';
+    langBtn.setAttribute('aria-pressed',String(!ar));
+  });
+
+  /* ---- copy buttons ---- */
+  Array.prototype.forEach.call(document.querySelectorAll('.copy'),function(btn){
+    btn.addEventListener('click',function(){
+      var pre=btn.closest('.prompt').querySelector('pre');
+      if(!pre) return;
+      var txt=pre.innerText;
+      var done=function(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy';},1600);};
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(txt).then(done,function(){fallback(txt,done);});
+      }else{fallback(txt,done);}
+    });
+  });
+  function fallback(txt,cb){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.select();document.execCommand('copy');
+      document.body.removeChild(ta);cb();
+    }catch(e){}
+  }
+
+  /* ---- hero heartbeat trace ---- */
+  var cv=document.getElementById('trace');
+  if(cv&&cv.getContext){
+    var ctx=cv.getContext('2d'),pts=[],W=0,H=0,dpr=1,head=0,fade=1,raf=null;
+    var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function build(){
+      dpr=Math.min(window.devicePixelRatio||1,2);
+      W=cv.clientWidth;H=cv.clientHeight;
+      cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      var y0=H*0.66,c=W*0.54;
+      pts=[];
+      for(var x=-10;x<c-96;x+=9)pts.push([x,y0]);
+      var seq=[[-96,0],[-70,0],[-58,-12],[-44,0],[-20,0],[-9,7],[0,-60],[13,38],[24,0],[44,0],[64,-17],[88,-5],[104,0]];
+      for(var i=0;i<seq.length;i++)pts.push([c+seq[i][0],y0+seq[i][1]]);
+      for(var x2=c+114;x2<=W+12;x2+=9)pts.push([x2,y0]);
+    }
+    function stroke(n){
+      if(n<2)return;
+      var grad=ctx.createLinearGradient(0,0,W,0);
+      grad.addColorStop(0,'rgba(143,217,205,0)');
+      grad.addColorStop(0.18,'rgba(143,217,205,0.55)');
+      grad.addColorStop(1,'rgba(143,217,205,0.9)');
+      ctx.strokeStyle=grad;ctx.lineWidth=2.2;ctx.lineJoin='round';ctx.lineCap='round';
+      ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);
+      for(var i=1;i<n;i++)ctx.lineTo(pts[i][0],pts[i][1]);
+      ctx.stroke();
+    }
+    function dot(p){
+      ctx.save();
+      ctx.shadowBlur=18;ctx.shadowColor='rgba(229,169,60,0.95)';
+      ctx.fillStyle='#F6D08A';
+      ctx.beginPath();ctx.arc(p[0],p[1],3.4,0,Math.PI*2);ctx.fill();
+      ctx.restore();
+    }
+    function frame(){
+      ctx.clearRect(0,0,W,H);
+      ctx.globalAlpha=fade;
+      if(reduce){stroke(pts.length);ctx.globalAlpha=1;return;}
+      head+=Math.max(1,pts.length/230);
+      if(head>=pts.length){
+        head=pts.length;fade-=0.02;
+        if(fade<=0){fade=1;head=0;}
+      }
+      var n=Math.floor(head);
+      stroke(n);
+      if(n>1&&n<pts.length)dot(pts[n-1]);
+      ctx.globalAlpha=1;
+      raf=requestAnimationFrame(frame);
+    }
+    function start(){
+      build();head=0;fade=1;
+      if(raf)cancelAnimationFrame(raf);
+      if(reduce){ctx.clearRect(0,0,W,H);stroke(pts.length);}else{frame();}
+    }
+    start();
+    var t=null;
+    window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(start,180);});
+  }
+})();
+</script>
+<style>
+html{scroll-behavior:smooth}
+.sec{scroll-margin-top:64px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
