@@ -14,13 +14,10 @@ Pulse operates as the central intelligence of the Nabda platform, reducing admin
 *   **Automated Prescription Extraction:** Analyzes the finalized transcription to extract medications, dosages, and instructions, generating a structured prescription.
 *   **Verification & Saving:** Returns the extracted prescription to the doctor for a final review and edit. Upon approval, the data is saved directly to the patient's secure electronic profile.
 
-## System Architecture
-
-*Note: Update this section based on specific deployment configurations.*
-
-*   **Backend:** ASP.NET Core Web API, C#
-*   **Database:** SQL Server, Entity Framework (EF) Core
-*   **AI Orchestration:** Pulse AI Model 
+### 🏢 CMS Architecture
+*   **Resource Management:** Flexible management of clinic operations, staff scheduling, and facility resources.
+*   **Patient Profiles:** Centralized and secure electronic health records (EHR) management.
+*   **Content Control:** Administrative dashboards for managing clinic data, FAQs, and system configurations.
 
 ## Workflow: Automated Documentation
 
