@@ -1,0 +1,1 @@
+export const THEME_INIT_SCRIPT = `(function(){try{var v=localStorage.getItem('nabda-theme');var t=v==='light'||v==='dark'||v==='system'?v:'system';var r=document.documentElement;r.dataset.themePreference=t;if(t==='system'){r.removeAttribute('data-theme')}else{r.dataset.theme=t}}catch(e){document.documentElement.dataset.themePreference='system'}})();`;

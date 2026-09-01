@@ -1,0 +1,643 @@
+.reception-workspace {
+  inline-size: min(100%, 1640px);
+  margin-inline: auto;
+  padding: clamp(16px, 2.4vw, 32px);
+  display: grid;
+  gap: 24px;
+}
+
+.reception-page-header,
+.reception-section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.reception-page-header h1,
+.reception-section-heading h2 {
+  margin: 3px 0 6px;
+  font-family: var(--f-display);
+  font-weight: 550;
+  letter-spacing: -0.025em;
+}
+
+.reception-page-header h1 {
+  font-size: clamp(1.8rem, 4vw, 2.65rem);
+}
+
+.reception-page-header p,
+.reception-section-heading p {
+  max-inline-size: 680px;
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.reception-page-header .type-label,
+.reception-section-heading .type-label {
+  color: var(--action-primary-bg);
+}
+
+.reception-page-header .ui-button kbd {
+  min-inline-size: 24px;
+  padding: 2px 5px;
+  border: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+  border-radius: var(--r-xs);
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+}
+
+.reception-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.reception-metrics .ui-card {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 10px;
+  box-shadow: none;
+}
+
+.reception-metrics .ui-card > svg {
+  color: var(--action-primary-bg);
+}
+
+.reception-metrics strong {
+  font-family: var(--f-display);
+  font-size: 1.5rem;
+}
+
+.reception-metrics span {
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+}
+
+.reception-section,
+.reception-pulse-panel {
+  min-inline-size: 0;
+  padding: clamp(16px, 2vw, 24px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-xl);
+  background: var(--surface-raised);
+  box-shadow: var(--e-1);
+}
+
+.reception-live-badge,
+.reception-estimate-note,
+.reception-shortcut-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+}
+
+.reception-live-badge {
+  min-block-size: 36px;
+  padding-inline: 11px;
+  border: 1px solid color-mix(in srgb, var(--status-available) 42%, var(--border-default));
+  border-radius: var(--r-full);
+  background: color-mix(in srgb, var(--status-available) 9%, var(--surface-raised));
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.reception-live-badge svg {
+  color: var(--status-available);
+}
+
+.reception-shortcut-hint kbd {
+  min-block-size: 26px;
+  min-inline-size: 26px;
+  padding-inline: 5px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-xs);
+  display: inline-grid;
+  place-items: center;
+  background: var(--surface-sunken);
+  color: var(--text-primary);
+  font-family: var(--f-mono);
+}
+
+.reception-conflict {
+  margin-block: 18px 0;
+  padding: 14px;
+  border: 1px solid var(--status-held);
+  border-radius: var(--r-lg);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  background: color-mix(in srgb, var(--status-held) 10%, var(--surface-raised));
+}
+
+.reception-conflict > svg {
+  color: var(--status-held);
+}
+
+.reception-conflict p {
+  margin: 3px 0 0;
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+}
+
+.reception-schedule-scroll {
+  max-inline-size: 100%;
+  margin-block-start: 18px;
+  overflow: auto;
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-lg);
+  overscroll-behavior-inline: contain;
+  scrollbar-gutter: stable;
+}
+
+.reception-schedule-scroll:focus-visible {
+  outline-offset: -3px;
+}
+
+.reception-schedule-grid {
+  min-inline-size: 850px;
+  display: grid;
+  grid-template-columns: 82px repeat(3, minmax(230px, 1fr));
+}
+
+.reception-grid-corner,
+.reception-doctor-header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 4;
+  min-block-size: 68px;
+  padding: 11px;
+  border-block-end: 1px solid var(--border-default);
+  border-inline-end: 1px solid var(--border-subtle);
+  display: grid;
+  align-content: center;
+  background: var(--surface-sunken);
+}
+
+.reception-grid-corner {
+  inset-inline-start: 0;
+  z-index: 6;
+  color: var(--text-primary);
+  font-size: 0.76rem;
+}
+
+.reception-doctor-header strong {
+  font-size: 0.9rem;
+}
+
+.reception-doctor-header span {
+  color: var(--text-primary);
+  font-size: 0.72rem;
+}
+
+.reception-time-cell {
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: 3;
+  min-block-size: 74px;
+  padding: 10px;
+  border-block-end: 1px solid var(--border-subtle);
+  border-inline-end: 1px solid var(--border-default);
+  display: grid;
+  place-items: start center;
+  background: var(--surface-raised);
+  color: var(--text-secondary);
+  font-family: var(--f-mono);
+  font-size: 0.74rem;
+}
+
+.reception-slot-cell {
+  min-block-size: 74px;
+  padding: 5px;
+  border-block-end: 1px solid var(--border-subtle);
+  border-inline-end: 1px solid var(--border-subtle);
+  background: linear-gradient(
+    to bottom,
+    transparent calc(50% - 0.5px),
+    var(--border-subtle) 50%,
+    transparent calc(50% + 0.5px)
+  );
+}
+
+.reception-empty-slot,
+.reception-appointment-block {
+  inline-size: 100%;
+  min-block-size: 62px;
+  border-radius: var(--r-md);
+  cursor: pointer;
+}
+
+.reception-empty-slot {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-tertiary);
+  opacity: 0;
+}
+
+.reception-slot-cell:hover .reception-empty-slot,
+.reception-empty-slot:focus-visible {
+  border-color: var(--border-default);
+  background: var(--surface-sunken);
+  opacity: 1;
+}
+
+.reception-appointment-block {
+  --appointment-status: var(--status-booked);
+  padding: 7px;
+  border: 1px solid color-mix(in srgb, var(--appointment-status) 54%, var(--border-default));
+  border-inline-start-width: 4px;
+  display: grid;
+  justify-items: start;
+  gap: 5px;
+  background: color-mix(in srgb, var(--appointment-status) 10%, var(--surface-raised));
+  color: var(--text-primary);
+  text-align: start;
+}
+
+.reception-appointment-block.is-checked_in {
+  --appointment-status: var(--status-checked-in);
+}
+
+.reception-appointment-block.is-in_progress {
+  --appointment-status: var(--status-in-progress);
+}
+
+.reception-appointment-block.is-completed {
+  --appointment-status: var(--status-completed);
+}
+
+.reception-appointment-block.is-cancelled {
+  --appointment-status: var(--status-cancelled);
+}
+
+.reception-appointment-block .ui-status {
+  min-block-size: 22px;
+  padding-inline: 5px;
+  font-size: 0.64rem;
+}
+
+.reception-appointment-block .ui-status__icon {
+  inline-size: 16px;
+  block-size: 16px;
+}
+
+.reception-queue-board {
+  max-inline-size: 100%;
+  margin-block-start: 18px;
+  padding-block-end: 8px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(210px, 1fr));
+  gap: 10px;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+
+.reception-queue-column {
+  min-block-size: 240px;
+  padding: 9px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  background: var(--surface-bg);
+}
+
+.reception-queue-column h3 {
+  min-block-size: 38px;
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.82rem;
+}
+
+.reception-queue-column h3 span {
+  min-inline-size: 24px;
+  margin-inline-start: auto;
+  padding: 3px;
+  border-radius: var(--r-full);
+  background: var(--surface-sunken);
+  text-align: center;
+}
+
+.reception-queue-list {
+  display: grid;
+  gap: 7px;
+}
+
+.reception-queue-card {
+  min-block-size: 116px;
+  padding: 10px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-md);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 3px 9px;
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  text-align: start;
+  cursor: pointer;
+}
+
+.reception-queue-card[aria-pressed="true"] {
+  border-color: var(--border-focus);
+  box-shadow: inset 0 0 0 1px var(--border-focus);
+}
+
+.reception-queue-position {
+  grid-row: 1 / span 3;
+  inline-size: 34px;
+  block-size: 34px;
+  border-radius: var(--r-full);
+  display: grid;
+  place-items: center;
+  background: var(--action-primary-bg);
+  color: var(--action-primary-fg);
+  font-family: var(--f-mono);
+  font-weight: 700;
+}
+
+.reception-queue-card small,
+.reception-wait {
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+}
+
+.reception-wait {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.reception-queue-empty {
+  margin: 20px 0;
+  color: var(--text-primary);
+  text-align: center;
+  font-size: 0.78rem;
+}
+
+.reception-estimate-note {
+  margin: 8px 0 0;
+}
+
+.reception-estimate-note svg {
+  color: var(--status-available);
+}
+
+.reception-lower-grid {
+  min-inline-size: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 24px;
+}
+
+.reception-patient-search {
+  position: relative;
+  margin-block-start: 18px;
+  display: block;
+}
+
+.reception-patient-search > svg {
+  position: absolute;
+  inset-inline-start: 12px;
+  inset-block-start: 12px;
+  z-index: 1;
+  color: var(--text-secondary);
+}
+
+.reception-patient-search .ui-control {
+  padding-inline: 42px;
+}
+
+.reception-patient-search kbd {
+  position: absolute;
+  inset-inline-end: 10px;
+  inset-block-start: 9px;
+  min-inline-size: 26px;
+  padding: 3px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-xs);
+  background: var(--surface-sunken);
+  font-family: var(--f-mono);
+  text-align: center;
+}
+
+.reception-patient-results,
+.reception-billing ul {
+  margin: 14px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 7px;
+  list-style: none;
+}
+
+.reception-patient-results li {
+  min-block-size: 60px;
+  padding: 8px;
+  border-block-end: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.reception-patient-results li div {
+  display: grid;
+  gap: 2px;
+}
+
+.reception-patient-results .ltr {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+
+.reception-billing li {
+  padding: 10px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md);
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) 100px auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.reception-billing li.is-paid {
+  border-color: color-mix(in srgb, var(--status-available) 45%, var(--border-default));
+  background: color-mix(in srgb, var(--status-available) 7%, var(--surface-raised));
+}
+
+.reception-billing li > div {
+  display: grid;
+  gap: 3px;
+}
+
+.reception-billing li > div .ltr {
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+}
+
+.reception-receipt-details {
+  color: var(--text-secondary);
+  font-size: 0.65rem;
+  line-height: 1.5;
+}
+
+.reception-billing .ui-control {
+  min-inline-size: 0;
+}
+
+.reception-print-note {
+  margin-block-end: 0;
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+}
+
+.reception-pulse-panel {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.42fr) minmax(420px, 1fr);
+  align-items: stretch;
+  gap: 20px;
+  border-color: color-mix(in srgb, var(--pulse-core) 25%, var(--border-default));
+}
+
+.reception-pulse-panel > .pulse-chat {
+  block-size: 620px;
+  border-radius: var(--r-lg);
+}
+
+.reception-pulse-panel .pulse-handoff-button {
+  padding-inline: 14px;
+  border: 1px solid var(--status-available);
+  background: color-mix(in srgb, var(--status-available) 12%, var(--surface-raised));
+  color: var(--text-primary);
+}
+
+.reception-pulse-panel .pulse-chat.is-handoff {
+  border-color: var(--status-available);
+  box-shadow: none;
+}
+
+.reception-dialog-form {
+  display: grid;
+  gap: 16px;
+}
+
+.reception-dialog-form > div:not(.reception-dialog-actions, .reception-price-confirm) {
+  display: grid;
+  gap: 7px;
+}
+
+.reception-field-label {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.reception-price-confirm {
+  padding: 12px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-md);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 9px;
+  background: var(--surface-sunken);
+  color: var(--text-primary);
+}
+
+.reception-price-confirm svg {
+  color: var(--action-primary-bg);
+}
+
+.reception-dialog-actions {
+  padding-block-start: 14px;
+  border-block-start: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.reception-form-error {
+  margin: 0;
+  color: var(--status-cancelled);
+}
+
+@media (max-width: 1100px) {
+  .reception-lower-grid,
+  .reception-pulse-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .reception-pulse-panel > .pulse-chat {
+    block-size: 600px;
+  }
+}
+
+@media (max-width: 767px) {
+  .reception-workspace {
+    padding: 12px;
+  }
+
+  .reception-page-header,
+  .reception-section-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .reception-page-header .ui-button {
+    inline-size: 100%;
+  }
+
+  .reception-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .reception-section,
+  .reception-pulse-panel {
+    padding: 14px;
+    border-radius: var(--r-lg);
+  }
+
+  .reception-conflict {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .reception-conflict .ui-button {
+    grid-column: 1 / -1;
+  }
+
+  .reception-billing li {
+    grid-template-columns: minmax(0, 1fr) 96px;
+  }
+
+  .reception-billing li .ui-button {
+    grid-column: 1 / -1;
+  }
+
+  .reception-pulse-panel > .pulse-chat {
+    block-size: 640px;
+  }
+}
+
+@media print {
+  .staff-sidebar,
+  .staff-topbar,
+  .reception-workspace > :not(.reception-lower-grid),
+  .reception-lower-grid > :not(.reception-billing),
+  .reception-billing .ui-button,
+  .reception-billing li:not(.is-paid) {
+    display: none !important;
+  }
+
+  .reception-billing li.is-paid:not(.is-receipt-target) {
+    display: none !important;
+  }
+
+  .reception-billing {
+    border: 0;
+    box-shadow: none;
+  }
+}

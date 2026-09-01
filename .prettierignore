@@ -1,0 +1,13 @@
+.next
+node_modules
+coverage
+playwright-report
+test-results
+*.html
+*.docx
+*.zip
+*.png
+*.svg
+AGENTS.md
+public/fonts
+pnpm-lock.yaml

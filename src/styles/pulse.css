@@ -1,0 +1,586 @@
+.pulse-core {
+  transition:
+    background var(--duration-pulse-handoff) var(--ease-product),
+    box-shadow var(--duration-pulse-handoff) var(--ease-product),
+    opacity var(--duration-pulse-handoff) var(--ease-product);
+}
+
+.pulse-state-handoff,
+.pulse-state-handoff * {
+  animation: none !important;
+}
+
+.pulse-state-handoff .pulse-core {
+  background: var(--status-available);
+  box-shadow: none;
+}
+
+.pulse-state-handoff .pulse-listening-rings,
+.pulse-state-handoff .pulse-thinking-arc,
+.pulse-state-handoff .pulse-speaking-bars,
+.pulse-state-handoff .pulse-acting-line {
+  display: none;
+}
+
+.pulse-page {
+  min-block-size: calc(100dvh - 72px);
+  padding-block: clamp(12px, 3vw, 34px);
+}
+
+.pulse-page-shell {
+  inline-size: min(920px, calc(100% - 24px));
+}
+
+.pulse-chat {
+  min-inline-size: 0;
+  min-block-size: 0;
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-xl);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  box-shadow: var(--e-2);
+}
+
+.pulse-chat.is-handoff {
+  --pulse-core: var(--status-available);
+  --pulse-fg: var(--status-available);
+  --pulse-glow: var(--accent-soft);
+  --pulse-fg-on-light: var(--action-primary-bg);
+  --e-pulse: none;
+}
+
+.pulse-chat--route {
+  block-size: min(780px, calc(100dvh - 110px));
+  min-block-size: 620px;
+}
+
+.pulse-chat-header {
+  min-block-size: 76px;
+  padding: 13px 16px;
+  border-block-end: 1px solid color-mix(in srgb, var(--pulse-fg) 18%, transparent);
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 11px;
+  background: var(--pulse-surface);
+  color: var(--text-inverse);
+}
+
+.pulse-chat-header h1 {
+  margin: 1px 0 0;
+  color: var(--text-inverse);
+  font-family: var(--f-display);
+  font-size: 1.12rem;
+  font-weight: 500;
+}
+
+.pulse-chat-header .type-label {
+  margin: 0;
+  color: var(--pulse-fg);
+}
+
+.pulse-chat-header .ui-icon-button {
+  border-color: color-mix(in srgb, var(--text-inverse) 32%, transparent);
+  color: var(--text-inverse);
+}
+
+.pulse-identity {
+  min-block-size: 30px;
+  padding-inline: 9px;
+  border: 1px solid color-mix(in srgb, var(--pulse-core) 45%, transparent);
+  border-radius: var(--r-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--pulse-fg);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.pulse-identity.is-human {
+  border-color: color-mix(in srgb, var(--status-available) 52%, transparent);
+  color: var(--status-available);
+}
+
+.pulse-not-human {
+  min-block-size: 38px;
+  padding: 8px 14px;
+  border-block-end: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--surface-sunken);
+  color: var(--text-primary);
+  font-size: 0.75rem;
+}
+
+.pulse-message-list {
+  min-block-size: 0;
+  flex: 1;
+  padding: 18px clamp(12px, 3vw, 24px);
+  overflow-y: auto;
+  overscroll-behavior-block: contain;
+  scroll-behavior: smooth;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--accent-soft) 8%, transparent),
+      transparent 28%
+    ),
+    var(--surface-bg);
+}
+
+.pulse-message-list:focus-visible {
+  outline: 3px solid var(--border-focus);
+  outline-offset: -4px;
+}
+
+.pulse-message {
+  inline-size: min(86%, 620px);
+  margin-block-end: 13px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  background: var(--surface-raised);
+  box-shadow: var(--e-1);
+}
+
+.pulse-message--patient {
+  margin-inline-start: auto;
+  border-color: color-mix(in srgb, var(--action-primary-bg) 30%, var(--border-subtle));
+  background: var(--surface-tint);
+}
+
+.pulse-message--human {
+  border-color: color-mix(in srgb, var(--status-available) 42%, var(--border-subtle));
+}
+
+.pulse-message-author {
+  display: block;
+  margin-block-end: 4px;
+  color: var(--text-secondary);
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.pulse-message--pulse .pulse-message-author {
+  color: var(--pulse-fg-on-light);
+}
+
+.pulse-message--human .pulse-message-author {
+  color: var(--action-primary-bg);
+}
+
+.pulse-message > p {
+  margin: 0;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+.pulse-stream-caret {
+  inline-size: 2px;
+  block-size: 1em;
+  margin-inline-start: 3px;
+  display: inline-block;
+  background: var(--pulse-fg-on-light);
+  animation: pulse-stream-caret 680ms steps(1) infinite;
+  vertical-align: text-bottom;
+}
+
+@keyframes pulse-stream-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+.pulse-chat-suggestions {
+  padding: 10px 14px;
+  border-block-start: 1px solid var(--border-subtle);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  background: var(--surface-raised);
+}
+
+.pulse-chat-suggestions button {
+  min-block-size: 52px;
+  padding: 8px 10px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 0.74rem;
+  text-align: start;
+}
+
+[dir="rtl"] .pulse-chat-suggestions button svg {
+  transform: scaleX(-1);
+}
+
+.pulse-chat-controls {
+  border-block-start: 1px solid var(--border-subtle);
+  background: var(--surface-raised);
+}
+
+.pulse-chat-composer {
+  padding: 10px 12px 7px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 8px;
+}
+
+.pulse-chat-composer textarea {
+  min-inline-size: 0;
+  min-block-size: 48px;
+  max-block-size: 130px;
+  padding: 12px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-md);
+  resize: vertical;
+  background: var(--surface-bg);
+  color: var(--text-primary);
+  font: inherit;
+  text-align: start;
+}
+
+.pulse-chat-composer textarea:focus-visible,
+.pulse-chat-suggestions button:focus-visible,
+.pulse-handoff-button:focus-visible,
+.pulse-dock-trigger:focus-visible {
+  outline: 3px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+.pulse-chat-composer textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.68;
+}
+
+.pulse-chat-composer .ui-button {
+  min-inline-size: 94px;
+}
+
+.pulse-chat-control-row {
+  min-block-size: 39px;
+  padding: 0 12px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.pulse-chat-control-row p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.68rem;
+}
+
+.pulse-handoff-button {
+  min-block-size: 44px;
+  padding-inline: 9px;
+  border: 0;
+  border-radius: var(--r-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--action-primary-bg);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.pulse-tool-card {
+  margin-block-start: 12px;
+  border: 1px solid color-mix(in srgb, var(--pulse-fg-on-light) 44%, var(--border-default));
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--surface-raised);
+}
+
+.pulse-tool-card > header {
+  padding: 12px;
+  border-block-end: 1px solid var(--border-subtle);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 9px;
+  background: color-mix(in srgb, var(--pulse-glow) 16%, var(--surface-raised));
+}
+
+.pulse-tool-card h2,
+.pulse-tool-card .type-label {
+  margin: 0;
+}
+
+.pulse-tool-card .type-label {
+  color: var(--pulse-fg-on-light);
+}
+
+.pulse-tool-icon {
+  inline-size: 38px;
+  block-size: 38px;
+  border-radius: var(--r-sm);
+  display: grid;
+  place-items: center;
+  background: var(--pulse-surface);
+  color: var(--pulse-fg);
+}
+
+.pulse-tool-card dl {
+  margin: 0;
+  padding: 7px 12px;
+}
+
+.pulse-tool-card dl > div {
+  min-block-size: 42px;
+  padding-block: 7px;
+  border-block-end: 1px solid var(--border-subtle);
+  display: grid;
+  grid-template-columns: minmax(88px, 0.55fr) 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+.pulse-tool-card dl > div:last-child {
+  border-block-end: 0;
+}
+
+.pulse-tool-card dt {
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+}
+
+.pulse-tool-card dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.pulse-tool-card > footer {
+  padding: 10px 12px;
+  border-block-start: 1px solid var(--border-subtle);
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 7px;
+}
+
+.pulse-tool-card > footer .ui-button {
+  inline-size: 100%;
+}
+
+.pulse-tool-result {
+  margin: 0;
+  padding: 11px 12px;
+  border-block-start: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--action-primary-bg);
+  font-size: 0.75rem;
+}
+
+.pulse-emergency {
+  margin: 12px;
+  padding: clamp(18px, 4vw, 28px);
+  border: 2px solid var(--action-danger-bg);
+  border-radius: var(--r-lg);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  background: color-mix(in srgb, var(--action-danger-bg) 8%, var(--surface-raised));
+}
+
+.pulse-emergency-icon {
+  inline-size: 48px;
+  block-size: 48px;
+  border-radius: var(--r-full);
+  display: grid;
+  place-items: center;
+  background: var(--action-danger-bg);
+  color: var(--action-danger-fg);
+}
+
+.pulse-emergency h2 {
+  margin: 3px 0 7px;
+  font-family: var(--f-display);
+}
+
+.pulse-emergency p {
+  margin: 0;
+  line-height: 1.65;
+}
+
+.pulse-emergency-actions,
+.pulse-emergency-lock {
+  grid-column: 1 / -1;
+}
+
+.pulse-emergency-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.pulse-emergency-actions .ui-button {
+  inline-size: 100%;
+}
+
+.pulse-emergency-lock {
+  padding: 10px;
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--surface-raised);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+
+.pulse-dock-trigger {
+  position: fixed;
+  z-index: 70;
+  inset-inline-end: 14px;
+  inset-block-end: 86px;
+  min-block-size: 52px;
+  padding-inline: 13px;
+  border: 1px solid color-mix(in srgb, var(--pulse-fg) 26%, transparent);
+  border-radius: var(--r-full);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--pulse-surface);
+  color: var(--pulse-fg);
+  box-shadow: var(--e-pulse);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.pulse-loader-dot {
+  inline-size: 18px;
+  block-size: 18px;
+  border: 2px solid var(--pulse-fg-on-light);
+  border-radius: 50%;
+  background: var(--pulse-core);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--pulse-glow) 24%, transparent);
+}
+
+.pulse-dock-backdrop {
+  position: fixed;
+  z-index: 80;
+  inset: 0;
+  background: color-mix(in srgb, var(--surface-inverse) 72%, transparent);
+}
+
+.pulse-dock-panel {
+  position: absolute;
+  inset: 0;
+}
+
+.pulse-chat--dock {
+  inline-size: 100%;
+  block-size: 100%;
+  border: 0;
+  border-radius: 0;
+}
+
+@media (min-width: 1024px) {
+  .pulse-dock-trigger {
+    inset-block-end: 24px;
+    inset-inline-end: 24px;
+  }
+
+  .pulse-dock-backdrop {
+    inset: auto;
+    background: transparent;
+  }
+
+  .pulse-dock-panel {
+    position: fixed;
+    z-index: 80;
+    inset-inline-end: 24px;
+    inset-block: 82px 24px;
+    inline-size: min(430px, calc(100vw - 48px));
+  }
+
+  .pulse-chat--dock {
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-xl);
+  }
+}
+
+@media (max-width: 640px) {
+  .pulse-chat--route {
+    block-size: calc(100dvh - 84px);
+    min-block-size: 560px;
+  }
+
+  .pulse-page {
+    padding-block: 6px;
+  }
+
+  .pulse-page-shell {
+    inline-size: calc(100% - 12px);
+  }
+
+  .pulse-chat-header {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .pulse-identity {
+    display: none;
+  }
+
+  .pulse-chat-suggestions {
+    grid-template-columns: 1fr;
+  }
+
+  .pulse-message {
+    inline-size: 94%;
+  }
+
+  .pulse-chat-composer {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .pulse-chat-composer .ui-button {
+    min-inline-size: 72px;
+    padding-inline: 10px;
+  }
+
+  .pulse-chat-control-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pulse-emergency {
+    grid-template-columns: 1fr;
+  }
+
+  .pulse-emergency-actions,
+  .pulse-emergency-lock {
+    grid-column: auto;
+  }
+
+  .pulse-emergency-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-orb *,
+  .pulse-stream-caret {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .pulse-message-list {
+    scroll-behavior: auto;
+  }
+}

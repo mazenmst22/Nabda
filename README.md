@@ -1,42 +1,78 @@
-# Nabda
-> Your health starts with a pulse
+# Nabda web client
 
-Nabda is a comprehensive clinic management system designed to streamline healthcare operations and automate patient documentation. The core of the system is driven by **Pulse**, an integrated AI agent that assists both patients and medical professionals by handling inquiries and generating accurate medical records from consultations.
+Nabda is a bilingual, multi-clinic healthcare web client. Arabic is the default locale and renders RTL; English renders LTR. The repository currently runs against deterministic local mocks while preserving the HTTP contract expected from the future ASP.NET Core API.
 
-## Features
+## Requirements
 
-### 🧠 Pulse AI Agent
-Pulse operates as the central intelligence of the Nabda platform, reducing administrative overhead for doctors and improving patient communication.
+- Node.js 22
+- pnpm 11.19
+- Chromium for Playwright and Lighthouse (`pnpm exec playwright install --with-deps chromium`)
 
-*   **FAQ Handling:** Automatically processes and replies to standard patient questions and inquiries.
-*   **Consultation Recording:** Utilizes microphone input to securely record the physical conversation between the patient and the doctor.
-*   **Intelligent Transcription:** Converts the recorded consultation audio into text. Doctors maintain full control to review and edit the transcribed result for accuracy.
-*   **Automated Prescription Extraction:** Analyzes the finalized transcription to extract medications, dosages, and instructions, generating a structured prescription.
-*   **Verification & Saving:** Returns the extracted prescription to the doctor for a final review and edit. Upon approval, the data is saved directly to the patient's secure electronic profile.
+## Setup
 
-### 🏢 CMS Architecture
-*   **Resource Management:** Flexible management of clinic operations, staff scheduling, and facility resources.
-*   **Patient Profiles:** Centralized and secure electronic health records (EHR) management.
-*   **Content Control:** Administrative dashboards for managing clinic data, FAQs, and system configurations.
+```bash
+pnpm install --frozen-lockfile
+pnpm dev
+```
 
-## Workflow: Automated Documentation
+Open `http://localhost:3000/ar` or `http://localhost:3000/en`. The locale middleware redirects `/` to Arabic.
 
-1. **Record:** Doctor initiates Pulse recording during the patient examination.
-2. **Transcribe:** Pulse processes the audio and outputs text.
-3. **Review:** Doctor edits the raw text transcription if necessary.
-4. **Extract:** Doctor clicks "Extract"; Pulse processes the text to isolate prescription data.
-5. **Finalize:** Doctor reviews the generated prescription.
-6. **Save:** Doctor clicks "Save"; the prescription is attached to the patient profile and the consultation is logged.
+## Scripts
 
-## Getting Started
+| Command                     | Purpose                                                                  |
+| --------------------------- | ------------------------------------------------------------------------ |
+| `pnpm dev`                  | Start the Next.js development server                                     |
+| `pnpm build` / `pnpm start` | Build and serve the production application                               |
+| `pnpm lint`                 | ESLint, including `nabda/no-physical-properties`                         |
+| `pnpm format:check`         | Check Prettier formatting                                                |
+| `pnpm typecheck`            | Strict TypeScript validation                                             |
+| `pnpm test`                 | Vitest unit and API-contract tests                                       |
+| `pnpm test:e2e`             | Complete Playwright release suite against deterministic local mocks      |
+| `pnpm test:golden`          | Patient and clinical golden paths in both locales                        |
+| `pnpm test:a11y`            | Axe sweep of every application page in both locales                      |
+| `pnpm test:visual`          | RTL snapshots at 390 px and 1280 px                                      |
+| `pnpm test:visual:update`   | Deliberately regenerate visual baselines                                 |
+| `pnpm preview:shots`        | Export every preview state as PNGs and an HTML contact sheet             |
+| `pnpm bundle:check`         | Enforce the 120 KB gzip JavaScript budget per route and write the report |
+| `pnpm lighthouse`           | Enforce Slow 4G LCP and the route-owned JavaScript budget                |
 
-### Prerequisites
-*   [.NET 8.0 SDK](https://dotnet.microsoft.com/download) (or current version)
-*   [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
-*   Required API keys for the Pulse AI model
+## Architecture
 
-### Installation
+```text
+Next.js App Router
+  /[locale]
+    (public)       directory, clinic pages, shared booking, Pulse
+    (patient)      appointments, records, preferences, profile
+    (reception)    schedule, queue, patient and billing operations
+    (doctor)       encounter, capture, transcript and prescription review
+    (developer)    tenant configuration, templates, audit and health
 
-1. Clone the repository:
-   ```bash
-   git clone [https://github.com/your-username/nabda.git](https://github.com/your-username/nabda.git)
+src/components     shared UI, layout and domain components
+src/lib/api         typed fetch client and TanStack Query hooks
+src/lib/schemas     Zod boundary schemas, one per aggregate
+src/lib/auth|rbac   replaceable session adapter and permission policy
+src/mocks           MSW handlers, Egyptian fixtures and fault controls
+src/app/v1          deterministic in-process HTTP mock used by browser tests
+messages            ICU Arabic and English catalogues
+e2e                 journeys, accessibility and visual release gates
+```
+
+The client treats API responses as untrusted. Every successful body is parsed through Zod; development fails loudly, while production reports a schema failure and only degrades where a caller supplied a safe fallback. Mutations carry stable idempotency and correlation identifiers across retries, and updates require `If-Match`.
+
+## Switching from mocks to the real API
+
+1. Implement the worklist in [`docs/GAPS.md`](docs/GAPS.md), including headers, error envelopes, concurrency and streaming semantics.
+2. Configure the application API base URL at the single `ApiClient` composition point. The client already accepts `baseUrl`; keep all call sites on relative `/v1/...` paths.
+3. Replace the mock session implementation in `src/lib/auth/session.ts` with the OIDC adapter. No role checks should move into page components.
+4. Do not start `src/mocks/browser.ts` outside local/mock mode, and remove or disable the Next.js `src/app/v1` and `src/app/api/testing` mock routes in the deployment build.
+5. Run `pnpm test` against MSW for contract compatibility, then run `pnpm test:e2e` against an isolated backend tenant seeded with the same fixture identities.
+
+Mock controls and fault reproduction are documented in [`docs/RUNBOOK.md`](docs/RUNBOOK.md).
+
+## Developer preview harness
+
+`pnpm dev` enables the local-only preview at `/ar/dev/preview` and `/en/dev/preview`. The inventory is generated from `src/app/[locale]`, embeds each real route in an iframe, and seeds the existing mock-session cookie at the route's own scope so the normal authentication and RBAC guards still run. The route returns 404 unless both development mode and `NEXT_PUBLIC_ENABLE_PREVIEW=1` are active; it is also excluded from robots.
+
+Run `pnpm preview:shots` to capture the generated inventory in Arabic and English, light and dark, at 390 px and 1280 px. PNGs are written to the ignored `preview/shots/` directory and [`preview/index.html`](preview/index.html) is regenerated as a portable contact sheet. For a local diagnostic subset, set `PREVIEW_SHOTS_MATCH` to an entry-id regular expression or `PREVIEW_SHOTS_LIMIT` to a positive count.
+
+The rail lists unsupported scenario states as **Blocked** instead of substituting preview-only markup. These are routes whose current product implementation is fed by server fixtures and does not expose loading, empty, or error behavior through the existing MSW boundary; their exported image remains the real baseline route and the blocked reason is included in the contact-sheet caption.

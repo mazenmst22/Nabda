@@ -1,0 +1,697 @@
+.shell-main > .patient-workspace {
+  max-inline-size: 1120px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.patient-workspace {
+  display: grid;
+  gap: var(--space-24);
+}
+
+.patient-page-header {
+  padding: clamp(22px, 4vw, 36px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-24);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--accent-soft) 18%, transparent),
+      transparent 56%
+    ),
+    var(--surface-raised);
+  box-shadow: var(--e-1);
+}
+
+.patient-page-header h1 {
+  margin-block: 5px 8px !important;
+}
+
+.patient-page-header p:not(.type-label) {
+  max-inline-size: 630px;
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.patient-page-header > .ui-button,
+.patient-page-header > .patient-truth-badge {
+  flex: 0 0 auto;
+}
+
+.patient-section {
+  padding: clamp(18px, 3vw, 28px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  background: var(--surface-raised);
+  box-shadow: var(--e-1);
+}
+
+.patient-section-heading {
+  margin-block-end: var(--space-16);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+}
+
+.patient-section-heading h2 {
+  margin: 3px 0 0;
+  font-family: var(--f-display);
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+}
+
+.patient-section-heading p {
+  margin: 5px 0 0;
+  color: var(--text-secondary);
+}
+
+.patient-appointment-list,
+.patient-prescription-list,
+.patient-encounter-list {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.patient-appointment-card {
+  padding: var(--space-16);
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-md);
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr);
+  gap: var(--space-16);
+  background: var(--surface-raised);
+}
+
+.patient-appointment-date {
+  min-block-size: 78px;
+  border-radius: var(--r-md);
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  background: var(--surface-sunken);
+  color: var(--brand-deep);
+}
+
+.patient-appointment-date strong {
+  font-family: var(--f-display);
+  font-size: 1.6rem;
+}
+
+.patient-appointment-date span {
+  font-size: 0.72rem;
+}
+
+.patient-card-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-12);
+}
+
+.patient-card-heading h3 {
+  margin: 0;
+  font-family: var(--f-display);
+  font-size: 1rem;
+}
+
+.patient-card-heading p {
+  margin: 3px 0 0;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+}
+
+.patient-appointment-meta {
+  margin-block: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 15px;
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+}
+
+.patient-appointment-meta > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.patient-card-link,
+.patient-back-link {
+  min-block-size: 44px;
+  inline-size: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--action-primary-bg);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+[dir="rtl"] .patient-card-link svg,
+[dir="rtl"] .patient-back-link svg {
+  transform: scaleX(-1);
+}
+
+.patient-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-16);
+}
+
+.patient-overview-card {
+  min-block-size: 150px;
+  padding: var(--space-24);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-16);
+  background: var(--surface-raised);
+  box-shadow: var(--e-1);
+  transition:
+    transform var(--duration-product-fast) var(--ease-product),
+    border-color var(--duration-product-fast) var(--ease-product);
+}
+
+.patient-overview-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+.patient-overview-card > span,
+.patient-record-icon {
+  inline-size: 46px;
+  block-size: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-md);
+  background: var(--surface-sunken);
+  color: var(--action-primary-bg);
+}
+
+.patient-overview-card small {
+  color: var(--text-secondary);
+}
+
+.patient-overview-card h2 {
+  margin: 5px 0;
+  font-family: var(--f-display);
+}
+
+.patient-overview-card p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.patient-pulse-link {
+  inline-size: fit-content;
+  margin-inline: auto;
+}
+
+.patient-detail-page {
+  gap: var(--space-16);
+}
+
+.patient-detail-header {
+  padding-block: var(--space-24);
+}
+
+.patient-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-16);
+}
+
+.patient-detail-card,
+.patient-reschedule-card {
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  background: var(--surface-raised);
+  box-shadow: var(--e-1);
+}
+
+.patient-detail-card h2,
+.patient-reschedule-card h2 {
+  margin-block-start: 0;
+  font-family: var(--f-display);
+}
+
+.patient-detail-card dl {
+  margin: 0;
+}
+
+.patient-detail-card dl > div,
+.patient-profile-card dl > div {
+  min-block-size: 57px;
+  padding-block: 10px;
+  border-block-end: 1px solid var(--border-subtle);
+  display: grid;
+  grid-template-columns: minmax(100px, 0.55fr) 1fr;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.patient-detail-card dt,
+.patient-profile-card dt {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+
+.patient-detail-card dd,
+.patient-profile-card dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.patient-detail-card dd small {
+  margin-block-start: 3px;
+  display: block;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.patient-detail-actions {
+  margin-block-start: var(--space-24);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+.patient-detail-actions .ui-button {
+  flex: 1 1 180px;
+}
+
+.patient-action-notice {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--status-available);
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: color-mix(in srgb, var(--accent-soft) 18%, var(--surface-raised));
+  color: var(--text-secondary);
+}
+
+.patient-hold-countdown {
+  padding: 8px 10px;
+  border: 1px solid var(--status-held);
+  border-radius: var(--r-sm);
+  display: flex;
+  flex-direction: column;
+  color: var(--status-held);
+}
+
+.patient-hold-countdown small {
+  color: var(--text-secondary);
+}
+
+.patient-reschedule-card > p {
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.patient-reschedule-action {
+  inline-size: 100%;
+  margin-block-start: var(--space-16);
+}
+
+.patient-policy {
+  padding: var(--space-16);
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-12);
+  background: var(--surface-sunken);
+}
+
+.patient-policy p {
+  margin-block: 5px 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.patient-truth-badge,
+.patient-approved-mark,
+.patient-required-note {
+  padding: 8px 10px;
+  border: 1px solid var(--status-available);
+  border-radius: var(--r-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--status-available);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.patient-prescription-card,
+.patient-encounter-card {
+  padding: clamp(17px, 3vw, 24px);
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-md);
+}
+
+.patient-prescription-card > header,
+.patient-encounter-card > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-12);
+}
+
+.patient-prescription-card > header > div,
+.patient-encounter-card > header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.patient-prescription-card h2,
+.patient-encounter-card h2 {
+  margin: 0;
+  font-family: var(--f-display);
+  font-size: 1rem;
+}
+
+.patient-prescription-card header p,
+.patient-encounter-card header p {
+  margin: 4px 0 0;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+
+.patient-medications {
+  margin-block: var(--space-16);
+  display: grid;
+  gap: var(--space-8);
+}
+
+.patient-medications > div {
+  padding: var(--space-16);
+  border-radius: var(--r-sm);
+  display: grid;
+  grid-template-columns: minmax(120px, 0.8fr) 1fr;
+  gap: 5px var(--space-16);
+  background: var(--surface-sunken);
+}
+
+.patient-medications small {
+  grid-column: 2;
+  color: var(--text-secondary);
+}
+
+.patient-prescription-card > footer,
+.patient-encounter-card > footer {
+  padding-block-start: var(--space-12);
+  border-block-start: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-12);
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+}
+
+.patient-encounter-card > div:not(.patient-follow-up) {
+  margin-block: var(--space-20, 20px);
+}
+
+.patient-encounter-card h3 {
+  margin-block: 0 7px;
+  font-size: 0.82rem;
+}
+
+.patient-encounter-card > div p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.patient-follow-up {
+  margin-block: var(--space-16);
+  padding: var(--space-16);
+  border-inline-start: 3px solid var(--action-primary-bg);
+  display: flex;
+  gap: var(--space-12);
+  background: var(--surface-sunken);
+}
+
+.patient-follow-up strong {
+  display: block;
+}
+
+.patient-notifications {
+  min-inline-size: 0;
+}
+
+.patient-required-note {
+  border-color: var(--status-held);
+  color: var(--status-held);
+}
+
+.patient-matrix-scroll {
+  max-inline-size: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+
+.patient-notification-matrix {
+  inline-size: 100%;
+  min-inline-size: 790px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.patient-notification-matrix th,
+.patient-notification-matrix td {
+  padding: 10px;
+  border-block-end: 1px solid var(--border-subtle);
+  text-align: center;
+}
+
+.patient-notification-matrix thead th {
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.patient-notification-matrix tbody th {
+  position: sticky;
+  inset-inline-start: 0;
+  min-inline-size: 130px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--surface-raised);
+  text-align: start;
+}
+
+.patient-matrix-toggle {
+  min-inline-size: 58px;
+  min-block-size: 50px;
+  display: inline-grid;
+  place-items: center;
+  gap: 2px;
+  cursor: pointer;
+}
+
+.patient-matrix-toggle input {
+  position: absolute;
+  opacity: 0;
+}
+
+.patient-matrix-toggle > span {
+  inline-size: 28px;
+  block-size: 28px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-sm);
+  display: grid;
+  place-items: center;
+  color: var(--text-secondary);
+}
+
+.patient-matrix-toggle input:checked + span {
+  border-color: var(--action-primary-bg);
+  background: var(--action-primary-bg);
+  color: var(--action-primary-fg);
+}
+
+.patient-matrix-toggle input:focus-visible + span {
+  outline: 3px solid var(--border-focus);
+  outline-offset: 3px;
+}
+
+.patient-matrix-toggle small {
+  color: var(--text-secondary);
+  font-size: 0.56rem;
+}
+
+.patient-preference-footer {
+  margin-block-start: var(--space-16);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+}
+
+.patient-preference-footer p {
+  color: var(--text-secondary);
+}
+
+.patient-profile-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: var(--space-16);
+}
+
+.patient-profile-card {
+  align-content: start;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-16);
+}
+
+.patient-profile-avatar {
+  inline-size: 64px;
+  block-size: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--brand-deep);
+  font-family: var(--f-display);
+  font-size: 1.2rem;
+}
+
+.patient-profile-card h2 {
+  margin: 5px 0;
+  font-family: var(--f-display);
+}
+
+.patient-profile-card > div p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.patient-profile-card dl {
+  grid-column: 1 / -1;
+  margin: var(--space-16) 0 0;
+}
+
+.patient-language-card fieldset {
+  margin: 0;
+  padding: var(--space-16) 0;
+  border: 0;
+  border-block-start: 1px solid var(--border-subtle);
+}
+
+.patient-language-card legend {
+  margin-block-end: var(--space-12);
+  font-weight: 600;
+}
+
+.patient-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-8);
+}
+
+.patient-choice {
+  min-block-size: 64px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: start;
+}
+
+.patient-choice.is-selected {
+  border-color: var(--action-primary-bg);
+  background: var(--surface-tint);
+}
+
+.patient-choice small,
+.patient-choice .ltr {
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+}
+
+.patient-numeral-preview {
+  margin-block: var(--space-12) 0;
+  padding: var(--space-12);
+  border-radius: var(--r-sm);
+  background: var(--surface-sunken);
+  color: var(--brand-deep);
+}
+
+@media (min-width: 1024px) {
+  .patient-detail-grid:has(.patient-reschedule-card) {
+    grid-template-columns: minmax(0, 0.82fr) minmax(380px, 1.18fr);
+    align-items: start;
+  }
+}
+
+@media (max-width: 767px) {
+  .patient-page-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .patient-page-header > .ui-button,
+  .patient-page-header > .patient-truth-badge {
+    inline-size: 100%;
+    justify-content: center;
+  }
+  .patient-overview-grid,
+  .patient-profile-grid {
+    grid-template-columns: 1fr;
+  }
+  .patient-appointment-card {
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: var(--space-12);
+  }
+  .patient-appointment-date {
+    min-block-size: 66px;
+  }
+  .patient-card-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .patient-medications > div {
+    grid-template-columns: 1fr;
+  }
+  .patient-medications small {
+    grid-column: auto;
+  }
+  .patient-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .patient-preference-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 389px) {
+  .patient-choice-grid {
+    grid-template-columns: 1fr;
+  }
+  .patient-appointment-card {
+    padding: var(--space-12);
+  }
+}

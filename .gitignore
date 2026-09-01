@@ -1,0 +1,34 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# testing
+/coverage
+/playwright-report
+/test-results
+/artifacts
+/.lighthouseci
+/output/
+/.playwright-cli/
+/.pnpm-store/
+/preview/shots/
+/preview/index.html
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# local
+.DS_Store
+*.pem
+.env*
+!.env.example
+/Al_Mahy_Al_Fateh_Marketing_Reference_Guide (5) (1).docx
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

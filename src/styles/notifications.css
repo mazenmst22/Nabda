@@ -1,0 +1,577 @@
+.staff-shell .shell-main > .notification-workspace {
+  max-inline-size: 1480px;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: 18px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.notification-page-header,
+.notification-panel-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.notification-page-header {
+  padding: clamp(18px, 3vw, 32px);
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-xl);
+  background:
+    radial-gradient(
+      circle at 85% 15%,
+      color-mix(in srgb, var(--brand-faience) 28%, transparent),
+      transparent 36%
+    ),
+    var(--surface-inverse);
+  color: var(--text-inverse);
+  box-shadow: var(--e-2);
+}
+
+.notification-page-header h1,
+.notification-panel-heading h2,
+.notification-live-preview h3 {
+  margin: 3px 0 7px;
+  font-family: var(--f-display);
+  font-weight: 570;
+  letter-spacing: -0.025em;
+}
+
+.notification-page-header h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.notification-page-header p,
+.notification-panel-heading p,
+.notification-live-preview p {
+  max-inline-size: 780px;
+  margin: 0;
+}
+
+.notification-page-header > div > p:last-child {
+  color: color-mix(in srgb, var(--text-inverse) 78%, transparent);
+}
+
+.notification-page-header .type-label {
+  color: var(--brand-gold-glow);
+}
+
+.notification-catalogue-mark {
+  min-block-size: 44px;
+  padding-inline: 14px;
+  border: 1px solid color-mix(in srgb, var(--brand-faience) 62%, transparent);
+  border-radius: var(--r-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--brand-mint);
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.notification-section-nav {
+  padding: 6px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+  background: var(--surface-raised);
+  box-shadow: var(--e-1);
+}
+
+.notification-section-nav button {
+  min-block-size: 44px;
+  padding-inline: 13px;
+  border: 0;
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 680;
+  cursor: pointer;
+}
+
+.notification-section-nav button[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--brand-lapis) 10%, var(--surface-raised));
+  color: var(--brand-lapis);
+  box-shadow: inset 0 -3px 0 var(--brand-lapis);
+}
+
+.notification-section-nav button:focus-visible,
+.notification-variable-picker button:focus-visible,
+.notification-template-gallery summary:focus-visible,
+.notification-log-table:focus-visible {
+  outline: 3px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+.notification-panel {
+  min-inline-size: 0;
+  padding: clamp(16px, 2.4vw, 28px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-xl);
+  display: grid;
+  gap: 20px;
+  background: var(--surface-raised);
+  box-shadow: var(--e-1);
+}
+
+.notification-panel-heading .type-label,
+.notification-live-preview .type-label {
+  color: var(--brand-lapis);
+}
+
+.notification-editor-grid {
+  min-inline-size: 0;
+  display: grid;
+  grid-template-columns: minmax(420px, 1.08fr) minmax(340px, 0.92fr);
+  gap: 16px;
+}
+
+.notification-editor,
+.notification-live-preview {
+  min-inline-size: 0;
+  padding: 16px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-lg);
+  display: grid;
+  align-content: start;
+  gap: 15px;
+  background: var(--surface-bg);
+}
+
+.notification-editor-selectors {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.notification-editor-selectors label,
+.notification-editor-field,
+.notification-log-filter {
+  min-inline-size: 0;
+  display: grid;
+  align-content: start;
+  gap: 7px;
+}
+
+.notification-editor-selectors label > span,
+.notification-editor-field > span,
+.notification-log-filter > span {
+  font-size: 0.75rem;
+  font-weight: 680;
+}
+
+.notification-editor-field textarea {
+  min-block-size: 148px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.notification-editor-field:first-of-type textarea {
+  min-block-size: 72px;
+}
+
+.notification-variable-picker {
+  margin: 0;
+  padding: 13px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md);
+  background: var(--surface-raised);
+}
+
+.notification-variable-picker legend {
+  padding-inline: 6px;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.notification-variable-picker p {
+  margin: 0 0 10px;
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+}
+
+.notification-variable-picker > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.notification-variable-picker button {
+  min-block-size: 44px;
+  padding-inline: 10px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-md);
+  background: var(--surface-bg);
+  color: var(--brand-lapis);
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.notification-variable-picker button:hover {
+  border-color: var(--brand-lapis);
+  background: color-mix(in srgb, var(--brand-lapis) 7%, var(--surface-raised));
+}
+
+.notification-sms-cost-warning {
+  padding: 12px;
+  border: 1px solid var(--status-held);
+  border-inline-start-width: 5px;
+  border-radius: var(--r-md);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  background: color-mix(in srgb, var(--status-held) 8%, var(--surface-raised));
+}
+
+.notification-sms-cost-warning > svg {
+  margin-block-start: 3px;
+  color: var(--status-held);
+}
+
+.notification-sms-cost-warning p {
+  margin: 4px 0;
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.notification-sms-cost-warning small {
+  color: var(--text-primary);
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+}
+
+.notification-live-preview {
+  position: sticky;
+  inset-block-start: 18px;
+  background: color-mix(in srgb, var(--brand-lapis) 4%, var(--surface-bg));
+}
+
+.notification-live-preview > header > p:last-child {
+  color: var(--text-primary);
+  font-size: 0.78rem;
+}
+
+.notification-preview {
+  min-inline-size: 0;
+  border: 1px solid var(--border-default);
+  border-block-start: 4px solid var(--brand-lapis);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--surface-raised);
+  box-shadow: var(--e-1);
+}
+
+.notification-preview--sms {
+  border-block-start-color: var(--brand-gold-deep);
+}
+
+.notification-preview--whatsapp {
+  border-block-start-color: var(--brand-teal);
+}
+
+.notification-preview > header {
+  min-block-size: 50px;
+  padding: 9px 11px;
+  border-block-end: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+  background: var(--surface-bg);
+}
+
+.notification-channel-mark {
+  min-block-size: 32px;
+  padding-inline: 9px;
+  border-radius: var(--r-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: color-mix(in srgb, var(--brand-lapis) 8%, var(--surface-raised));
+  color: var(--brand-lapis);
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.notification-channel-mark--sms {
+  background: color-mix(in srgb, var(--brand-gold) 12%, var(--surface-raised));
+  color: var(--brand-gold-deep);
+}
+
+.notification-channel-mark--whatsapp {
+  background: color-mix(in srgb, var(--brand-teal) 9%, var(--surface-raised));
+  color: var(--brand-deep);
+}
+
+.notification-preview-body {
+  min-block-size: 128px;
+  padding: 16px;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  font-size: 0.88rem;
+  line-height: 1.75;
+  unicode-bidi: plaintext;
+}
+
+.notification-preview-body .ltr {
+  display: inline;
+  font-family: var(--f-mono);
+  font-size: 0.92em;
+}
+
+.notification-preview--sms .notification-preview-body {
+  margin: 14px;
+  min-block-size: 116px;
+  border-radius: var(--r-lg) var(--r-lg) var(--r-sm) var(--r-lg);
+  background: var(--surface-sunken);
+}
+
+[dir="rtl"] .notification-preview--sms .notification-preview-body {
+  border-radius: var(--r-lg) var(--r-lg) var(--r-lg) var(--r-sm);
+}
+
+.notification-preview--whatsapp .notification-preview-body {
+  margin: 14px;
+  border: 1px solid color-mix(in srgb, var(--brand-teal) 22%, var(--border-subtle));
+  border-radius: var(--r-lg);
+  background: color-mix(in srgb, var(--brand-mint) 12%, var(--surface-raised));
+}
+
+.notification-email-chrome {
+  padding: 10px 14px;
+  border-block-end: 1px solid var(--border-subtle);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 9px;
+  background: var(--surface-bg);
+}
+
+.notification-email-chrome > span,
+.notification-email-chrome small {
+  color: var(--text-secondary);
+  font-size: 0.68rem;
+}
+
+.notification-email-chrome small {
+  grid-column: 2;
+}
+
+.notification-email-chrome strong {
+  overflow-wrap: anywhere;
+  font-size: 0.78rem;
+}
+
+.notification-sms-metrics {
+  min-block-size: 54px;
+  padding: 9px 12px;
+  border-block-start: 1px solid var(--border-subtle);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  background: var(--surface-bg);
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+}
+
+.notification-sms-metrics span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.notification-sms-metrics strong,
+.notification-sms-metrics > span:last-child {
+  color: var(--text-primary);
+  font-family: var(--f-mono);
+}
+
+.notification-template-gallery {
+  display: grid;
+  gap: 10px;
+}
+
+.notification-template-gallery details {
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--surface-bg);
+}
+
+.notification-template-gallery summary {
+  min-block-size: 58px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.notification-template-gallery summary > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notification-template-gallery details[open] summary {
+  border-block-end: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--brand-lapis) 6%, var(--surface-raised));
+  color: var(--brand-lapis);
+}
+
+.notification-language-grid {
+  padding: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.notification-language-grid > section {
+  min-inline-size: 0;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.notification-language-grid h3 {
+  margin: 0;
+  font-size: 0.84rem;
+}
+
+.notification-language-grid > section > div {
+  display: grid;
+  gap: 10px;
+}
+
+.notification-preview.is-compact .notification-preview-body {
+  min-block-size: 96px;
+  padding: 12px;
+  font-size: 0.78rem;
+}
+
+.notification-preview.is-compact.notification-preview--sms .notification-preview-body,
+.notification-preview.is-compact.notification-preview--whatsapp .notification-preview-body {
+  margin: 10px;
+}
+
+.notification-send-log {
+  min-inline-size: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.notification-log-filter {
+  max-inline-size: 280px;
+}
+
+.notification-log-table {
+  min-inline-size: 0;
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-lg);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.notification-log-table table {
+  inline-size: 100%;
+  min-inline-size: 900px;
+  border-collapse: collapse;
+  font-size: 0.74rem;
+}
+
+.notification-log-table th,
+.notification-log-table td {
+  min-block-size: 48px;
+  padding: 10px 12px;
+  border-block-end: 1px solid var(--border-subtle);
+  text-align: start;
+  white-space: nowrap;
+}
+
+.notification-log-table th {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+  background: var(--surface-sunken);
+  font-size: 0.68rem;
+}
+
+.notification-log-table tbody tr:hover {
+  background: var(--surface-tint);
+}
+
+@media (max-width: 1023px) {
+  .notification-editor-grid,
+  .notification-language-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .notification-live-preview {
+    position: static;
+  }
+}
+
+@media (max-width: 767px) {
+  .notification-page-header,
+  .notification-panel-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .notification-page-header,
+  .notification-panel {
+    padding: 14px;
+    border-radius: var(--r-lg);
+  }
+
+  .notification-catalogue-mark {
+    align-self: flex-start;
+    white-space: normal;
+  }
+
+  .notification-section-nav,
+  .notification-editor-selectors {
+    grid-template-columns: 1fr;
+  }
+
+  .notification-section-nav button {
+    text-align: start;
+  }
+
+  .notification-editor,
+  .notification-live-preview {
+    padding: 12px;
+  }
+
+  .notification-editor > .ui-button {
+    inline-size: 100%;
+  }
+
+  .notification-template-gallery summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notification-workspace *,
+  .notification-workspace *::before,
+  .notification-workspace *::after {
+    scroll-behavior: auto;
+    transition-duration: 0.01ms;
+  }
+}
