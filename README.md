@@ -2,6 +2,27 @@
 
 Nabda is a bilingual, multi-clinic healthcare web client. Arabic is the default locale and renders RTL; English renders LTR. The repository currently runs against deterministic local mocks while preserving the HTTP contract expected from the future ASP.NET Core API.
 
+## Repository layout
+
+Application code and design/research material are kept strictly apart. Code is under `src/`, `public/`, `e2e/`, `scripts/`, `eslint-rules/` and `messages/`; everything else is source material or documentation.
+
+| Path                                | Contents                                                                       |
+| ----------------------------------- | ------------------------------------------------------------------------------ |
+| `src/`                              | All application code — App Router, components, domain libraries, mocks, styles |
+| `public/`                           | Runtime-served assets: optimised `.woff2` subsets, the app mark, web workers   |
+| `messages/`                         | ICU Arabic and English catalogues                                              |
+| `e2e/`                              | Playwright journeys, accessibility and visual release gates                    |
+| `scripts/`                          | Dev server, bundle budget report, preview shots, git hook setup                |
+| `eslint-rules/`                     | The local `nabda` ESLint plugin (logical-properties enforcement)               |
+| [`docs/`](docs/README.md)           | Engineering documentation, by discipline                                       |
+| [`research/`](research/README.md)   | Source briefs, specifications and archives, kept unedited                      |
+| [`ux-ui/`](ux-ui/README.md)         | Prototypes, design system, wireframes, flows and token sources                 |
+| [`assets/`](assets/README.md)       | Design-time source assets — brand marks, font sources, exports                 |
+| [`.github/`](.github/README.md)     | CI workflows and repository automation                                         |
+| [`artifacts/`](artifacts/README.md) | Generated build and CI output (git-ignored)                                    |
+
+`assets/` is never imported by application code; anything the browser loads is exported into `public/` first.
+
 ## Requirements
 
 - Node.js 22
@@ -61,13 +82,13 @@ The client treats API responses as untrusted. Every successful body is parsed th
 
 ## Switching from mocks to the real API
 
-1. Implement the worklist in [`docs/GAPS.md`](docs/GAPS.md), including headers, error envelopes, concurrency and streaming semantics.
+1. Implement the worklist in [`docs/backend/GAPS.md`](docs/backend/GAPS.md), including headers, error envelopes, concurrency and streaming semantics.
 2. Configure the application API base URL at the single `ApiClient` composition point. The client already accepts `baseUrl`; keep all call sites on relative `/v1/...` paths.
 3. Replace the mock session implementation in `src/lib/auth/session.ts` with the OIDC adapter. No role checks should move into page components.
 4. Do not start `src/mocks/browser.ts` outside local/mock mode, and remove or disable the Next.js `src/app/v1` and `src/app/api/testing` mock routes in the deployment build.
 5. Run `pnpm test` against MSW for contract compatibility, then run `pnpm test:e2e` against an isolated backend tenant seeded with the same fixture identities.
 
-Mock controls and fault reproduction are documented in [`docs/RUNBOOK.md`](docs/RUNBOOK.md).
+Mock controls and fault reproduction are documented in [`docs/testing/RUNBOOK.md`](docs/testing/RUNBOOK.md).
 
 ## Developer preview harness
 
