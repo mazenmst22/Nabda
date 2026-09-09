@@ -1,35 +1,5 @@
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
 
-# testing
-/coverage
-/playwright-report
-/test-results
-/artifacts/*
-!/artifacts/README.md
-/.lighthouseci
-/output/
-/.playwright-cli/
-/.pnpm-store/
-/preview/shots/
-/preview/index.html
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# local
-.DS_Store
-*.pem
-.env*
-!.env.example
-/Al_Mahy_Al_Fateh_Marketing_Reference_Guide (5) (1).docx
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+/.vs
